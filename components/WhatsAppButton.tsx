@@ -1,12 +1,13 @@
 import React from 'react';
 import { Language } from '../types';
+import { WHATSAPP_NUMBER } from '../constants';
 
 interface Props {
   lang: Language;
 }
 
 export const WhatsAppButton: React.FC<Props> = ({ lang }) => {
-  const whatsappUrl = "https://wa.me/919879737819?text=Hello%20Tejas%20Sir,%20I%20have%20a%20query%20about%20AI%20Pathshala.";
+  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=Hello%20Tejas%20Sir,%20I%20have%20a%20query%20about%20AI%20Pathshala.`;
 
   // Text content for the circular ring - Single instance as requested
   // Added bullets/spaces to balance the circle visually

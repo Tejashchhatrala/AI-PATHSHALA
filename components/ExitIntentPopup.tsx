@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Gift, ArrowRight } from 'lucide-react';
 import { Language } from '../types';
+import { WHATSAPP_NUMBER } from '../constants';
 
 interface Props {
   lang: Language;
@@ -47,7 +48,7 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
     setIsSubmitting(true);
     // WhatsApp redirect after form submission
     const message = `Hello Tejas Sir, I claimed the Free Prompt Library via the website popup.%0A%0A*Name:* ${formData.name}%0A*Phone:* ${formData.phone}`;
-    const whatsappUrl = `https://wa.me/919879737819?text=${message}`;
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
 
     setTimeout(() => {
       window.location.href = whatsappUrl;

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, CheckCircle, Shield, Calendar, Smartphone } from 'lucide-react';
 import { Language } from '../types';
+import { WHATSAPP_NUMBER, WHATSAPP_NUMBER_FORMATTED } from '../constants';
 
 interface Props {
   lang: Language;
@@ -30,7 +31,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
 
     // Prepare WhatsApp Message
     const message = `Hello Tejas Sir, I want to join the March 2026 Batch.%0A%0A*Name:* ${formData.name}%0A*Grade:* ${formData.grade}%0A*Phone:* ${formData.phone}`;
-    const whatsappUrl = `https://wa.me/919879737819?text=${message}`;
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
 
     // Wait 1.5 seconds to ensure Google Form receives data, then redirect
     setTimeout(() => {
@@ -153,7 +154,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                         value={formData.phone}
                         onChange={(e) => setFormData({...formData, phone: e.target.value})}
                         className="w-full px-4 py-3.5 rounded-xl border border-brand-200 focus:outline-none focus:ring-2 focus:ring-brand-400 bg-brand-50 transition-all font-medium placeholder:text-brand-300"
-                        placeholder="98797 37819"
+                        placeholder={WHATSAPP_NUMBER_FORMATTED}
                     />
                     </div>
 
