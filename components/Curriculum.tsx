@@ -38,6 +38,14 @@ export const Curriculum: React.FC<Props> = ({ lang }) => {
     }
   ];
 
+  const scrollToEnroll = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const element = document.getElementById('enroll');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="curriculum" className="py-24 bg-white relative overflow-hidden">
       {/* Background Decor */}
@@ -91,10 +99,13 @@ export const Curriculum: React.FC<Props> = ({ lang }) => {
           </div>
           
           <div className="mt-16 text-center">
-              <a href="#enroll" className="inline-flex items-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-full font-bold hover:bg-slate-800 transition-colors shadow-lg hover:-translate-y-1 transform">
+              <button 
+                  onClick={scrollToEnroll}
+                  className="inline-flex items-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-full font-bold hover:bg-slate-800 transition-colors shadow-lg hover:-translate-y-1 hover:scale-105 transform cursor-pointer"
+              >
                 <Flag className="w-5 h-5" />
                 {lang === 'EN' ? "Start Phase 1 Now" : "ફેઝ 1 અત્યારે જ શરૂ કરો"}
-              </a>
+              </button>
           </div>
         </div>
       </div>

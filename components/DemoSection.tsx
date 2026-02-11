@@ -9,6 +9,14 @@ interface Props {
 export const DemoSection: React.FC<Props> = ({ lang }) => {
   const [activeTab, setActiveTab] = useState<'bad' | 'good'>('bad');
 
+  const scrollToEnroll = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const element = document.getElementById('enroll');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="demo" className="py-24 bg-slate-900 text-white overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6">
@@ -114,10 +122,13 @@ export const DemoSection: React.FC<Props> = ({ lang }) => {
              {lang === 'EN' ? "I have 500+ such prompts ready for you." : "મારી પાસે આવા 500+ તૈયાર પ્રોમ્પ્ટ છે તમારા માટે."}
            </p>
            {/* Redirects to Form now */}
-           <a href="#enroll" className="inline-flex items-center gap-2 text-brand-400 font-bold hover:text-brand-300 transition-colors border-b-2 border-brand-400 pb-1">
+           <button 
+              onClick={scrollToEnroll}
+              className="inline-flex items-center gap-2 text-brand-400 font-bold hover:text-brand-300 transition-colors border-b-2 border-brand-400 pb-1 hover:-translate-y-1 cursor-pointer"
+           >
              {lang === 'EN' ? "Get The Prompt Library (Via Call)" : "પ્રોમ્પ્ટ લાઈબ્રેરી મેળવો (કોલ પર)"}
              <ArrowRight className="w-5 h-5" />
-           </a>
+           </button>
         </div>
       </div>
     </section>

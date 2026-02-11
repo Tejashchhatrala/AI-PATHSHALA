@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { ArrowRight, CheckCircle, Sparkles, Lock, Bell, Shield } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowRight, CheckCircle, Sparkles, Lock, Bell, Shield, Calendar } from 'lucide-react';
 import { Language } from '../types';
 
 interface Props {
@@ -54,7 +54,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
           <div className="lg:w-1/2 text-center lg:text-left">
              <div className="inline-flex items-center gap-2 bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-xs font-bold border border-green-500/30 mb-6 animate-pulse">
                 <Bell className="w-3 h-3" />
-                {lang === 'EN' ? "3 students booked a call in the last hour" : "છેલ્લા કલાકમાં 3 વિદ્યાર્થીઓએ કોલ બુક કર્યો"}
+                {lang === 'EN' ? "Recent inquiry from Ahmedabad (2m ago)" : "અમદાવાદથી હમણાં જ પૂછપરછ આવી (2m પહેલા)"}
              </div>
 
             <h2 className={`text-4xl md:text-5xl font-black mb-6 leading-tight ${lang === 'GU' ? 'font-gujarati' : ''}`}>
@@ -67,9 +67,9 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                 : "હું જાતે તમારી અત્યારની વાંચવાની પદ્ધતિ ચેક કરીશ અને તમને બતાવીશ કે રોજ ૨ કલાક કેવી રીતે બચાવવા."}
             </p>
 
-            <div className="bg-white/5 rounded-2xl p-6 border border-white/10 backdrop-blur-sm mb-8">
+            <div className="bg-white/5 rounded-2xl p-6 border border-white/10 backdrop-blur-sm mb-8 hover:bg-white/10 transition-colors">
                <h4 className="font-bold text-white mb-4 flex items-center gap-2">
-                  <Sparkles className="w-5 h-5 text-amber-400" />
+                  <Sparkles className="w-5 h-5 text-accent-500 animate-pulse" />
                   {lang === 'EN' ? "What happens on the call?" : "કોલ પર શું થશે?"}
                </h4>
                <ul className="space-y-3">
@@ -94,104 +94,111 @@ export const CTA: React.FC<Props> = ({ lang }) => {
 
           {/* Form Card */}
           <div className="lg:w-1/2 w-full max-w-md">
-            <div className="bg-white rounded-3xl p-8 shadow-2xl border border-white/10 relative overflow-hidden text-slate-900 transform transition-all hover:scale-[1.01]">
-              
-               {/* Urgency Ribbon */}
-               <div className="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl shadow-md">
-                  FINAL BATCH
-               </div>
+            {/* Pulsing Border Effect */}
+            <div className="relative">
+                <div className="absolute -inset-1 bg-gradient-to-r from-brand-400 to-accent-500 rounded-3xl blur opacity-30 animate-pulse"></div>
+                <div className="bg-white rounded-3xl p-8 shadow-2xl relative overflow-hidden text-slate-900 transform transition-all">
+                
+                {/* Professional Ribbon */}
+                <div className="absolute top-0 right-0 bg-brand-600 text-white text-[10px] font-bold px-4 py-1.5 rounded-bl-xl shadow-md z-20">
+                    NEW BATCH
+                </div>
 
-               <div className="mb-6">
-                  <div className="inline-flex items-center gap-2 text-xs font-bold text-red-600 bg-red-50 border border-red-100 px-3 py-1 rounded-full uppercase tracking-widest mb-3">
-                     <Lock className="w-3 h-3" />
-                     {lang === 'EN' ? "Only 5 Slots Left This Week" : "આ અઠવાડિયે માત્ર 5 સ્લોટ બાકી"}
-                  </div>
-                  <h3 className={`text-2xl font-bold text-slate-900 ${lang === 'GU' ? 'font-gujarati' : ''}`}>
-                     {lang === 'EN' ? "Get My Free Roadmap" : "મારો ફ્રી રોડમેપ મેળવો"}
-                  </h3>
-                  <p className="text-slate-500 text-sm mt-1">
-                     {lang === 'EN' ? "Fill this to start your journey." : "તમારી સફર શરૂ કરવા માટે આ ભરો."}
-                  </p>
-               </div>
+                <div className="mb-6">
+                    <div className="inline-flex items-center gap-2 text-xs font-bold text-brand-700 bg-brand-50 border border-brand-100 px-3 py-1 rounded-full uppercase tracking-widest mb-3">
+                        <Calendar className="w-3 h-3" />
+                        {lang === 'EN' ? "Limited Seats Available" : "મર્યાદિત બેઠકો ઉપલબ્ધ"}
+                    </div>
+                    <h3 className={`text-2xl font-bold text-slate-900 ${lang === 'GU' ? 'font-gujarati' : ''}`}>
+                        {lang === 'EN' ? "Get My Free Roadmap" : "મારો ફ્રી રોડમેપ મેળવો"}
+                    </h3>
+                    <p className="text-slate-500 text-sm mt-1">
+                        {lang === 'EN' ? "Fill this to start your journey." : "તમારી સફર શરૂ કરવા માટે આ ભરો."}
+                    </p>
+                </div>
 
-               {/* 
-                 HIDDEN IFRAME TRICK:
-                 We send the form data to this invisible iframe. 
-                 This prevents the page from reloading or going to Google's "Thank You" page.
-               */}
-               <iframe name="hidden_iframe" id="hidden_iframe" style={{display: 'none'}}></iframe>
+                {/* 
+                    HIDDEN IFRAME TRICK:
+                    We send the form data to this invisible iframe. 
+                    This prevents the page from reloading or going to Google's "Thank You" page.
+                */}
+                <iframe name="hidden_iframe" id="hidden_iframe" style={{display: 'none'}}></iframe>
 
-               <form 
-                  action={GOOGLE_FORM_ACTION_URL} 
-                  method="post" 
-                  target="hidden_iframe"
-                  onSubmit={handleSubmit}
-                  className="space-y-4"
-                >
-                 <div className="group">
-                   <label className="block text-sm font-bold text-slate-700 mb-1 ml-1 group-focus-within:text-brand-600 transition-colors">
-                     {lang === 'EN' ? "Student Name" : "વિદ્યાર્થીનું નામ"}
-                   </label>
-                   <input 
-                     type="text" 
-                     name={FORM_FIELD_IDS.name} // Maps to Google Form
-                     required
-                     value={formData.name}
-                     onChange={(e) => setFormData({...formData, name: e.target.value})}
-                     className="w-full px-4 py-3.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50 transition-all font-medium"
-                     placeholder={lang === 'EN' ? "e.g. Rahul Patel" : "દા.ત. રાહુલ પટેલ"}
-                   />
-                 </div>
-                 
-                 <div className="group">
-                   <label className="block text-sm font-bold text-slate-700 mb-1 ml-1 group-focus-within:text-brand-600 transition-colors">
-                     {lang === 'EN' ? "WhatsApp Number" : "વોટ્સએપ નંબર"}
-                   </label>
-                   <input 
-                     type="tel" 
-                     name={FORM_FIELD_IDS.phone} // Maps to Google Form
-                     required
-                     value={formData.phone}
-                     onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                     className="w-full px-4 py-3.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50 transition-all font-medium"
-                     placeholder="98797 37819"
-                   />
-                 </div>
+                <form 
+                    action={GOOGLE_FORM_ACTION_URL} 
+                    method="post" 
+                    target="hidden_iframe"
+                    onSubmit={handleSubmit}
+                    className="space-y-4"
+                    >
+                    <div className="group">
+                    <label className="block text-sm font-bold text-slate-700 mb-1 ml-1 group-focus-within:text-brand-600 transition-colors">
+                        {lang === 'EN' ? "Student Name" : "વિદ્યાર્થીનું નામ"}
+                    </label>
+                    <input 
+                        type="text" 
+                        name={FORM_FIELD_IDS.name} // Maps to Google Form
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        className="w-full px-4 py-3.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50 transition-all font-medium placeholder:text-slate-400"
+                        placeholder={lang === 'EN' ? "e.g. Rahul Patel" : "દા.ત. રાહુલ પટેલ"}
+                    />
+                    </div>
+                    
+                    <div className="group">
+                    <label className="block text-sm font-bold text-slate-700 mb-1 ml-1 group-focus-within:text-brand-600 transition-colors">
+                        {lang === 'EN' ? "WhatsApp Number" : "વોટ્સએપ નંબર"}
+                    </label>
+                    <input 
+                        type="tel" 
+                        name={FORM_FIELD_IDS.phone} // Maps to Google Form
+                        required
+                        value={formData.phone}
+                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                        className="w-full px-4 py-3.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50 transition-all font-medium placeholder:text-slate-400"
+                        placeholder="98797 37819"
+                    />
+                    </div>
 
-                 <div className="group">
-                   <label className="block text-sm font-bold text-slate-700 mb-1 ml-1 group-focus-within:text-brand-600 transition-colors">
-                     {lang === 'EN' ? "Grade / Stream" : "ધોરણ / પ્રવાહ"}
-                   </label>
-                   <input 
-                     type="text" 
-                     name={FORM_FIELD_IDS.grade} // Maps to Google Form
-                     required
-                     value={formData.grade}
-                     onChange={(e) => setFormData({...formData, grade: e.target.value})}
-                     className="w-full px-4 py-3.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50 transition-all font-medium"
-                     placeholder={lang === 'EN' ? "e.g. 10th / BCA / Commerce" : "દા.ત. 10th / BCA / Commerce"}
-                   />
-                 </div>
+                    <div className="group">
+                    <label className="block text-sm font-bold text-slate-700 mb-1 ml-1 group-focus-within:text-brand-600 transition-colors">
+                        {lang === 'EN' ? "Grade / Stream" : "ધોરણ / પ્રવાહ"}
+                    </label>
+                    <input 
+                        type="text" 
+                        name={FORM_FIELD_IDS.grade} // Maps to Google Form
+                        required
+                        value={formData.grade}
+                        onChange={(e) => setFormData({...formData, grade: e.target.value})}
+                        className="w-full px-4 py-3.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50 transition-all font-medium placeholder:text-slate-400"
+                        placeholder={lang === 'EN' ? "e.g. 10th / BCA / Commerce" : "દા.ત. 10th / BCA / Commerce"}
+                    />
+                    </div>
 
-                 <button 
-                   type="submit"
-                   disabled={isSubmitting}
-                   className="w-full mt-6 py-4 bg-green-600 hover:bg-green-700 text-white font-bold text-lg rounded-xl shadow-lg shadow-green-500/30 transition-all transform active:scale-[0.98] hover:-translate-y-1 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
-                 >
-                   {isSubmitting ? (
-                     <span className="animate-pulse">Processing...</span>
-                   ) : (
-                     <>
-                       {lang === 'EN' ? "Continue to WhatsApp" : "વોટ્સએપ પર આગળ વધો"}
-                       <ArrowRight className="w-6 h-6" />
-                     </>
-                   )}
-                 </button>
-                 
-                 <p className="text-center text-xs text-slate-400 mt-4 flex items-center justify-center gap-1">
-                   {lang === 'EN' ? "100% Free. No Payment Required." : "૧૦૦% ફ્રી. કોઈ પેમેન્ટ કરવાની જરૂર નથી."}
-                 </p>
-               </form>
+                    <button 
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="relative w-full mt-6 py-4 bg-green-600 hover:bg-green-700 text-white font-bold text-lg rounded-xl shadow-lg shadow-green-500/30 transition-all transform active:scale-[0.98] hover:-translate-y-1 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed overflow-hidden group"
+                    >
+                    {/* Button Shine Effect */}
+                    <div className="absolute top-0 left-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-shimmer" />
+
+                    {isSubmitting ? (
+                        <span className="animate-pulse">Processing...</span>
+                    ) : (
+                        <span className="relative z-10 flex items-center gap-2">
+                        {lang === 'EN' ? "Continue to WhatsApp" : "વોટ્સએપ પર આગળ વધો"}
+                        <ArrowRight className="w-6 h-6" />
+                        </span>
+                    )}
+                    </button>
+                    
+                    <p className="text-center text-xs text-slate-400 mt-4 flex items-center justify-center gap-1">
+                    {lang === 'EN' ? "100% Free. No Payment Required." : "૧૦૦% ફ્રી. કોઈ પેમેન્ટ કરવાની જરૂર નથી."}
+                    </p>
+                </form>
+                </div>
             </div>
           </div>
         </div>

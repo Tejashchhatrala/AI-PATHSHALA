@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, Brain, Zap } from 'lucide-react';
+import { ShieldCheck, Brain, Zap, ArrowRight } from 'lucide-react';
 import { Language } from '../types';
 
 interface Props {
@@ -7,6 +7,14 @@ interface Props {
 }
 
 export const Solution: React.FC<Props> = ({ lang }) => {
+  const scrollToEnroll = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const element = document.getElementById('enroll');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="py-24 bg-white overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6">
@@ -73,9 +81,13 @@ export const Solution: React.FC<Props> = ({ lang }) => {
             </div>
 
             <div className="mt-10">
-               <a href="#enroll" className="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white transition-all duration-200 bg-brand-600 border border-transparent rounded-xl hover:bg-brand-700 shadow-lg shadow-brand-500/30 hover:-translate-y-1">
+               <button 
+                  onClick={scrollToEnroll} 
+                  className="group inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-bold text-white transition-all duration-200 bg-brand-600 border border-transparent rounded-xl hover:bg-brand-700 shadow-lg shadow-brand-500/30 hover:-translate-y-1 hover:scale-105 cursor-pointer"
+               >
                   {lang === 'EN' ? "Book Free Roadmap Call" : "ફ્રી રોડમેપ કોલ બુક કરો"}
-               </a>
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+               </button>
             </div>
           </div>
           

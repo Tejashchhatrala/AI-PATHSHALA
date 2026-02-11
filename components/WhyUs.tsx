@@ -49,7 +49,7 @@ export const WhyUs: React.FC<Props> = ({ lang }) => {
                 { en: "Exam-Oriented Results", gu: "પરીક્ષાલક્ષી પરિણામ" },
                 { en: "Lifetime Access", gu: "લાઈફટાઈમ એક્સેસ" },
               ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 p-3 bg-white rounded-lg border border-slate-200 shadow-sm">
+                <div key={i} className="flex items-center gap-3 p-3 bg-white rounded-lg border border-slate-200 shadow-sm hover:border-brand-300 hover:shadow-md transition-all cursor-default">
                   <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center shrink-0">
                     <Check className="w-4 h-4 text-green-600" />
                   </div>
@@ -63,7 +63,7 @@ export const WhyUs: React.FC<Props> = ({ lang }) => {
 
           {/* Right Side: The Visual Differentiator */}
           <div className="lg:w-1/2 w-full mt-8 lg:mt-0">
-            <div className="relative bg-brand-900 rounded-3xl p-8 md:p-12 shadow-2xl text-white overflow-hidden transform hover:scale-[1.02] transition-transform duration-500">
+            <div className="relative bg-brand-900 rounded-3xl p-8 md:p-12 shadow-2xl text-white overflow-hidden transform hover:scale-[1.01] transition-transform duration-500 cursor-default">
               <div className="absolute top-0 right-0 w-64 h-64 bg-brand-600 rounded-full blur-3xl opacity-50 -mr-20 -mt-20"></div>
               <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-600 rounded-full blur-3xl opacity-50 -ml-20 -mb-20"></div>
 
@@ -74,40 +74,40 @@ export const WhyUs: React.FC<Props> = ({ lang }) => {
 
                 <div className="space-y-6">
                   {/* Row 1 */}
-                  <div className="flex justify-between items-center group">
-                    <div className="w-[45%] text-right text-slate-300 text-sm md:text-base pr-4 border-r border-white/10">
+                  <div className="flex justify-between items-center group p-3 rounded-xl hover:bg-white/5 transition-colors">
+                    <div className="w-[45%] text-right text-slate-300 text-sm md:text-base pr-4 border-r border-white/10 group-hover:text-white transition-colors">
                       {lang === 'EN' ? "Generic Lectures" : "સામાન્ય લેક્ચર"}
                     </div>
                     <div className="w-[10%] flex justify-center">
-                      <Zap className="w-6 h-6 text-yellow-400 group-hover:scale-125 transition-transform" />
+                      <Zap className="w-6 h-6 text-accent-500 group-hover:scale-125 transition-transform" />
                     </div>
-                    <div className="w-[45%] text-left font-bold text-white text-sm md:text-base pl-4 border-l border-white/10">
+                    <div className="w-[45%] text-left font-bold text-white text-sm md:text-base pl-4 border-l border-white/10 group-hover:text-accent-300 transition-colors">
                       {lang === 'EN' ? "Personalized Doubts" : "પર્સનલ ડાઉટ સોલ્યુશન"}
                     </div>
                   </div>
 
                   {/* Row 2 */}
-                  <div className="flex justify-between items-center group">
-                    <div className="w-[45%] text-right text-slate-300 text-sm md:text-base pr-4 border-r border-white/10">
+                  <div className="flex justify-between items-center group p-3 rounded-xl hover:bg-white/5 transition-colors">
+                    <div className="w-[45%] text-right text-slate-300 text-sm md:text-base pr-4 border-r border-white/10 group-hover:text-white transition-colors">
                       {lang === 'EN' ? "Confusing English" : "અઘરું અંગ્રેજી"}
                     </div>
                     <div className="w-[10%] flex justify-center">
                       <Globe className="w-6 h-6 text-blue-400 group-hover:scale-125 transition-transform" />
                     </div>
-                    <div className="w-[45%] text-left font-bold text-white text-sm md:text-base pl-4 border-l border-white/10">
+                    <div className="w-[45%] text-left font-bold text-white text-sm md:text-base pl-4 border-l border-white/10 group-hover:text-blue-300 transition-colors">
                       {lang === 'EN' ? "Simple Gujarati" : "સરળ ગુજરાતી સમજૂતી"}
                     </div>
                   </div>
 
                   {/* Row 3 */}
-                  <div className="flex justify-between items-center group">
-                    <div className="w-[45%] text-right text-slate-300 text-sm md:text-base pr-4 border-r border-white/10">
+                  <div className="flex justify-between items-center group p-3 rounded-xl hover:bg-white/5 transition-colors">
+                    <div className="w-[45%] text-right text-slate-300 text-sm md:text-base pr-4 border-r border-white/10 group-hover:text-white transition-colors">
                       {lang === 'EN' ? "Rote Memorization" : "ગોખણપટ્ટી"}
                     </div>
                     <div className="w-[10%] flex justify-center">
                       <Heart className="w-6 h-6 text-red-400 group-hover:scale-125 transition-transform" />
                     </div>
-                    <div className="w-[45%] text-left font-bold text-white text-sm md:text-base pl-4 border-l border-white/10">
+                    <div className="w-[45%] text-left font-bold text-white text-sm md:text-base pl-4 border-l border-white/10 group-hover:text-red-300 transition-colors">
                       {lang === 'EN' ? "Conceptual Mastery" : "કોન્સેપ્ટ પર પકડ"}
                     </div>
                   </div>

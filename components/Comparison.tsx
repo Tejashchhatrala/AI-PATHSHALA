@@ -53,11 +53,6 @@ export const Comparison: React.FC<Props> = ({ lang }) => {
                   feat: { en: "Exam Prep", gu: "પરીક્ષાની તૈયારી" }, 
                   old: { en: "Generic IMP List", gu: "સામાન્ય IMP લિસ્ટ" },
                   new: { en: "Custom Paper Analysis", gu: "પર્સનલ પેપર એનાલિસિસ" }
-                },
-                { 
-                  feat: { en: "Cost", gu: "ખર્ચ" }, 
-                  old: { en: "₹15,000 - ₹50,000 / year", gu: "₹15,000 - ₹50,000 / વર્ષ" },
-                  new: { en: "Fraction of the cost", gu: "ખૂબ જ ઓછો ખર્ચ" }
                 }
               ].map((row, i) => (
                 <tr key={i} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">

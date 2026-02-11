@@ -10,6 +10,7 @@ import { Solution } from './components/Solution';
 import { DemoSection } from './components/DemoSection';
 import { WhoIsThisFor } from './components/WhoIsThisFor';
 import { Curriculum } from './components/Curriculum';
+import { TheStack } from './components/TheStack';
 import { Testimonials } from './components/Testimonials';
 import { FAQ } from './components/FAQ';
 import { CTA } from './components/CTA';
@@ -26,6 +27,14 @@ function App() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const scrollToEnroll = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const element = document.getElementById('enroll');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <div className={`min-h-screen bg-slate-50 text-slate-900 ${lang === 'GU' ? 'font-gujarati' : 'font-sans'}`}>
@@ -49,9 +58,12 @@ function App() {
           </div>
           <div className="flex items-center gap-3 md:gap-6">
              {/* Simple CTA in Nav */}
-             <a href="#enroll" className="hidden md:flex items-center gap-2 text-sm font-bold text-white bg-green-600 hover:bg-green-700 px-6 py-2.5 rounded-full transition-all shadow-lg hover:shadow-green-500/30 hover:-translate-y-0.5 transform active:scale-95">
+             <button 
+                onClick={scrollToEnroll}
+                className="hidden md:flex items-center gap-2 text-sm font-bold text-white bg-green-600 hover:bg-green-700 px-6 py-2.5 rounded-full transition-all shadow-lg hover:shadow-green-500/30 hover:-translate-y-0.5 transform active:scale-95 cursor-pointer"
+             >
                {lang === 'EN' ? 'Book Free Call' : 'ફ્રી કોલ બુક કરો'}
-             </a>
+             </button>
              <LanguageToggle lang={lang} setLang={setLang} />
           </div>
         </div>
@@ -86,13 +98,16 @@ function App() {
         {/* 9. The Plan (Timeline) */}
         <Curriculum lang={lang} />
 
-        {/* 10. Social Proof (Testimonials) */}
+        {/* 10. The Offer Stack (Value Build up) */}
+        <TheStack lang={lang} />
+
+        {/* 11. Social Proof (Testimonials) */}
         <Testimonials lang={lang} />
         
-        {/* 11. Objection Handling */}
+        {/* 12. Objection Handling */}
         <FAQ lang={lang} />
         
-        {/* 12. Final Action */}
+        {/* 13. Final Action */}
         <CTA lang={lang} />
       </main>
 
@@ -100,9 +115,12 @@ function App() {
       
       {/* Mobile Floating CTA */}
       <div className="fixed bottom-0 left-0 w-full p-4 bg-white/90 backdrop-blur-md border-t border-slate-200 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] md:hidden z-40 pb-6">
-        <a href="#enroll" className="flex items-center justify-center w-full font-bold text-white bg-green-600 py-3.5 rounded-xl shadow-lg shadow-green-500/30 active:scale-95 transition-transform">
+        <button 
+           onClick={scrollToEnroll}
+           className="flex items-center justify-center w-full font-bold text-white bg-green-600 py-3.5 rounded-xl shadow-lg shadow-green-500/30 active:scale-95 transition-transform cursor-pointer"
+        >
           {lang === 'EN' ? 'Book Free Call' : 'ફ્રી કોલ બુક કરો'}
-        </a>
+        </button>
       </div>
     </div>
   );
