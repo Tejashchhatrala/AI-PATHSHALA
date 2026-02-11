@@ -46,8 +46,8 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
   const handleSubmit = (e: React.FormEvent) => {
     setIsSubmitting(true);
     // WhatsApp redirect after form submission
-    const message = `Hello Tejas Sir, I claimed the Free Prompt Library via the website popup.%0A%0A*Name:* ${formData.name}%0A*Phone:* ${formData.phone}`;
-    const whatsappUrl = `https://wa.me/919879737819?text=${message}`;
+    const message = `Hello Tejas Sir, I claimed the Free Prompt Library via the website popup.\n\n*Name:* ${formData.name}\n*Phone:* ${formData.phone}`;
+    const whatsappUrl = `https://wa.me/919879737819?text=${encodeURIComponent(message)}`;
 
     setTimeout(() => {
       window.location.href = whatsappUrl;
