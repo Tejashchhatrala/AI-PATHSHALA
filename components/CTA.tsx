@@ -38,8 +38,8 @@ export const CTA: React.FC<Props> = ({ lang }) => {
     setIsSubmitting(true);
 
     // Prepare WhatsApp Message
-    const message = `Hello Tejas Sir, I want to join the March 2026 Batch.%0A%0A*Name:* ${formData.name}%0A*Grade:* ${formData.grade}%0A*Phone:* ${formData.phone}`;
-    const whatsappUrl = `https://wa.me/919879737819?text=${message}`;
+    const message = `Hello Tejas Sir, I want to join the March 2026 Batch.\n\n*Name:* ${formData.name}\n*Grade:* ${formData.grade}\n*Phone:* ${formData.phone}`;
+    const whatsappUrl = `https://wa.me/919879737819?text=${encodeURIComponent(message)}`;
 
     setTimeout(() => {
         window.location.href = whatsappUrl;
