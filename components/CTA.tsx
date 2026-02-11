@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, Calendar, Smartphone, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Calendar, ShieldCheck } from 'lucide-react';
 import { Language } from '../types';
 import { content } from '../data/content';
 
