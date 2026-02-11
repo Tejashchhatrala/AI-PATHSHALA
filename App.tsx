@@ -7,7 +7,6 @@ import { PainPoints } from './components/PainPoints';
 import { WhyUs } from './components/WhyUs';
 import { Authority } from './components/Authority';
 import { Solution } from './components/Solution';
-import { DemoSection } from './components/DemoSection';
 import { WhoIsThisFor } from './components/WhoIsThisFor';
 import { Curriculum } from './components/Curriculum';
 import { TheStack } from './components/TheStack';
@@ -83,9 +82,6 @@ function App() {
         
         {/* 4. The Solution (New Mechanism) */}
         <Solution lang={lang} />
-
-        {/* 5. The Proof (Demo) */}
-        <DemoSection lang={lang} />
         
         {/* 6. Segmentation */}
         <WhoIsThisFor lang={lang} />
