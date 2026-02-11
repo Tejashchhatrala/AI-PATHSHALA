@@ -28,30 +28,52 @@ export const Authority: React.FC<Props> = ({ lang }) => {
     { src: getAssetPath("certificates/completion.png"), alt: "Certificate of Completion" },
   ];
 
+  const companyLogos = [
+    {
+       name: "Google",
+       src: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
+       height: "h-8"
+    },
+    {
+       name: "Microsoft",
+       src: "https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg",
+       height: "h-8"
+    },
+    {
+       name: "Oracle",
+       src: "https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg",
+       height: "h-6"
+    },
+    {
+       name: "Anthropic",
+       // Using a reliable placeholder for Anthropic since their SVG might not be on Commons or stable URL
+       // Alternatively, just text if logo fails.
+       src: "https://upload.wikimedia.org/wikipedia/commons/7/78/Anthropic_logo.svg",
+       height: "h-6"
+    }
+  ];
+
   return (
     <section className="py-24 bg-white relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="flex flex-col md:flex-row items-center gap-16 max-w-6xl mx-auto">
           
-          {/* Certificate Marquee Display */}
+          {/* Certificate Grid Display */}
           <div className="w-full md:w-1/2 order-2 md:order-1">
              <div className="relative">
                 <div className="absolute top-[-20px] left-1/2 -translate-x-1/2 bg-brand-600 text-white text-xs font-bold px-4 py-1 rounded-full shadow-md z-20 whitespace-nowrap">
                    {lang === 'EN' ? "6 Global Certifications" : "6 ગ્લોબલ સર્ટિફિકેટ્સ"}
                 </div>
                 
-                {/* Marquee Container */}
-                <div className="relative flex overflow-hidden w-full h-[300px] md:h-[400px] bg-brand-50 rounded-3xl border border-brand-200 shadow-xl group">
-                   <div className="absolute inset-0 z-10 pointer-events-none shadow-[inset_0_0_20px_rgba(0,0,0,0.05)] rounded-3xl"></div>
-                   
-                   {/* Scrolling Content (Doubled for seamless loop) */}
-                   <div className="flex animate-scroll hover:[animation-play-state:paused] items-center">
-                      {[...certificates, ...certificates].map((cert, i) => (
-                        <div key={i} className="flex-shrink-0 w-full h-full p-6 flex items-center justify-center">
+                {/* Grid Container */}
+                <div className="relative bg-brand-50 rounded-3xl border border-brand-200 shadow-xl group p-6 md:p-8">
+                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                      {certificates.map((cert, i) => (
+                        <div key={i} className="group/item relative bg-white rounded-xl border border-brand-100 p-2 md:p-3 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 aspect-video flex items-center justify-center overflow-hidden">
                            <img 
                               src={cert.src} 
                               alt={cert.alt} 
-                              className="max-w-full max-h-full object-contain rounded-lg shadow-sm border border-brand-100 bg-white"
+                              className="w-full h-full object-contain transform transition-transform duration-300 group-hover/item:scale-105"
                               onError={(e) => {
                                 // Fallback if user hasn't uploaded images yet
                                 const target = e.target as HTMLImageElement;
@@ -68,6 +90,23 @@ export const Authority: React.FC<Props> = ({ lang }) => {
                 <div className="mt-4 flex items-center justify-center gap-2 text-sm text-brand-600 font-bold uppercase tracking-wide">
                     <FileCheck className="w-5 h-5 text-green-600" />
                     <span>{lang === 'EN' ? "Verified & Globally Recognized" : "પ્રમાણિત અને વૈશ્વિક સ્તરે માન્ય"}</span>
+                </div>
+
+                {/* Company Logos Row */}
+                <div className="mt-6 pt-6 border-t border-brand-100">
+                    <p className="text-center text-xs font-bold text-brand-400 uppercase tracking-widest mb-4">
+                        {lang === 'EN' ? "Certifications from Top Tech Giants" : "ટોચની ટેક કંપનીઓ તરફથી પ્રમાણિત"}
+                    </p>
+                    <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
+                        {companyLogos.map((logo, idx) => (
+                            <img
+                                key={idx}
+                                src={logo.src}
+                                alt={logo.name}
+                                className={`${logo.height} w-auto object-contain hover:scale-110 transition-transform`}
+                            />
+                        ))}
+                    </div>
                 </div>
              </div>
           </div>
