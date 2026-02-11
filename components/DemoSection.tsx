@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { ArrowRight, Sparkles, MessageSquare } from 'lucide-react';
+import { ArrowRight, Sparkles, Check, X, GraduationCap, Zap } from 'lucide-react';
 import { Language } from '../types';
 
 interface Props {
   lang: Language;
 }
 
+type ScenarioType = 'science' | 'planning';
+
 export const DemoSection: React.FC<Props> = ({ lang }) => {
-  const [activeTab, setActiveTab] = useState<'bad' | 'good'>('bad');
+  const [activeScenario, setActiveScenario] = useState<ScenarioType>('science');
 
   const scrollToEnroll = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -17,116 +19,203 @@ export const DemoSection: React.FC<Props> = ({ lang }) => {
     }
   };
 
+  const scenarios = {
+    science: {
+      title: { EN: 'Explaining Concepts', GU: 'અઘરા વિષયો સમજવા' },
+      icon: <Zap className="w-5 h-5" />,
+      generic: {
+        prompt: { EN: 'What is photosynthesis?', GU: 'પ્રકાશસંશ્લેષણ એટલે શું?' },
+        answer: {
+          EN: '6CO2 + 6H2O + Light Energy → C6H12O6 + 6O2. It is the process by which green plants and some other organisms use sunlight to synthesize foods...',
+          GU: '6CO2 + 6H2O + સૂર્યપ્રકાશ → C6H12O6 + 6O2. આ એક રાસાયણિક પ્રક્રિયા છે જેમાં લીલી વનસ્પતિ સૂર્યપ્રકાશનો ઉપયોગ કરીને ખોરાક બનાવે છે...'
+        },
+        result: { EN: 'Textbook definition. Hard to visualize.', GU: 'ચોપડી જેવી વ્યાખ્યા. ગોખવી પડે.' }
+      },
+      tejas: {
+        prompt: {
+          EN: "Explain photosynthesis to a 5th grader. Use a 'Kitchen' analogy.",
+          GU: "ધોરણ 5 ના વિદ્યાર્થીને 'પ્રકાશસંશ્લેષણ' સમજાવો. 'રસોડા'નું ઉદાહરણ આપો."
+        },
+        answer: {
+          EN: "Plants cook their own food! 🍃\n\nSunlight = The Gas Stove 🔥\nWater = Ingredients 💧\nChlorophyll = The Chef 👨‍🍳\n\nJust like mom cooks, plants use sunlight to make sugar!",
+          GU: "વનસ્પતિ પણ રસોઈ બનાવે છે! 🍃\n\nસૂર્યપ્રકાશ = ગેસ સ્ટવ 🔥\nપાણી = મસાલા 💧\nહરિતદ્રવ્ય = રસોઈયો 👨‍🍳\n\nજેમ મમ્મી રસોડામાં જમવાનું બનાવે, તેમ વનસ્પતિ સૂર્યપ્રકાશથી ખોરાક બનાવે છે!"
+        },
+        result: { EN: 'Visual & Simple. Stays in memory forever.', GU: 'એકદમ સરળ. જિંદગીભર યાદ રહી જાય.' }
+      }
+    },
+    planning: {
+      title: { EN: 'Study Planning', GU: 'સ્ટડી પ્લાનિંગ' },
+      icon: <GraduationCap className="w-5 h-5" />,
+      generic: {
+        prompt: { EN: 'Create a study timetable.', GU: 'એક અઠવાડિયાનું ટાઈમ ટેબલ આપો.' },
+        answer: {
+          EN: 'Monday: Math (1hr), Science (1hr). Tuesday: English (1hr), SS (1hr)... Wednesday: Math (1hr)...',
+          GU: 'સોમવાર: ગણિત (1 કલાક), વિજ્ઞાન (1 કલાક). મંગળવાર: અંગ્રેજી (1 કલાક)... બુધવાર: ગણિત (1 કલાક)...'
+        },
+        result: { EN: 'Generic list. Hard to follow.', GU: 'સામાન્ય લિસ્ટ. ફોલો કરવું અઘરું.' }
+      },
+      tejas: {
+        prompt: {
+          EN: "I'm in 10th grade. Weak in Math. School 8-2. Tuition 4-6. Make a plan.",
+          GU: "હું ધોરણ 10માં છું. ગણિતમાં કાચો છું. સવારે 7 વાગ્યે ઉઠું છું, 8-2 સ્કૂલ, 4-6 ટ્યુશન. પ્લાન બનાવો."
+        },
+        answer: {
+          EN: "Here is your personalized plan! 📅\n\n6:00 - 8:00 PM: Math (Focus time when fresh)\n8:30 - 9:30 PM: Science/English\nSunday: Mock Test & Revision.\n\nStick to this and you will score 90%+!",
+          GU: "તારા માટે ખાસ પ્લાન! 📅\n\n6:00 - 8:00 PM: ગણિત (ફ્રેશ મૂડમાં)\n8:30 - 9:30 PM: વિજ્ઞાન/અંગ્રેજી\nરવિવાર: માત્ર રિવિઝન અને ટેસ્ટ.\n\nઆ પ્લાન ફોલો કર, 90% પાક્કા!"
+        },
+        result: { EN: 'Personalized & Actionable. Guarantees results.', GU: 'તમારા માટે ખાસ બનાવેલો પ્લાન. 100% રિઝલ્ટ આપે.' }
+      }
+    }
+  };
+
+  const currentScenario = scenarios[activeScenario];
+
   return (
-    <section id="demo" className="py-24 bg-brand-100 text-brand-950 overflow-hidden">
-      <div className="container mx-auto px-4 sm:px-6">
-        <div className="text-center mb-16">
-          <span className="text-brand-700 font-bold tracking-wider uppercase text-sm border border-brand-300 bg-white px-4 py-1.5 rounded-full inline-block mb-4 shadow-sm">
-             {lang === 'EN' ? "See The Magic" : "જાદુ જુઓ"}
+    <section id="demo" className="py-24 bg-brand-50 text-brand-950 overflow-hidden relative">
+      {/* Background decoration */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-64 h-64 bg-brand-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+        <div className="absolute top-20 right-10 w-64 h-64 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob delay-100"></div>
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
+        <div className="text-center mb-12">
+          <span className="text-brand-700 font-bold tracking-wider uppercase text-sm border border-brand-200 bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full inline-block mb-4 shadow-sm">
+             {lang === 'EN' ? "Experience The Difference" : "તફાવત જાતે અનુભવો"}
           </span>
           <h2 className={`text-3xl md:text-5xl font-black mb-6 ${lang === 'GU' ? 'font-gujarati' : ''}`}>
-            {lang === 'EN' ? "One Prompt Can Change Your Understanding" : "એક પ્રોમ્પ્ટ તમારી સમજણ બદલી શકે છે"}
+            {lang === 'EN' ? "Generic AI vs The Tejas Method" : "સામાન્ય AI vs તેજસ મેથડ"}
           </h2>
-          <p className="text-brand-800 text-lg max-w-2xl mx-auto">
+          <p className="text-brand-800 text-lg max-w-2xl mx-auto mb-8">
             {lang === 'EN' 
-              ? "Most students ask ChatGPT boring questions. I teach you the 'Tejas Method' to get crystal clear answers." 
-              : "મોટાભાગના વિદ્યાર્થીઓ AI ને કંટાળાજનક પ્રશ્નો પૂછે છે. હું તમને 'તેજસ મેથડ' શીખવીશ જેનાથી કોઈ પણ વિષય પાણી જેવો સરળ લાગશે."}
+              ? "See how the right prompt changes everything."
+              : "જુઓ કે સાચો પ્રોમ્પ્ટ કેવી રીતે જાદુ કરે છે."}
           </p>
+
+          {/* Scenario Selector */}
+          <div className="inline-flex bg-white p-1 rounded-full border border-brand-200 shadow-sm mb-8">
+            {(Object.keys(scenarios) as ScenarioType[]).map((key) => (
+              <button
+                key={key}
+                onClick={() => setActiveScenario(key)}
+                className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${
+                  activeScenario === key
+                    ? 'bg-brand-500 text-white shadow-md transform scale-105'
+                    : 'text-brand-400 hover:bg-brand-50'
+                }`}
+              >
+                {scenarios[key].icon}
+                {scenarios[key].title[lang]}
+              </button>
+            ))}
+          </div>
         </div>
 
-        <div className="max-w-5xl mx-auto bg-white rounded-3xl overflow-hidden border border-brand-200 shadow-xl">
-           <div className="flex border-b border-brand-100">
-             <button 
-               onClick={() => setActiveTab('bad')}
-               className={`flex-1 py-4 text-center font-bold text-lg transition-colors ${activeTab === 'bad' ? 'bg-brand-50 text-red-500' : 'text-brand-300 hover:text-brand-500'}`}
-             >
-               {lang === 'EN' ? "❌ The Boring Way" : "❌ સામાન્ય રીત"}
-             </button>
-             <button 
-               onClick={() => setActiveTab('good')}
-               className={`flex-1 py-4 text-center font-bold text-lg transition-colors ${activeTab === 'good' ? 'bg-brand-50 text-green-600' : 'text-brand-300 hover:text-brand-500'}`}
-             >
-               {lang === 'EN' ? "✅ The AI Pathshala Way" : "✅ AI પાઠશાળાની રીત"}
-             </button>
-           </div>
+        {/* Side by Side Comparison */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
 
-           <div className="p-8 min-h-[400px] bg-brand-50/50">
-             {activeTab === 'bad' ? (
-                <div className="space-y-6 animate-fade-in">
-                   <div className="flex gap-4 items-start">
-                      <div className="w-10 h-10 rounded-full bg-brand-200 flex items-center justify-center shrink-0">
-                         <span className="font-bold text-brand-800">You</span>
-                      </div>
-                      <div className="bg-white border border-brand-200 p-4 rounded-2xl rounded-tl-none max-w-2xl shadow-sm">
-                        <p className={`text-lg text-brand-900 ${lang === 'GU' ? 'font-gujarati' : ''}`}>
-                           {lang === 'EN' ? "What is Compound Interest?" : "ચક્રવૃદ્ધિ વ્યાજ એટલે શું?"}
-                        </p>
-                      </div>
-                   </div>
-
-                   <div className="flex gap-4 items-start flex-row-reverse">
-                      <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center shrink-0">
-                         <span className="font-bold text-red-500">AI</span>
-                      </div>
-                      <div className="bg-red-50 border border-red-100 p-4 rounded-2xl rounded-tr-none max-w-2xl">
-                        <p className="text-brand-800 text-sm leading-relaxed font-mono">
-                           Compound interest is the interest on a loan or deposit calculated based on both the initial principal and the accumulated interest from previous periods. Formula: A = P(1 + r/n)^(nt).
-                        </p>
-                        <p className="text-red-500 text-xs mt-3 font-bold uppercase">
-                           {lang === 'EN' ? "Result: Textbook definition. Hard to visualize." : "પરિણામ: ચોપડી જેવી વ્યાખ્યા. સમજવી અઘરી."}
-                        </p>
-                      </div>
-                   </div>
+          {/* Generic AI Card */}
+          <div className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-lg flex flex-col h-full transform transition-all hover:shadow-xl group">
+            <div className="bg-slate-50 p-4 border-b border-slate-100 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center">
+                  <span className="font-bold text-slate-500 text-xs">AI</span>
                 </div>
-             ) : (
-                <div className="space-y-6 animate-fade-in">
-                   <div className="flex gap-4 items-start">
-                      <div className="w-10 h-10 rounded-full bg-brand-200 flex items-center justify-center shrink-0">
-                         <span className="font-bold text-brand-800">You</span>
-                      </div>
-                      <div className="bg-white border border-brand-200 p-4 rounded-2xl rounded-tl-none max-w-3xl shadow-sm">
-                        <div className="text-xs text-brand-400 mb-1 uppercase font-bold tracking-wider">The "Tejas Method" Prompt</div>
-                        <p className={`text-lg font-medium text-brand-900 ${lang === 'GU' ? 'font-gujarati' : ''}`}>
-                           {lang === 'EN' 
-                             ? "Explain 'Compound Interest' to a 15-year-old using a real-life example of saving pocket money. Explain the difference between Simple vs Compound Interest in simple Gujarati." 
-                             : "એક 15 વર્ષના વિદ્યાર્થીને 'ચક્રવૃદ્ધિ વ્યાજ' સમજાવો. પોકેટ મની બચાવવાના ઉદાહરણનો ઉપયોગ કરો અને સાદા વ્યાજ vs ચક્રવૃદ્ધિ વ્યાજ વચ્ચેનો તફાવત સરળ ગુજરાતીમાં કહો."}
-                        </p>
-                      </div>
-                   </div>
+                <span className="font-bold text-slate-600">Generic AI</span>
+              </div>
+              <span className="bg-slate-200 text-slate-600 text-xs font-bold px-2 py-1 rounded uppercase">
+                {lang === 'EN' ? "Boring" : "કંટાળાજનક"}
+              </span>
+            </div>
 
-                   <div className="flex gap-4 items-start flex-row-reverse">
-                      <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center shrink-0">
-                         <Sparkles className="w-5 h-5 text-green-600" />
-                      </div>
-                      <div className="bg-green-50 border border-green-200 p-4 rounded-2xl rounded-tr-none max-w-3xl">
-                        <p className={`text-brand-900 text-lg leading-relaxed ${lang === 'GU' ? 'font-gujarati' : ''}`}>
-                           "ધારો કે તું 1000 રૂપિયા જમા કરે છે.<br/><br/>
-                           સાદું વ્યાજ: દર વર્ષે તને 100 રૂપિયા મળે. 10 વર્ષ પછી 2000 રૂપિયા થાય.<br/>
-                           ચક્રવૃદ્ધિ વ્યાજ (Compound): તને વ્યાજનું પણ વ્યાજ મળે! પહેલા વર્ષે 100, બીજા વર્ષે 110, ત્રીજા વર્ષે 121...<br/><br/>
-                           આને કહેવાય 'પાવર ઓફ કમ્પાઉન્ડિંગ'. આલ્બર્ટ આઈન્સ્ટાઈન આને દુનિયાની આઠમી અજાયબી કહેતા હતા!"
-                        </p>
-                        <p className="text-green-600 text-xs mt-3 font-bold uppercase flex items-center gap-2">
-                           <MessageSquare className="w-4 h-4" />
-                           {lang === 'EN' ? "Result: Relatable concept. Practical knowledge." : "પરિણામ: જીવન સાથે જોડાયેલું ઉદાહરણ. પ્રેક્ટિકલ જ્ઞાન."}
-                        </p>
-                      </div>
-                   </div>
+            <div className="p-6 flex-1 flex flex-col gap-6">
+              {/* User Prompt */}
+              <div className="flex gap-3">
+                <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center shrink-0">
+                  <span className="font-bold text-slate-500 text-xs">You</span>
                 </div>
-             )}
-           </div>
+                <div className="bg-slate-50 p-3 rounded-2xl rounded-tl-none text-slate-700 text-sm font-medium border border-slate-100 w-full">
+                  "{currentScenario.generic.prompt[lang]}"
+                </div>
+              </div>
+
+              {/* AI Response */}
+              <div className="flex gap-3 flex-row-reverse">
+                <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center shrink-0">
+                   <X className="w-4 h-4 text-slate-500" />
+                </div>
+                <div className="bg-red-50 p-4 rounded-2xl rounded-tr-none text-slate-800 text-sm border border-red-100 w-full relative">
+                  <p className="mb-2 opacity-80 font-mono text-xs leading-relaxed">
+                    {currentScenario.generic.answer[lang]}
+                  </p>
+                  <div className="mt-3 pt-3 border-t border-red-100 flex items-start gap-2 text-red-500 text-xs font-bold">
+                    <X className="w-4 h-4 shrink-0" />
+                    <span>{currentScenario.generic.result[lang]}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Tejas Method Card */}
+          <div className="bg-white rounded-3xl overflow-hidden border border-brand-200 shadow-xl flex flex-col h-full transform transition-all hover:shadow-2xl hover:-translate-y-1 relative ring-4 ring-brand-100">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-300 to-brand-500"></div>
+            <div className="bg-brand-50 p-4 border-b border-brand-100 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center shadow-sm">
+                  <Sparkles className="w-4 h-4 text-white" />
+                </div>
+                <span className="font-bold text-brand-800">The Tejas Method</span>
+              </div>
+              <span className="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded uppercase flex items-center gap-1">
+                <Check className="w-3 h-3" />
+                {lang === 'EN' ? "Effective" : "અસરકારક"}
+              </span>
+            </div>
+
+            <div className="p-6 flex-1 flex flex-col gap-6">
+              {/* User Prompt */}
+              <div className="flex gap-3">
+                <div className="w-8 h-8 rounded-full bg-brand-100 flex items-center justify-center shrink-0">
+                  <span className="font-bold text-brand-600 text-xs">You</span>
+                </div>
+                <div className="bg-white p-3 rounded-2xl rounded-tl-none text-brand-900 text-sm font-medium border border-brand-100 shadow-sm w-full">
+                  <p className={`${lang === 'GU' ? 'font-gujarati' : ''}`}>
+                    "{currentScenario.tejas.prompt[lang]}"
+                  </p>
+                </div>
+              </div>
+
+              {/* AI Response */}
+              <div className="flex gap-3 flex-row-reverse">
+                <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center shrink-0 shadow-sm">
+                   <Sparkles className="w-4 h-4 text-green-600" />
+                </div>
+                <div className="bg-green-50 p-4 rounded-2xl rounded-tr-none text-brand-900 text-sm border border-green-200 w-full shadow-sm">
+                  <p className={`mb-3 whitespace-pre-line leading-relaxed ${lang === 'GU' ? 'font-gujarati' : ''}`}>
+                    {currentScenario.tejas.answer[lang]}
+                  </p>
+                  <div className="mt-3 pt-3 border-t border-green-200 flex items-start gap-2 text-green-700 text-xs font-bold uppercase">
+                    <Check className="w-4 h-4 shrink-0" />
+                    <span>{currentScenario.tejas.result[lang]}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <div className="text-center mt-10">
-           <p className={`text-xl text-brand-800 mb-6 ${lang === 'GU' ? 'font-gujarati' : ''}`}>
-             {lang === 'EN' ? "Join the live class to master this skill." : "આ કળા શીખવા માટે લાઈવ ક્લાસમાં જોડાઓ."}
+        <div className="text-center mt-12">
+           <p className={`text-xl text-brand-800 mb-6 font-medium ${lang === 'GU' ? 'font-gujarati' : ''}`}>
+             {lang === 'EN' ? "Want to learn how to write prompts like this?" : "આવા પ્રોમ્પ્ટ લખતા શીખવું છે?"}
            </p>
-           {/* Redirects to Form now */}
            <button 
               onClick={scrollToEnroll}
-              className="inline-flex items-center gap-2 text-brand-600 font-bold hover:text-brand-800 transition-colors border-b-2 border-brand-400 pb-1 hover:-translate-y-1 cursor-pointer"
+              className="inline-flex items-center gap-2 bg-brand-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-brand-700 transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 group"
            >
-             {lang === 'EN' ? "Get The Prompt Library (Via Call)" : "પ્રોમ્પ્ટ લાઈબ્રેરી મેળવો (કોલ પર)"}
-             <ArrowRight className="w-5 h-5" />
+             {lang === 'EN' ? "Join The Masterclass" : "માસ્ટરક્લાસમાં જોડાઓ"}
+             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
            </button>
         </div>
       </div>
