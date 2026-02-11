@@ -16,16 +16,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
   // ⚙️ SETUP COMPLETED
   // ==============================
   
-  const GOOGLE_FORM_ACTION_URL = "https://docs.google.com/forms/d/e/1FAIpQLSf7M-loWlZHlCWXTtimPTezMqAbeKHPvTuBUjORRb3M/formResponse";
-  // Note: The URL in the previous file seemed to be a mix of edit/viewform.
-  // I will use the ACTION URL from previous file but check if it was correct.
-  // Previous file had: "https://docs.google.com/forms/d/1AxEX-loWlZHlCWXTtimPTezMqAbeKHPvTuBUjORRb3M/formResponse" which looks like a mix of ID and path.
-  // Standard format is usually /d/e/<ID>/formResponse or /d/<ID>/formResponse.
-  // I will stick to what was there in previous file to avoid breaking form submission, assuming it was tested working.
-  // Actually, let me double check the previous file content again.
-  // Previous: "https://docs.google.com/forms/d/1AxEX-loWlZHlCWXTtimPTezMqAbeKHPvTuBUjORRb3M/formResponse"
-
-  const FORM_ACTION_URL = "https://docs.google.com/forms/d/1AxEX-loWlZHlCWXTtimPTezMqAbeKHPvTuBUjORRb3M/formResponse";
+  const FORM_ACTION_URL = "https://docs.google.com/forms/d/e/1FAIpQLSepGWEDJ0ohH_e7XUK2TRrgB0gGNp9E3vnBKC4EY07F8K0jww/formResponse";
   
   const FORM_FIELD_IDS = {
     name: "entry.549617858",
