@@ -33,25 +33,22 @@ export const Authority: React.FC<Props> = ({ lang }) => {
       <div className="container mx-auto px-4 sm:px-6">
         <div className="flex flex-col md:flex-row items-center gap-16 max-w-6xl mx-auto">
           
-          {/* Certificate Marquee Display */}
+          {/* Certificate Grid Display */}
           <div className="w-full md:w-1/2 order-2 md:order-1">
              <div className="relative">
                 <div className="absolute top-[-20px] left-1/2 -translate-x-1/2 bg-brand-600 text-white text-xs font-bold px-4 py-1 rounded-full shadow-md z-20 whitespace-nowrap">
                    {lang === 'EN' ? "6 Global Certifications" : "6 ગ્લોબલ સર્ટિફિકેટ્સ"}
                 </div>
                 
-                {/* Marquee Container */}
-                <div className="relative flex overflow-hidden w-full h-[300px] md:h-[400px] bg-brand-50 rounded-3xl border border-brand-200 shadow-xl group">
-                   <div className="absolute inset-0 z-10 pointer-events-none shadow-[inset_0_0_20px_rgba(0,0,0,0.05)] rounded-3xl"></div>
-                   
-                   {/* Scrolling Content (Doubled for seamless loop) */}
-                   <div className="flex animate-scroll hover:[animation-play-state:paused] items-center">
-                      {[...certificates, ...certificates].map((cert, i) => (
-                        <div key={i} className="flex-shrink-0 w-full h-full p-6 flex items-center justify-center">
+                {/* Grid Container */}
+                <div className="relative bg-brand-50 rounded-3xl border border-brand-200 shadow-xl group p-6 md:p-8">
+                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                      {certificates.map((cert, i) => (
+                        <div key={i} className="group/item relative bg-white rounded-xl border border-brand-100 p-2 md:p-3 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 aspect-video flex items-center justify-center overflow-hidden">
                            <img 
                               src={cert.src} 
                               alt={cert.alt} 
-                              className="max-w-full max-h-full object-contain rounded-lg shadow-sm border border-brand-100 bg-white"
+                              className="w-full h-full object-contain transform transition-transform duration-300 group-hover/item:scale-105"
                               onError={(e) => {
                                 // Fallback if user hasn't uploaded images yet
                                 const target = e.target as HTMLImageElement;
