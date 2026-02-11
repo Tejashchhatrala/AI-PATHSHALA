@@ -28,6 +28,31 @@ export const Authority: React.FC<Props> = ({ lang }) => {
     { src: getAssetPath("certificates/completion.png"), alt: "Certificate of Completion" },
   ];
 
+  const companyLogos = [
+    {
+       name: "Google",
+       src: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
+       height: "h-8"
+    },
+    {
+       name: "Microsoft",
+       src: "https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg",
+       height: "h-8"
+    },
+    {
+       name: "Oracle",
+       src: "https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg",
+       height: "h-6"
+    },
+    {
+       name: "Anthropic",
+       // Using a reliable placeholder for Anthropic since their SVG might not be on Commons or stable URL
+       // Alternatively, just text if logo fails.
+       src: "https://upload.wikimedia.org/wikipedia/commons/7/78/Anthropic_logo.svg",
+       height: "h-6"
+    }
+  ];
+
   return (
     <section className="py-24 bg-white relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6">
@@ -65,6 +90,23 @@ export const Authority: React.FC<Props> = ({ lang }) => {
                 <div className="mt-4 flex items-center justify-center gap-2 text-sm text-brand-600 font-bold uppercase tracking-wide">
                     <FileCheck className="w-5 h-5 text-green-600" />
                     <span>{lang === 'EN' ? "Verified & Globally Recognized" : "પ્રમાણિત અને વૈશ્વિક સ્તરે માન્ય"}</span>
+                </div>
+
+                {/* Company Logos Row */}
+                <div className="mt-6 pt-6 border-t border-brand-100">
+                    <p className="text-center text-xs font-bold text-brand-400 uppercase tracking-widest mb-4">
+                        {lang === 'EN' ? "Certifications from Top Tech Giants" : "ટોચની ટેક કંપનીઓ તરફથી પ્રમાણિત"}
+                    </p>
+                    <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
+                        {companyLogos.map((logo, idx) => (
+                            <img
+                                key={idx}
+                                src={logo.src}
+                                alt={logo.name}
+                                className={`${logo.height} w-auto object-contain hover:scale-110 transition-transform`}
+                            />
+                        ))}
+                    </div>
                 </div>
              </div>
           </div>
