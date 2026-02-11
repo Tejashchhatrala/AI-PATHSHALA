@@ -17,12 +17,36 @@ export const Authority: React.FC<Props> = ({ lang }) => {
   };
 
   const certificates = [
-    { src: getAssetPath("certificates/oracle.png"), alt: "Oracle Certified" },
-    { src: getAssetPath("certificates/microsoft.png"), alt: "Microsoft Certified" },
-    { src: getAssetPath("certificates/google.png"), alt: "Google Cloud Certified" },
-    { src: getAssetPath("certificates/gemini.png"), alt: "Gemini Certified Educator" },
-    { src: getAssetPath("certificates/ai-fluency.png"), alt: "AI Fluency Framework" },
-    { src: getAssetPath("certificates/completion.png"), alt: "Certificate of Completion" },
+    {
+      src: getAssetPath("certificates/oracle.png"),
+      altEn: "Oracle Certified",
+      altGu: "ઓરેકલ સર્ટીફાઈડ"
+    },
+    {
+      src: getAssetPath("certificates/microsoft.png"),
+      altEn: "Microsoft Certified",
+      altGu: "માઈક્રોસોફ્ટ સર્ટીફાઈડ"
+    },
+    {
+      src: getAssetPath("certificates/google.png"),
+      altEn: "Google Cloud Certified",
+      altGu: "ગૂગલ ક્લાઉડ સર્ટીફાઈડ"
+    },
+    {
+      src: getAssetPath("certificates/gemini.png"),
+      altEn: "Gemini Certified Educator",
+      altGu: "જેમિની સર્ટીફાઈડ એજ્યુકેટર"
+    },
+    {
+      src: getAssetPath("certificates/ai-fluency.png"),
+      altEn: "Anthropic Certified",
+      altGu: "એન્થ્રોપિક સર્ટીફાઈડ"
+    },
+    {
+      src: getAssetPath("certificates/completion.png"),
+      altEn: "Anthropic Certified",
+      altGu: "એન્થ્રોપિક સર્ટીફાઈડ"
+    },
   ];
 
   const companyLogos = [
@@ -47,6 +71,11 @@ export const Authority: React.FC<Props> = ({ lang }) => {
        height: "h-6"
     }
   ];
+
+  // CSS Filter for Brand Color #E06060 (Brand 600)
+  // Generated using: https://codepen.io/sosuke/pen/Pjoqqp
+  // Target: #E06060
+  const brandColorFilter = "brightness(0) saturate(100%) invert(48%) sepia(30%) saturate(986%) hue-rotate(315deg) brightness(98%) contrast(92%)";
 
   return (
     <section className="py-24 bg-white relative overflow-hidden">
@@ -121,47 +150,53 @@ export const Authority: React.FC<Props> = ({ lang }) => {
                 <span className="inline-block bg-brand-100 text-brand-800 text-xs font-bold px-4 py-1 rounded-full uppercase tracking-widest mb-4">
                    {lang === 'EN' ? "World-Class Credentials" : "વર્લ્ડ-ક્લાસ સર્ટિફિકેટ્સ"}
                 </span>
-                <h3 className={`text-3xl font-bold text-gray-900 ${lang === 'GU' ? 'font-gujarati' : ''}`}>
+                <h3 className={`text-3xl font-bold text-brand-950 ${lang === 'GU' ? 'font-gujarati' : ''}`}>
                    {lang === 'EN' ? "6 Global Certifications" : "6 ગ્લોબલ સર્ટિફિકેટ્સ"}
                 </h3>
-                <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+                <p className="mt-4 text-brand-800 max-w-2xl mx-auto">
                     {lang === 'EN' ? "Verified by top tech giants like Google, Microsoft, and Oracle." : "Google, Microsoft અને Oracle જેવી ટોચની ટેક કંપનીઓ દ્વારા પ્રમાણિત."}
                 </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {certificates.map((cert, i) => (
-                <div key={i} className="group relative bg-white rounded-2xl border border-brand-100 p-4 shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col items-center">
-                    <div className="w-full aspect-[4/3] overflow-hidden rounded-lg bg-gray-50 flex items-center justify-center mb-4 relative">
-                        <div className="absolute inset-0 bg-brand-600/0 group-hover:bg-brand-600/5 transition-colors duration-300 z-10"></div>
-                        <img
-                            src={cert.src}
-                            alt={cert.alt}
-                            className="w-full h-full object-contain transform transition-transform duration-500 group-hover:scale-105"
-                            onError={(e) => {
-                                const target = e.target as HTMLImageElement;
-                                if (target.src.indexOf('placehold.co') === -1) {
-                                target.src = `https://placehold.co/800x600/f1f5f9/334155?text=${cert.alt.replace(/ /g, '+')}`;
-                                }
-                            }}
-                        />
+                {certificates.map((cert, i) => {
+                  const certName = lang === 'EN' ? cert.altEn : cert.altGu;
+                  return (
+                    <div key={i} className="group relative bg-white rounded-2xl border border-brand-100 p-4 shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col items-center">
+                        <div className="w-full aspect-[4/3] overflow-hidden rounded-lg bg-brand-50 flex items-center justify-center mb-4 relative">
+                            <div className="absolute inset-0 bg-brand-600/0 group-hover:bg-brand-600/5 transition-colors duration-300 z-10"></div>
+                            <img
+                                src={cert.src}
+                                alt={certName}
+                                className="w-full h-full object-contain transform transition-transform duration-500 group-hover:scale-105"
+                                onError={(e) => {
+                                    const target = e.target as HTMLImageElement;
+                                    if (target.src.indexOf('placehold.co') === -1) {
+                                    target.src = `https://placehold.co/800x600/f1f5f9/334155?text=${certName.replace(/ /g, '+')}`;
+                                    }
+                                }}
+                            />
+                        </div>
+                        <h4 className={`font-semibold text-brand-950 text-center ${lang === 'GU' ? 'font-gujarati' : ''}`}>
+                          {certName}
+                        </h4>
                     </div>
-                    <h4 className="font-semibold text-gray-900 text-center">{cert.alt}</h4>
-                </div>
-                ))}
+                  );
+                })}
             </div>
 
             {/* Company Logos Row */}
-            <div className="mt-16 pt-8 border-t border-gray-100">
-                <p className="text-center text-xs font-bold text-gray-400 uppercase tracking-widest mb-8">
+            <div className="mt-16 pt-8 border-t border-brand-200">
+                <p className="text-center text-xs font-bold text-brand-400 uppercase tracking-widest mb-8">
                     {lang === 'EN' ? "Certifications from Top Tech Giants" : "ટોચની ટેક કંપનીઓ તરફથી પ્રમાણિત"}
                 </p>
-                <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16 opacity-80 hover:opacity-100 transition-all duration-500">
                     {companyLogos.map((logo, idx) => (
                         <img
                             key={idx}
                             src={logo.src}
                             alt={logo.name}
+                            style={{ filter: brandColorFilter }}
                             className={`${logo.height} w-auto object-contain hover:scale-110 transition-transform`}
                         />
                     ))}
