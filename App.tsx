@@ -2,16 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Language } from './types';
 import { LanguageToggle } from './components/LanguageToggle';
 import { Hero } from './components/Hero';
-import { ComputerEra } from './components/ComputerEra';
-import { PainPoints } from './components/PainPoints';
+import { TheRealProblem } from './components/TheRealProblem';
 import { WhyUs } from './components/WhyUs';
 import { Authority } from './components/Authority';
-import { Solution } from './components/Solution';
+import { Introducing } from './components/Introducing';
+import { WhatChanges } from './components/WhatChanges';
 import { WhoIsThisFor } from './components/WhoIsThisFor';
-import { Curriculum } from './components/Curriculum';
-import { TheStack } from './components/TheStack';
+import { HowItWorks } from './components/HowItWorks';
 import { Testimonials } from './components/Testimonials';
-import { FAQ } from './components/FAQ';
 import { CTA } from './components/CTA';
 import { Footer } from './components/Footer';
 import { ExitIntentPopup } from './components/ExitIntentPopup';
@@ -74,37 +72,31 @@ function App() {
         {/* 1. Hook & Promise (Cream & Salmon Hero) */}
         <Hero lang={lang} />
         
-        {/* 2. The Context (Why Now?) */}
-        <ComputerEra lang={lang} />
+        {/* 2. The Real Problem (Agitation) */}
+        <TheRealProblem lang={lang} />
         
-        {/* 3. The Pain (Agitation) */}
-        <PainPoints lang={lang} />
+        {/* 3. Introducing (New Mechanism) */}
+        <Introducing lang={lang} />
+
+        {/* 4. What Changes */}
+        <WhatChanges lang={lang} />
         
-        {/* 4. The Solution (New Mechanism) */}
-        <Solution lang={lang} />
-        
-        {/* 6. Segmentation */}
+        {/* 5. Segmentation */}
         <WhoIsThisFor lang={lang} />
 
-        {/* 7. Differentiation (Why Us) */}
+        {/* 6. How The System Works */}
+        <HowItWorks lang={lang} />
+
+        {/* 7. Why Parents Trust Us */}
         <WhyUs lang={lang} />
         
-        {/* 8. Authority (Trust) */}
+        {/* 8. Meet Your Mentor */}
         <Authority lang={lang} />
-        
-        {/* 9. The Plan (Timeline) */}
-        <Curriculum lang={lang} />
 
-        {/* 10. The Offer Stack (Value Build up) */}
-        <TheStack lang={lang} />
-
-        {/* 11. Social Proof (Testimonials) */}
+        {/* 9. Social Proof (Testimonials) */}
         <Testimonials lang={lang} />
         
-        {/* 12. Objection Handling */}
-        <FAQ lang={lang} />
-        
-        {/* 13. Final Action */}
+        {/* 10. Final Action */}
         <CTA lang={lang} />
       </main>
 
