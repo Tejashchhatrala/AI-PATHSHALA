@@ -1,12 +1,14 @@
 import React from 'react';
-import { ArrowRight, ShieldCheck, Zap, Lock, Radio, ChevronDown } from 'lucide-react';
+import { ArrowRight, Lock, Radio, ShieldCheck, Zap } from 'lucide-react';
 import { Language } from '../types';
+import { content } from '../data/content';
 
 interface Props {
   lang: Language;
 }
 
 export const Hero: React.FC<Props> = ({ lang }) => {
+  const t = content.hero;
   
   const scrollToEnroll = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -39,36 +41,28 @@ export const Hero: React.FC<Props> = ({ lang }) => {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
             </span>
             <span className="text-xs font-bold tracking-widest uppercase text-brand-700">
-              {lang === 'EN' ? 'Admissions Open: March 2026 Batch' : 'એડમિશન શરૂ: માર્ચ 2026 બેચ'}
+              {lang === 'EN' ? t.badge.en : t.badge.gu}
             </span>
           </div>
 
           {/* Main Headline */}
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-brand-950 tracking-tight leading-[1.1] mb-8 opacity-0 animate-fade-in-up delay-100">
-            {lang === 'EN' ? (
+             {lang === 'EN' ? (
               <>
-                <span className="block text-lg md:text-2xl font-extrabold text-brand-600 mb-4 tracking-[0.2em] uppercase font-sans">30-Day Live AI Masterclass</span>
-                Stop Memorizing.<br/>
-                Start <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 via-brand-400 to-brand-500 animate-shimmer bg-[length:200%_100%]">Understanding</span>.
+                {t.headline.line1.en}<br/>
+                <span className="text-lg md:text-2xl font-extrabold text-brand-600 tracking-[0.2em] uppercase font-sans block mt-4 mb-2">{t.headline.line2.en}</span>
               </>
             ) : (
               <span className="font-gujarati leading-tight">
-                <span className="block text-lg md:text-2xl font-bold text-brand-600 mb-4 tracking-wide">ગુજરાતની પ્રથમ AI સ્કૂલ</span>
-                ગોખણપટ્ટી છોડો,<br/>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 via-brand-400 to-brand-500 animate-shimmer bg-[length:200%_100%]">AI સાથે ટોપર બનો</span>.
+                 {t.headline.line1.gu}<br/>
+                 <span className="text-lg md:text-2xl font-bold text-brand-600 tracking-wide block mt-4 mb-2">{t.headline.line2.gu}</span>
               </span>
             )}
           </h1>
 
           {/* Subheadline */}
           <p className="mt-8 text-lg md:text-2xl text-brand-800/80 max-w-3xl mx-auto leading-relaxed font-medium opacity-0 animate-fade-in-up delay-200">
-            {lang === 'EN' ? (
-              "A 30-Day Live Program via Zoom. See results from Week 1. I teach you how to use AI for better marks, better logic, and a better future."
-            ) : (
-              <span className="font-gujarati">
-                ઝૂમ પર 30 દિવસનો લાઈવ કોર્સ. પહેલા અઠવાડિયાથી જ રિઝલ્ટ જુઓ. હું તમને શીખવીશ કે AI નો ઉપયોગ કરીને સારા માર્ક્સ અને ઉજ્જવળ ભવિષ્ય કેવી રીતે બનાવવું.
-              </span>
-            )}
+            {lang === 'EN' ? t.subheadline.en : <span className="font-gujarati">{t.subheadline.gu}</span>}
           </p>
 
           {/* CTA Buttons */}
@@ -79,13 +73,13 @@ export const Hero: React.FC<Props> = ({ lang }) => {
                 className="group relative w-full sm:w-auto px-10 py-5 bg-brand-400 text-white text-xl font-bold rounded-full shadow-[0_4px_20px_rgba(255,148,148,0.4)] transition-all transform hover:-translate-y-1 hover:scale-105 flex items-center justify-center gap-3 overflow-hidden cursor-pointer hover:bg-brand-500"
               >
                 <span className="relative z-10 flex items-center gap-3">
-                  {lang === 'EN' ? 'Book Free Roadmap Call' : 'ફ્રી રોડમેપ કોલ બુક કરો'}
+                  {lang === 'EN' ? t.cta.en : t.cta.gu}
                   <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
                 </span>
               </button>
               <span className="text-[10px] md:text-xs font-bold text-brand-700 tracking-wide uppercase flex items-center gap-1.5 opacity-80">
                  <Lock className="w-3 h-3 text-brand-500 fill-current" />
-                {lang === 'EN' ? 'Limited Batch Size' : 'ગુણવત્તા માટે મર્યાદિત બેચ'}
+                {lang === 'EN' ? t.features[3].en : t.features[3].gu}
               </span>
             </div>
           </div>
@@ -94,17 +88,17 @@ export const Hero: React.FC<Props> = ({ lang }) => {
            <div className="mt-20 pt-8 border-t border-brand-200 flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-semibold text-brand-800 opacity-0 animate-fade-in-up delay-300">
             <div className="flex items-center gap-2 hover:text-brand-600 transition-colors">
                <Radio className="w-5 h-5 text-red-500 animate-pulse" />
-               <span>Live on Zoom</span>
+               <span>{lang === 'EN' ? t.features[0].en : t.features[0].gu}</span>
             </div>
             <div className="w-px h-4 bg-brand-200 hidden sm:block"></div>
             <div className="flex items-center gap-2 hover:text-brand-600 transition-colors">
               <ShieldCheck className="w-5 h-5 text-green-600" />
-              <span>For All Fields (Arts/Com/Sci)</span>
+               <span>{lang === 'EN' ? t.features[2].en : t.features[2].gu}</span>
             </div>
              <div className="w-px h-4 bg-brand-200 hidden sm:block"></div>
              <div className="flex items-center gap-2 hover:text-brand-600 transition-colors">
               <Zap className="w-5 h-5 text-yellow-500 fill-current" />
-              <span>Certified Expert Tejas Sir</span>
+              <span>{lang === 'EN' ? t.features[1].en : t.features[1].gu}</span>
             </div>
           </div>
 

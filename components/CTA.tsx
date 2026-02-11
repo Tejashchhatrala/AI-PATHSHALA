@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { ArrowRight, CheckCircle, Shield, Calendar, Smartphone } from 'lucide-react';
+import { ArrowRight, Calendar, Smartphone, ShieldCheck } from 'lucide-react';
 import { Language } from '../types';
+import { content } from '../data/content';
 
 interface Props {
   lang: Language;
 }
 
 export const CTA: React.FC<Props> = ({ lang }) => {
+  const t = content.finalCall;
   const [formData, setFormData] = useState({ name: '', phone: '', grade: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -14,25 +16,31 @@ export const CTA: React.FC<Props> = ({ lang }) => {
   // ⚙️ SETUP COMPLETED
   // ==============================
   
-  const GOOGLE_FORM_ACTION_URL = "https://docs.google.com/forms/d/1AxEX-loWlZHlCWXTtimPTezMqAbeKHPvTuBUjORRb3M/formResponse";
+  const GOOGLE_FORM_ACTION_URL = "https://docs.google.com/forms/d/e/1FAIpQLSf7M-loWlZHlCWXTtimPTezMqAbeKHPvTuBUjORRb3M/formResponse";
+  // Note: The URL in the previous file seemed to be a mix of edit/viewform.
+  // I will use the ACTION URL from previous file but check if it was correct.
+  // Previous file had: "https://docs.google.com/forms/d/1AxEX-loWlZHlCWXTtimPTezMqAbeKHPvTuBUjORRb3M/formResponse" which looks like a mix of ID and path.
+  // Standard format is usually /d/e/<ID>/formResponse or /d/<ID>/formResponse.
+  // I will stick to what was there in previous file to avoid breaking form submission, assuming it was tested working.
+  // Actually, let me double check the previous file content again.
+  // Previous: "https://docs.google.com/forms/d/1AxEX-loWlZHlCWXTtimPTezMqAbeKHPvTuBUjORRb3M/formResponse"
+
+  const FORM_ACTION_URL = "https://docs.google.com/forms/d/1AxEX-loWlZHlCWXTtimPTezMqAbeKHPvTuBUjORRb3M/formResponse";
   
-  // Updated IDs: Swapped Phone and Grade based on user feedback
   const FORM_FIELD_IDS = {
     name: "entry.549617858",
-    phone: "entry.1902268774", // Previously assigned to grade
-    grade: "entry.2145394662"  // Previously assigned to phone
+    phone: "entry.1902268774",
+    grade: "entry.2145394662"
   };
   // ==============================
 
   const handleSubmit = (e: React.FormEvent) => {
-    // We let the form submit naturally to the hidden iframe
     setIsSubmitting(true);
 
     // Prepare WhatsApp Message
     const message = `Hello Tejas Sir, I want to join the March 2026 Batch.%0A%0A*Name:* ${formData.name}%0A*Grade:* ${formData.grade}%0A*Phone:* ${formData.phone}`;
     const whatsappUrl = `https://wa.me/919879737819?text=${message}`;
 
-    // Wait 1.5 seconds to ensure Google Form receives data, then redirect
     setTimeout(() => {
         window.location.href = whatsappUrl;
         setIsSubmitting(false);
@@ -45,9 +53,6 @@ export const CTA: React.FC<Props> = ({ lang }) => {
       <div className="absolute top-0 right-0 w-96 h-96 bg-brand-50 rounded-full opacity-50 blur-[100px] animate-pulse"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-white rounded-full opacity-50 blur-[100px]"></div>
       
-      {/* Pattern Overlay */}
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5"></div>
-
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-16">
           
@@ -55,40 +60,20 @@ export const CTA: React.FC<Props> = ({ lang }) => {
           <div className="lg:w-1/2 text-center lg:text-left">
              <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold border border-green-200 mb-6 shadow-sm">
                 <Calendar className="w-3 h-3" />
-                {lang === 'EN' ? "Admission Open: March 2026 Batch" : "એડમિશન શરૂ: માર્ચ 2026 બેચ"}
+                {lang === 'EN' ? "Admissions Open: March 2026 Batch" : "એડમિશન શરૂ: માર્ચ 2026 બેચ"}
              </div>
 
-            <h2 className={`text-4xl md:text-5xl font-black mb-6 leading-tight ${lang === 'GU' ? 'font-gujarati' : ''}`}>
-              {lang === 'EN' ? "Prepare Them For The Age of AI." : "આવનારો યુગ AI નો છે. શું તમે તૈયાર છો?"}
+            <h2 className={`text-3xl md:text-5xl font-black mb-6 leading-tight ${lang === 'GU' ? 'font-gujarati' : ''}`}>
+              {lang === 'EN' ? t.title.en : t.title.gu}
             </h2>
             
-            <p className={`text-brand-800 mb-8 text-lg md:text-xl leading-relaxed ${lang === 'GU' ? 'font-gujarati' : ''}`}>
-              {lang === 'EN' 
-                ? "Degrees alone won't be enough in 2030. Give your child the unfair advantage of mastering AI tools before they even enter college." 
-                : "2030 માં માત્ર ડિગ્રી પૂરતી નહીં હોય. તમારા બાળકને કોલેજમાં જતા પહેલા જ AI ટૂલ્સમાં માસ્ટર બનાવીને સૌથી મોટો ફાયદો આપો."}
+            <p className={`text-brand-800 mb-8 text-lg md:text-2xl font-bold leading-relaxed ${lang === 'GU' ? 'font-gujarati' : ''}`}>
+               {lang === 'EN' ? "AI Pathshala" : "AI Pathshala"}<br/>
+               <span className="text-brand-600 font-normal">{lang === 'EN' ? t.subtitle.en : t.subtitle.gu}</span>
             </p>
 
-            <div className="bg-white/40 rounded-2xl p-6 border border-white/50 backdrop-blur-sm mb-8 hover:bg-white/60 transition-colors shadow-sm">
-               <h4 className="font-bold text-brand-900 mb-4 flex items-center gap-2">
-                  <Smartphone className="w-5 h-5 text-brand-500" />
-                  {lang === 'EN' ? "Why Join This Course?" : "શા માટે આ કોર્સ?"}
-               </h4>
-               <ul className="space-y-3">
-                  {[
-                    { en: "30-Day Live Practical Training", gu: "30-દિવસની લાઈવ પ્રેક્ટિકલ ટ્રેનિંગ" },
-                    { en: "Boost Logic & Problem Solving", gu: "તર્કશક્તિ અને પ્રોબ્લેમ સોલ્વિંગમાં વધારો" },
-                    { en: "Useful for Job, Business & Studies", gu: "નોકરી, બિઝનેસ અને અભ્યાસ માટે ઉપયોગી" }
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-center gap-3 text-brand-800 text-sm md:text-base">
-                      <CheckCircle className="w-5 h-5 text-green-600 shrink-0" />
-                      <span className={lang === 'GU' ? 'font-gujarati' : ''}>{lang === 'EN' ? item.en : item.gu}</span>
-                    </li>
-                  ))}
-               </ul>
-            </div>
-            
             <div className="flex items-center gap-2 text-xs text-brand-700 justify-center lg:justify-start">
-               <Shield className="w-4 h-4" />
+               <ShieldCheck className="w-4 h-4" />
                {lang === 'EN' ? "Your data is safe. No spam." : "તમારો ડેટા સુરક્ષિત છે. કોઈ સ્પામ નહીં."}
             </div>
           </div>
@@ -106,12 +91,8 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                 </div>
 
                 <div className="mb-6">
-                    <div className="inline-flex items-center gap-2 text-xs font-bold text-brand-700 bg-brand-50 border border-brand-200 px-3 py-1 rounded-full uppercase tracking-widest mb-3">
-                        <Calendar className="w-3 h-3" />
-                        {lang === 'EN' ? "Limited Seats Available" : "મર્યાદિત બેઠકો ઉપલબ્ધ"}
-                    </div>
                     <h3 className={`text-2xl font-bold text-brand-950 ${lang === 'GU' ? 'font-gujarati' : ''}`}>
-                        {lang === 'EN' ? "Book Free Roadmap Call" : "ફ્રી રોડમેપ કોલ બુક કરો"}
+                       {lang === 'EN' ? t.cta.en : t.cta.gu}
                     </h3>
                     <p className="text-brand-600 text-sm mt-1">
                         {lang === 'EN' ? "Fill this to start your journey." : "તમારી સફર શરૂ કરવા માટે આ ભરો."}
@@ -121,7 +102,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                 <iframe name="hidden_iframe" id="hidden_iframe" style={{display: 'none'}}></iframe>
 
                 <form 
-                    action={GOOGLE_FORM_ACTION_URL} 
+                    action={FORM_ACTION_URL}
                     method="post" 
                     target="hidden_iframe"
                     onSubmit={handleSubmit}
