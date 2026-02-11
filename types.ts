@@ -22,3 +22,8 @@ export interface Testimonial {
   role: string;
   text: BilingualText;
 }
+
+export interface FAQItem {
+  q: BilingualText;
+  a: BilingualText;
+}
