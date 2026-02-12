@@ -36,6 +36,15 @@ export const Authority: React.FC<Props> = ({ lang }) => {
     }
   ];
 
+  const certificates = [
+    { src: "certificates/google.png", alt: "Google Certification" },
+    { src: "certificates/microsoft.png", alt: "Microsoft Certification" },
+    { src: "certificates/oracle.png", alt: "Oracle Certification" },
+    { src: "certificates/gemini.png", alt: "Google Gemini Certification" },
+    { src: "certificates/ai-fluency.png", alt: "AI Fluency Certification" },
+    { src: "certificates/completion.png", alt: "Course Completion Certificate" },
+  ];
+
   return (
     <section className="py-24 bg-white relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6">
@@ -98,6 +107,26 @@ export const Authority: React.FC<Props> = ({ lang }) => {
                    ))}
                 </div>
              </div>
+          </div>
+
+          {/* Certificates Grid */}
+          <div className="mt-12 pt-8 border-t border-brand-200">
+            <h3 className={`text-center text-xl font-bold text-brand-900 mb-6 flex items-center justify-center gap-2 ${lang === 'GU' ? 'font-gujarati' : ''}`}>
+              <Award className="w-6 h-6 text-brand-600" />
+              {lang === 'EN' ? t.certificationsTitle.en : t.certificationsTitle.gu}
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+              {certificates.map((cert, idx) => (
+                <div key={idx} className="bg-white p-3 rounded-xl shadow-sm border border-brand-100 hover:shadow-md transition-shadow flex items-center justify-center aspect-[4/3] overflow-hidden">
+                  <img
+                    src={getAssetPath(cert.src)}
+                    alt={cert.alt}
+                    className="w-full h-full object-contain hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
 
         </div>
