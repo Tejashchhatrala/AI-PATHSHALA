@@ -70,7 +70,7 @@ export const Hero: React.FC<Props> = ({ lang }) => {
             <div className="flex flex-col items-center gap-3 w-full sm:w-auto">
               <button 
                 onClick={scrollToEnroll}
-                className="group relative w-full sm:w-auto px-10 py-5 bg-brand-400 text-white text-xl font-bold rounded-full shadow-[0_4px_20px_rgba(255,148,148,0.4)] transition-all transform hover:-translate-y-1 hover:scale-105 flex items-center justify-center gap-3 overflow-hidden cursor-pointer hover:bg-brand-500"
+                className="group relative w-full sm:w-auto px-10 py-5 bg-brand-600 text-white text-xl font-bold rounded-full shadow-[0_4px_20px_rgba(224,96,96,0.4)] transition-all transform hover:-translate-y-1 hover:scale-105 flex items-center justify-center gap-3 overflow-hidden cursor-pointer hover:bg-brand-700"
               >
                 <span className="relative z-10 flex items-center gap-3">
                   {lang === 'EN' ? t.cta.en : t.cta.gu}

@@ -36,37 +36,18 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
       }
     };
 
-    // 1. Mouse Leave (Desktop)
+    // 1. Mouse Leave (Desktop Only)
+    // This event only triggers reliably on desktop when cursor leaves the window upwards (to tabs/address bar)
     const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY <= 0) {
         showPopup();
       }
     };
 
-    // 2. Timer (15 seconds)
-    const timerId = setTimeout(() => {
-      showPopup();
-    }, 15000);
-
-    // 3. Scroll Up (Mobile Exit Intent)
-    let lastScrollY = window.scrollY;
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      // Triggers if scrolling UP and we have scrolled down at least 300px initially
-      if (currentScrollY < lastScrollY - 50 && currentScrollY > 300) {
-         // "Scrolling back" rapidly usually indicates intent to leave or navigate
-         showPopup();
-      }
-      lastScrollY = currentScrollY;
-    };
-
     document.addEventListener('mouseleave', handleMouseLeave);
-    window.addEventListener('scroll', handleScroll);
 
     return () => {
       document.removeEventListener('mouseleave', handleMouseLeave);
-      window.removeEventListener('scroll', handleScroll);
-      clearTimeout(timerId);
     };
   }, [hasSeen]);
 
