@@ -5,7 +5,7 @@ def run():
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
         # Navigate to the homepage
-        url = "http://localhost:3000/AI-PATHSHALA/"
+        url = "http://localhost:5173/"
         print(f"Navigating to {url}")
         page.goto(url)
 

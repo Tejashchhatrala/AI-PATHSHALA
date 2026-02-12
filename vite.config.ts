@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   // IMPORTANT: This must match your GitHub repository name exactly, with slashes.
-  base: '/AI-PATHSHALA/', 
+  base: '/',
   build: {
     outDir: 'dist',
   }
