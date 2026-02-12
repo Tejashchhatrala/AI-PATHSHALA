@@ -52,6 +52,7 @@ export interface HomepageContent {
     name: BilingualText;
     badges: BilingualText;
     quote: BilingualText;
+    certificationsTitle: BilingualText;
   };
   testimonials: {
     title: BilingualText;
@@ -337,6 +338,10 @@ export const content: HomepageContent = {
     quote: {
       en: "“My mission is simple: To give Gujarati students the same AI advantage that top engineers use.”",
       gu: "“મારું મિશન સરળ છે: ગુજરાતી વિદ્યાર્થીઓને તે જ AI ફાયદો આપવો જે ટોચના એન્જિનિયરો વાપરે છે.”"
+    },
+    certificationsTitle: {
+      en: "Certifications & Achievements",
+      gu: "પ્રમાણપત્રો અને સિદ્ધિઓ"
     }
   },
   testimonials: {
