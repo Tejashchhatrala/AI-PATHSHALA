@@ -78,7 +78,7 @@ export const content: HomepageContent = {
     headline: {
       line1: {
         en: "Stop Memorizing. Start Thinking.",
-        gu: "ગોખણપટ્ટી છોડો. વિચારતા શીખો."
+        gu: "ગોખણપટ્ટી છોડો. વિચારતા શીખો. 30 દિવસમાં AI ને તમારો પર્સનલ ટ્યુટર બનાવો."
       },
       line2: {
         en: "Gujarat’s First AI-Powered Study System",
@@ -87,7 +87,7 @@ export const content: HomepageContent = {
     },
     subheadline: {
       en: "Designed to turn confused students into confident, concept-clear performers in just 30 days.",
-      gu: "જે 30 દિવસમાં મૂંઝાયેલા વિદ્યાર્થીને કોન્સેપ્ટ-ક્લિયર બનાવે."
+      gu: "વિદ્યાર્થીઓ માટે 30 દિવસનું AI આધારિત અભ્યાસ સિસ્ટમ જ્યાં અમે તમને શીખવીએ છીએ કે AI ને કેવી રીતે બનાવવું તમારો પર્સનલ ટ્યુટર — જેથી કોન્સેપ્ટ ક્લિયર થાય, રિવિઝન ઝડપથી થાય અને માર્ક્સ વધે."
     },
     cta: {
       en: "Book Your Free Study Strategy Call",
