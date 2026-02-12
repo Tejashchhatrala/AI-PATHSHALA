@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Brain } from 'lucide-react';
+import { throttle } from './utils';
 import { Language } from './types';
 import { LanguageToggle } from './components/LanguageToggle';
 import { Hero } from './components/Hero';
@@ -20,9 +21,9 @@ function App() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = throttle(() => {
       setScrolled(window.scrollY > 20);
-    };
+    }, 100);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
