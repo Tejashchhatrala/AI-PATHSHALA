@@ -83,20 +83,20 @@ export const Authority: React.FC<Props> = ({ lang }) => {
                 </h2>
 
                 <div className="flex items-center justify-center md:justify-start gap-2 mb-6">
-                   <ShieldCheck className="w-5 h-5 text-green-600" />
+                   <ShieldCheck className="w-5 h-5 text-brand-600" />
                    <span className={`font-semibold text-brand-700 ${lang === 'GU' ? 'font-gujarati' : ''}`}>
                       {lang === 'EN' ? t.badges.en : t.badges.gu}
                    </span>
                 </div>
 
-                <div className="bg-white p-6 rounded-2xl border-l-4 border-brand-400 shadow-sm relative">
+                <div className="bg-white p-6 rounded-2xl border-l-4 border-brand-600 shadow-sm relative">
                    <p className={`text-lg md:text-xl font-bold text-brand-900 italic leading-relaxed ${lang === 'GU' ? 'font-gujarati' : ''}`}>
                       {lang === 'EN' ? t.quote.en : t.quote.gu}
                    </p>
                 </div>
 
                 {/* Trust Badges */}
-                <div className="mt-8 pt-6 border-t border-brand-200 flex flex-wrap items-center justify-center md:justify-start gap-6 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all">
+                <div className="mt-8 pt-6 border-t border-brand-200 flex flex-wrap items-center justify-center md:justify-start gap-6 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
                    {companyLogos.map((logo, idx) => (
                       <img
                           key={idx}

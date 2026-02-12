@@ -59,7 +59,7 @@ export const Introducing: React.FC<Props> = ({ lang }) => {
             <div className="mt-10">
                <button
                   onClick={scrollToEnroll}
-                  className="group relative inline-flex items-center gap-3 text-white bg-brand-400 hover:bg-brand-500 px-10 py-5 rounded-full font-bold text-lg shadow-[0_4px_20px_rgba(255,148,148,0.4)] transition-all transform hover:-translate-y-1 hover:scale-105 overflow-hidden cursor-pointer"
+                  className="group relative inline-flex items-center gap-3 text-white bg-brand-600 hover:bg-brand-700 px-10 py-5 rounded-full font-bold text-lg shadow-[0_4px_20px_rgba(224,96,96,0.4)] transition-all transform hover:-translate-y-1 hover:scale-105 overflow-hidden cursor-pointer"
                >
                   <span className="relative z-10 flex items-center gap-2">
                      {lang === 'EN' ? "Book Free Roadmap Call" : "ફ્રી રોડમેપ કોલ બુક કરો"}
