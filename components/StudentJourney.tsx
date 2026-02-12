@@ -21,14 +21,14 @@ export const StudentJourney: React.FC<Props> = ({ lang }) => {
     "bg-brand-500",
     "bg-brand-500",
     "bg-brand-500",
-    "bg-green-500"
+    "bg-brand-500"
   ];
 
   const lightColors = [
     "bg-brand-50 border-brand-100",
     "bg-brand-50 border-brand-100",
     "bg-brand-50 border-brand-100",
-    "bg-green-50 border-green-100"
+    "bg-brand-50 border-brand-100"
   ];
 
   return (

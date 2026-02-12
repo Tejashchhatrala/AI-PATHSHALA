@@ -29,7 +29,7 @@ export const Testimonials: React.FC<Props> = ({ lang }) => {
               <div className="mb-6">
                  <div className="flex mb-3">
                     {STARS_ARRAY.map((_, i) => (
-                      <Star key={i} className="w-4 h-4 text-amber-400 fill-current" />
+                      <Star key={i} className="w-4 h-4 text-brand-400 fill-current" />
                     ))}
                  </div>
                  <p className={`text-brand-800 leading-relaxed font-medium text-lg italic ${lang === 'GU' ? 'font-gujarati' : ''}`}>

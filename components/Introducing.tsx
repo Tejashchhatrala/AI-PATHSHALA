@@ -1,5 +1,5 @@
 import React from 'react';
-import { User, RefreshCw, FileText, Zap, ArrowRight, Brain } from 'lucide-react';
+import { User, RefreshCw, FileText, Zap, ArrowRight, Brain, Calendar } from 'lucide-react';
 import { Language } from '../types';
 import { content } from '../data/content';
 
@@ -22,7 +22,8 @@ export const Introducing: React.FC<Props> = ({ lang }) => {
     <User className="w-7 h-7" />,
     <RefreshCw className="w-7 h-7" />,
     <FileText className="w-7 h-7" />,
-    <Zap className="w-7 h-7" />
+    <Zap className="w-7 h-7" />,
+    <Calendar className="w-7 h-7" />
   ];
 
   return (

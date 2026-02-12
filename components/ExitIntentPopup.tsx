@@ -96,9 +96,9 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
              </p>
 
              {/* Micro-Proof */}
-             <div className="inline-flex items-center gap-2 bg-green-50 px-4 py-2 rounded-full border border-green-100">
-               <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-               <p className={`text-green-800 text-sm font-bold ${lang === 'GU' ? 'font-gujarati' : ''}`}>
+             <div className="inline-flex items-center gap-2 bg-brand-50 px-4 py-2 rounded-full border border-brand-100">
+               <div className="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></div>
+               <p className={`text-brand-800 text-sm font-bold ${lang === 'GU' ? 'font-gujarati' : ''}`}>
                  {lang === 'EN'
                    ? "Already helping 300+ Gujarati students improve marks."
                    : "300+ વિદ્યાર્થીઓ આ પ્રોમ્પ્ટથી પહેલેથી જ ફાયદો લઈ રહ્યા છે."}
