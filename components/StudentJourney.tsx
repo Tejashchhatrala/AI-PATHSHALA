@@ -18,16 +18,16 @@ export const StudentJourney: React.FC<Props> = ({ lang }) => {
   ];
 
   const colors = [
-    "bg-blue-500",
-    "bg-purple-500",
-    "bg-amber-500",
+    "bg-brand-500",
+    "bg-brand-500",
+    "bg-brand-500",
     "bg-green-500"
   ];
 
   const lightColors = [
-    "bg-blue-50 border-blue-100",
-    "bg-purple-50 border-purple-100",
-    "bg-amber-50 border-amber-100",
+    "bg-brand-50 border-brand-100",
+    "bg-brand-50 border-brand-100",
+    "bg-brand-50 border-brand-100",
     "bg-green-50 border-green-100"
   ];
 

@@ -38,8 +38,8 @@ export const TheRealProblem: React.FC<Props> = ({ lang }) => {
         <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
            {/* Pain 1 */}
            <div className="bg-white p-8 rounded-3xl border border-brand-100 shadow-sm hover:shadow-md transition-all text-center">
-              <div className="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                 <Clock className="w-7 h-7 text-red-600" />
+              <div className="w-14 h-14 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                 <Clock className="w-7 h-7 text-brand-600" />
               </div>
               <p className={`text-lg font-bold text-brand-900 ${lang === 'GU' ? 'font-gujarati' : ''}`}>
                  {lang === 'EN' ? t.points[0].en : t.points[0].gu}
@@ -48,8 +48,8 @@ export const TheRealProblem: React.FC<Props> = ({ lang }) => {
 
            {/* Pain 2 */}
            <div className="bg-white p-8 rounded-3xl border border-brand-100 shadow-sm hover:shadow-md transition-all text-center">
-               <div className="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                 <AlertTriangle className="w-7 h-7 text-red-600" />
+               <div className="w-14 h-14 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                 <AlertTriangle className="w-7 h-7 text-brand-600" />
               </div>
               <p className={`text-lg font-bold text-brand-900 ${lang === 'GU' ? 'font-gujarati' : ''}`}>
                  {lang === 'EN' ? t.points[1].en : t.points[1].gu}
@@ -58,8 +58,8 @@ export const TheRealProblem: React.FC<Props> = ({ lang }) => {
 
            {/* Pain 3 */}
            <div className="bg-white p-8 rounded-3xl border border-brand-100 shadow-sm hover:shadow-md transition-all text-center">
-               <div className="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                 <HelpCircle className="w-7 h-7 text-red-600" />
+               <div className="w-14 h-14 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                 <HelpCircle className="w-7 h-7 text-brand-600" />
               </div>
               <p className={`text-lg font-bold text-brand-900 ${lang === 'GU' ? 'font-gujarati' : ''}`}>
                  {lang === 'EN' ? t.points[2].en : t.points[2].gu}

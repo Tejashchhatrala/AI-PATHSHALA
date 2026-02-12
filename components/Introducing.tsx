@@ -72,7 +72,7 @@ export const Introducing: React.FC<Props> = ({ lang }) => {
           <div className="lg:w-1/2 w-full">
             <div className="relative">
                 {/* Abstract Visual Representation of the System */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-brand-600 to-purple-600 rounded-3xl blur-2xl opacity-20 transform rotate-6"></div>
+                <div className="absolute inset-0 bg-gradient-to-tr from-brand-600 to-brand-400 rounded-3xl blur-2xl opacity-20 transform rotate-6"></div>
                 <div className="relative bg-brand-950 rounded-3xl border border-brand-800 p-2 shadow-2xl">
                    <div className="bg-brand-900 rounded-2xl p-8 md:p-12 text-center">
                       <div className="w-20 h-20 bg-gradient-to-br from-brand-400 to-brand-600 rounded-full mx-auto flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(255,148,148,0.3)]">

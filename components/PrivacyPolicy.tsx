@@ -90,7 +90,7 @@ export const PrivacyPolicy: React.FC<Props> = ({ lang, onBack }) => {
               <h2 className="text-2xl font-bold text-brand-950 mb-4">
                 {lang === 'EN' ? "4. Data Security & Sharing" : "4. ડેટા સુરક્ષા અને શેરિંગ"}
               </h2>
-              <div className="bg-red-50 p-6 rounded-xl border border-red-100 text-brand-900">
+              <div className="bg-brand-50 p-6 rounded-xl border border-brand-100 text-brand-900">
                 <p className="font-bold mb-2">
                   {lang === 'EN' ? "Our Promise:" : "અમારું વચન:"}
                 </p>
