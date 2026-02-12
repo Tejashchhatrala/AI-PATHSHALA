@@ -49,7 +49,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
           
           {/* Text Content */}
           <div className="lg:w-1/2 text-center lg:text-left">
-             <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold border border-green-200 mb-6 shadow-sm">
+             <div className="inline-flex items-center gap-2 bg-brand-100 text-brand-700 px-3 py-1 rounded-full text-xs font-bold border border-brand-200 mb-6 shadow-sm">
                 <Calendar className="w-3 h-3" />
                 {lang === 'EN' ? "Admissions Open: March 2026 Batch" : "એડમિશન શરૂ: માર્ચ 2026 બેચ"}
              </div>

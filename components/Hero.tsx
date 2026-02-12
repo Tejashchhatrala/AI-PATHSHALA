@@ -92,7 +92,7 @@ export const Hero: React.FC<Props> = ({ lang }) => {
             </div>
             <div className="w-px h-4 bg-brand-200 hidden sm:block"></div>
             <div className="flex items-center gap-2 hover:text-brand-600 transition-colors">
-              <ShieldCheck className="w-5 h-5 text-green-600" />
+              <ShieldCheck className="w-5 h-5 text-brand-600" />
                <span>{lang === 'EN' ? t.features[2].en : t.features[2].gu}</span>
             </div>
              <div className="w-px h-4 bg-brand-200 hidden sm:block"></div>

@@ -21,7 +21,7 @@ export const HowItWorks: React.FC<Props> = ({ lang }) => {
     "bg-brand-500",
     "bg-brand-500",
     "bg-brand-500",
-    "bg-green-500"
+    "bg-brand-500"
   ];
 
   const scrollToEnroll = (e: React.MouseEvent) => {
