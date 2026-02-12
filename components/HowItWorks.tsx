@@ -18,9 +18,9 @@ export const HowItWorks: React.FC<Props> = ({ lang }) => {
   ];
 
   const colors = [
-    "bg-blue-500",
-    "bg-purple-500",
-    "bg-amber-500",
+    "bg-brand-500",
+    "bg-brand-500",
+    "bg-brand-500",
     "bg-green-500"
   ];
 

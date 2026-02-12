@@ -87,7 +87,7 @@ export const Hero: React.FC<Props> = ({ lang }) => {
           {/* Trust Indicators */}
            <div className="mt-20 pt-8 border-t border-brand-200 flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-semibold text-brand-800 opacity-0 animate-fade-in-up delay-300">
             <div className="flex items-center gap-2 hover:text-brand-600 transition-colors">
-               <Radio className="w-5 h-5 text-red-500 animate-pulse" />
+               <Radio className="w-5 h-5 text-brand-500 animate-pulse" />
                <span>{lang === 'EN' ? t.features[0].en : t.features[0].gu}</span>
             </div>
             <div className="w-px h-4 bg-brand-200 hidden sm:block"></div>
@@ -97,7 +97,7 @@ export const Hero: React.FC<Props> = ({ lang }) => {
             </div>
              <div className="w-px h-4 bg-brand-200 hidden sm:block"></div>
              <div className="flex items-center gap-2 hover:text-brand-600 transition-colors">
-              <Zap className="w-5 h-5 text-yellow-500 fill-current" />
+              <Zap className="w-5 h-5 text-brand-500 fill-current" />
               <span>{lang === 'EN' ? t.features[1].en : t.features[1].gu}</span>
             </div>
           </div>
