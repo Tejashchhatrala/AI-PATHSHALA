@@ -3,9 +3,10 @@ import { Language } from '../types';
 
 interface Props {
   lang: Language;
+  onPrivacyClick: () => void;
 }
 
-export const Footer: React.FC<Props> = ({ lang }) => {
+export const Footer: React.FC<Props> = ({ lang, onPrivacyClick }) => {
   return (
     <footer className="bg-brand-100 text-brand-800 py-12 border-t border-brand-200">
       <div className="container mx-auto px-4 text-center">
@@ -19,6 +20,11 @@ export const Footer: React.FC<Props> = ({ lang }) => {
           <p className="text-sm text-brand-800 font-medium">
             © 2026 Sarvottam AI Pathshala
           </p>
+          <div className="flex items-center justify-center gap-4 mt-2 mb-1">
+             <button onClick={onPrivacyClick} className="text-xs text-brand-600 hover:text-brand-800 underline font-medium cursor-pointer">
+               {lang === 'EN' ? "Privacy Policy" : "પ્રાઇવસી પોલિસી"}
+             </button>
+          </div>
           <p className="text-xs mt-3 text-brand-600">
              {lang === 'EN' 
                ? "Founded by Tejas Chhatrala, Gujarat's Top AI Educator." 

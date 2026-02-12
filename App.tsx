@@ -15,9 +15,13 @@ import { Testimonials } from './components/Testimonials';
 import { CTA } from './components/CTA';
 import { Footer } from './components/Footer';
 import { ExitIntentPopup } from './components/ExitIntentPopup';
+import { StudentJourney } from './components/StudentJourney';
+import { FAQ } from './components/FAQ';
+import { PrivacyPolicy } from './components/PrivacyPolicy';
 
 function App() {
   const [lang, setLang] = useState<Language>('GU');
+  const [showPrivacy, setShowPrivacy] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -35,6 +39,10 @@ function App() {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  if (showPrivacy) {
+    return <PrivacyPolicy lang={lang} onBack={() => setShowPrivacy(false)} />;
+  }
 
   return (
     <div className={`min-h-screen bg-brand-50 text-brand-950 pb-24 md:pb-0 ${lang === 'GU' ? 'font-gujarati' : 'font-sans'}`}>
@@ -80,29 +88,35 @@ function App() {
         {/* 3. Introducing (New Mechanism) */}
         <Introducing lang={lang} />
 
-        {/* 4. What Changes */}
+        {/* 4. Student Journey (Timeline) */}
+        <StudentJourney lang={lang} />
+
+        {/* 5. What Changes */}
         <WhatChanges lang={lang} />
         
-        {/* 5. Segmentation */}
+        {/* 6. Segmentation */}
         <WhoIsThisFor lang={lang} />
 
-        {/* 6. How The System Works */}
+        {/* 7. How The System Works */}
         <HowItWorks lang={lang} />
 
-        {/* 7. Why Parents Trust Us */}
+        {/* 8. Why Parents Trust Us */}
         <WhyUs lang={lang} />
         
-        {/* 8. Meet Your Mentor */}
+        {/* 9. Meet Your Mentor */}
         <Authority lang={lang} />
 
-        {/* 9. Social Proof (Testimonials) */}
+        {/* 10. Social Proof (Testimonials) */}
         <Testimonials lang={lang} />
         
-        {/* 10. Final Action */}
+        {/* 11. FAQ Section */}
+        <FAQ lang={lang} />
+
+        {/* 12. Final Action */}
         <CTA lang={lang} />
       </main>
 
-      <Footer lang={lang} />
+      <Footer lang={lang} onPrivacyClick={() => { setShowPrivacy(true); window.scrollTo(0,0); }} />
       
       {/* New Components */}
       <ExitIntentPopup lang={lang} />

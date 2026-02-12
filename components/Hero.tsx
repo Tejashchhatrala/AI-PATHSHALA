@@ -53,9 +53,9 @@ export const Hero: React.FC<Props> = ({ lang }) => {
                 <span className="text-lg md:text-2xl font-extrabold text-brand-600 tracking-[0.2em] uppercase font-sans block mt-4 mb-2">{t.headline.line2.en}</span>
               </>
             ) : (
-              <span className="font-gujarati leading-tight">
+              <span className="font-gujarati leading-tight font-extrabold">
                  {t.headline.line1.gu}<br/>
-                 <span className="text-lg md:text-2xl font-bold text-brand-600 tracking-wide block mt-4 mb-2">{t.headline.line2.gu}</span>
+                 <span className="text-lg md:text-3xl font-bold text-brand-600 tracking-wide block mt-4 mb-2">{t.headline.line2.gu}</span>
               </span>
             )}
           </h1>
