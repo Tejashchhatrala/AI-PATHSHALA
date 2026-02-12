@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Gift, ArrowRight } from 'lucide-react';
+import { X, ArrowRight, ShieldCheck } from 'lucide-react';
 import { Language } from '../types';
 
 interface Props {
@@ -13,39 +13,66 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
   
   const GOOGLE_FORM_ACTION_URL = "https://docs.google.com/forms/d/1AxEX-loWlZHlCWXTtimPTezMqAbeKHPvTuBUjORRb3M/formResponse";
   
-  // Updated IDs: Swapped Phone and Grade based on user feedback
   const FORM_FIELD_IDS = {
     name: "entry.549617858",
-    phone: "entry.1902268774", // Previously assigned to grade
-    grade: "entry.2145394662"  // Previously assigned to phone
+    phone: "entry.1902268774",
+    grade: "entry.2145394662"
   };
   const [formData, setFormData] = useState({ name: '', phone: '', grade: 'Popup Lead' });
 
   useEffect(() => {
-    // Check session storage so we don't annoy user on every refresh
+    // Check session storage
     const sessionSeen = sessionStorage.getItem('ai_pathshala_exit_popup_seen');
     if (sessionSeen) {
       setHasSeen(true);
+      return; // If seen, don't set up any listeners
     }
 
-    const handleMouseLeave = (e: MouseEvent) => {
-      // If mouse leaves the top of the window
-      if (e.clientY <= 0 && !hasSeen && !sessionStorage.getItem('ai_pathshala_exit_popup_seen')) {
+    const showPopup = () => {
+      if (!sessionStorage.getItem('ai_pathshala_exit_popup_seen')) {
         setIsVisible(true);
         setHasSeen(true);
         sessionStorage.setItem('ai_pathshala_exit_popup_seen', 'true');
       }
     };
 
+    // 1. Mouse Leave (Desktop)
+    const handleMouseLeave = (e: MouseEvent) => {
+      if (e.clientY <= 0) {
+        showPopup();
+      }
+    };
+
+    // 2. Timer (15 seconds)
+    const timerId = setTimeout(() => {
+      showPopup();
+    }, 15000);
+
+    // 3. Scroll Up (Mobile Exit Intent)
+    let lastScrollY = window.scrollY;
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      // Triggers if scrolling UP and we have scrolled down at least 300px initially
+      if (currentScrollY < lastScrollY - 50 && currentScrollY > 300) {
+         // "Scrolling back" rapidly usually indicates intent to leave or navigate
+         showPopup();
+      }
+      lastScrollY = currentScrollY;
+    };
+
     document.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('scroll', handleScroll);
+
     return () => {
       document.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(timerId);
     };
   }, [hasSeen]);
 
   const handleSubmit = (e: React.FormEvent) => {
     setIsSubmitting(true);
-    // WhatsApp redirect after form submission
+    // WhatsApp redirect logic
     const message = `Hello Tejas Sir, I claimed the Free Prompt Library via the website popup.\n\n*Name:* ${formData.name}\n*Phone:* ${formData.phone}`;
     const whatsappUrl = `https://wa.me/919879737819?text=${encodeURIComponent(message)}`;
 
@@ -64,31 +91,41 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
         {/* Close Button */}
         <button 
           onClick={() => setIsVisible(false)}
-          className="absolute top-4 right-4 p-2 bg-brand-50 rounded-full hover:bg-brand-100 transition-colors z-20 cursor-pointer"
+          className="absolute top-4 right-4 p-2 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors z-20 cursor-pointer"
         >
-          <X className="w-5 h-5 text-brand-400" />
+          <X className="w-5 h-5 text-gray-500" />
         </button>
 
-        {/* Header */}
-        <div className="bg-brand-600 p-8 text-center relative overflow-hidden">
-           <div className="absolute top-0 right-0 w-32 h-32 bg-brand-400 rounded-full blur-3xl opacity-50 -mr-10 -mt-10"></div>
-           <div className="absolute bottom-0 left-0 w-32 h-32 bg-purple-500 rounded-full blur-3xl opacity-50 -ml-10 -mb-10"></div>
+        {/* Content Body */}
+        <div className="p-8 pt-12 md:p-10">
            
-           <div className="relative z-10 flex flex-col items-center">
-             <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg mb-4 animate-bounce">
-                <Gift className="w-8 h-8 text-brand-600" />
-             </div>
-             <h3 className={`text-2xl md:text-3xl font-black text-white leading-tight ${lang === 'GU' ? 'font-gujarati' : ''}`}>
-               {lang === 'EN' ? "Wait! Don't Leave Empty Handed!" : "ઊભા રહો! ખાલી હાથે ન જશો!"}
+           <div className="text-center space-y-4 mb-8">
+             {/* Headline */}
+             <h3 className={`text-2xl md:text-3xl font-black text-brand-600 leading-tight ${lang === 'GU' ? 'font-gujarati' : ''}`}>
+               {lang === 'EN'
+                 ? "Wait! Don't Leave Without This Exam Advantage."
+                 : "ઊભા રહો! શું તમે આ 50 AI પરીક્ષા પ્રોમ્પ્ટ વગર જશો?"}
              </h3>
-             <p className={`text-brand-100 mt-2 ${lang === 'GU' ? 'font-gujarati' : ''}`}>
-               {lang === 'EN' ? "Get my secret 'Top 50 Exam Prompts' PDF for FREE." : "મારી સિક્રેટ 'Top 50 પરીક્ષા પ્રોમ્પ્ટ' PDF ફ્રીમાં મેળવો."}
-             </p>
-           </div>
-        </div>
 
-        {/* Form Body */}
-        <div className="p-8">
+             {/* Subheadline */}
+             <p className={`text-gray-600 text-lg font-medium leading-snug ${lang === 'GU' ? 'font-gujarati' : ''}`}>
+               {lang === 'EN'
+                 ? "50 AI Exam Prompts Designed for Grades 9–12. Revise 2x Faster. Score Higher. Study Smarter. Built from the Tejas AI Study System™."
+                 : "ધોરણ 9–12 માટે ખાસ તૈયાર. 2x ઝડપી રિવિઝન. વધુ માર્ક્સ. ઓછું ટેન્શન. Tejas AI Study System™ પરથી તૈયાર."}
+             </p>
+
+             {/* Micro-Proof */}
+             <div className="inline-flex items-center gap-2 bg-green-50 px-4 py-2 rounded-full border border-green-100">
+               <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+               <p className={`text-green-800 text-sm font-bold ${lang === 'GU' ? 'font-gujarati' : ''}`}>
+                 {lang === 'EN'
+                   ? "Already helping 300+ Gujarati students improve marks."
+                   : "300+ વિદ્યાર્થીઓ આ પ્રોમ્પ્ટથી પહેલેથી જ ફાયદો લઈ રહ્યા છે."}
+               </p>
+             </div>
+           </div>
+
+           {/* Form */}
            <iframe name="popup_hidden_iframe" id="popup_hidden_iframe" style={{display: 'none'}}></iframe>
            <form 
               action={GOOGLE_FORM_ACTION_URL} 
@@ -98,8 +135,8 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
               className="space-y-4"
            >
               <div>
-                <label className="block text-sm font-bold text-brand-900 mb-1">
-                   {lang === 'EN' ? "Your Name" : "તમારું નામ"}
+                <label className="block text-sm font-bold text-gray-700 mb-1">
+                   {lang === 'EN' ? "Your Name" : "વિદ્યાર્થીનું નામ"}
                 </label>
                 <input 
                   type="text"
@@ -107,12 +144,12 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  className="w-full px-4 py-3 rounded-xl border border-brand-200 focus:ring-2 focus:ring-brand-500 focus:outline-none bg-brand-50"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:outline-none bg-gray-50 placeholder-gray-400"
                   placeholder="e.g. Amit Patel"
                 />
               </div>
               <div>
-                <label className="block text-sm font-bold text-brand-900 mb-1">
+                <label className="block text-sm font-bold text-gray-700 mb-1">
                    {lang === 'EN' ? "WhatsApp Number" : "વોટ્સએપ નંબર"}
                 </label>
                 <input 
@@ -121,34 +158,46 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
                   required
                   value={formData.phone}
                   onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                  className="w-full px-4 py-3 rounded-xl border border-brand-200 focus:ring-2 focus:ring-brand-500 focus:outline-none bg-brand-50"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:outline-none bg-gray-50 placeholder-gray-400"
                   placeholder="98765 43210"
                 />
-                {/* Sending grade as hidden field for popup submissions */}
                 <input type="hidden" name={FORM_FIELD_IDS.grade} value="Exit Popup Lead" />
               </div>
               
+              {/* Primary CTA */}
               <button 
                 type="submit"
                 disabled={isSubmitting}
-                className="group relative w-full mt-6 py-4 bg-brand-400 hover:bg-brand-500 text-white font-bold text-lg rounded-full shadow-[0_4px_20px_rgba(255,148,148,0.4)] transition-all transform active:scale-[0.98] hover:-translate-y-1 hover:scale-105 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed overflow-hidden"
+                className="group relative w-full mt-6 py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-brand-500/30 transition-all transform active:scale-[0.98] hover:-translate-y-1 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed overflow-hidden"
               >
                  {isSubmitting ? 'Processing...' : (
                    <span className="relative z-10 flex items-center gap-2">
-                     {lang === 'EN' ? "Send Me The PDF" : "મને PDF મોકલો"}
+                     {lang === 'EN' ? "Yes, Send Me The Study Upgrade PDF" : "હા! મને Study Upgrade PDF મોકલો"}
                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                    </span>
                  )}
               </button>
            </form>
-           <div className="mt-4 text-center">
+
+           {/* Secondary CTA & Trust */}
+           <div className="mt-6 text-center space-y-4">
              <button 
                onClick={() => setIsVisible(false)} 
-               className="text-sm text-brand-400 hover:text-brand-600 underline cursor-pointer"
+               className={`text-sm text-gray-400 hover:text-gray-600 transition-colors cursor-pointer ${lang === 'GU' ? 'font-gujarati' : ''}`}
              >
-               {lang === 'EN' ? "No thanks, I don't want better marks" : "ના, મારે સારા માર્ક્સ નથી જોઈતા"}
+               {lang === 'EN' ? "No, I’ll Stick To Old Study Methods" : "ના, હું જૂની ગોખણપટ્ટી જ ચાલુ રાખીશ"}
              </button>
+
+             <div className="flex items-center justify-center gap-1.5 text-xs text-gray-400">
+               <ShieldCheck className="w-3 h-3" />
+               <span>
+                 {lang === 'EN'
+                   ? "100% Free. No Spam. PDF delivered instantly on WhatsApp."
+                   : "100% ફ્રી. કોઈ સ્પામ નહીં. PDF તરત વોટ્સએપ પર મળશે."}
+               </span>
+             </div>
            </div>
+
         </div>
       </div>
     </div>
