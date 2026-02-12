@@ -7,6 +7,8 @@ interface Props {
   lang: Language;
 }
 
+const STARS_ARRAY = [...Array(5)];
+
 export const Testimonials: React.FC<Props> = ({ lang }) => {
   const t = content.testimonials;
 
@@ -26,7 +28,7 @@ export const Testimonials: React.FC<Props> = ({ lang }) => {
 
               <div className="mb-6">
                  <div className="flex mb-3">
-                    {[...Array(5)].map((_, i) => (
+                    {STARS_ARRAY.map((_, i) => (
                       <Star key={i} className="w-4 h-4 text-amber-400 fill-current" />
                     ))}
                  </div>
