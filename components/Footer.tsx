@@ -11,14 +11,13 @@ export const Footer: React.FC<Props> = ({ lang }) => {
       <div className="container mx-auto px-4 text-center">
         <div className="mb-6">
            <h3 className="text-2xl text-brand-950 font-bold mb-2">AI Pathshala</h3>
-           <p className="text-brand-600 font-medium uppercase tracking-wider text-sm">
-             {lang === 'EN' ? "Gujarat's First AI School" : "ગુજરાતની પ્રથમ AI સ્કૂલ"}
-           </p>
+           <p className="text-brand-800 text-sm mb-1 font-medium">An Initiative by Sarvottam</p>
+           <a href="https://sarvottamai.in" target="_blank" rel="noopener noreferrer" className="text-brand-600 hover:text-brand-800 text-sm font-medium transition-colors">sarvottamai.in</a>
         </div>
         
         <div className="max-w-2xl mx-auto border-t border-brand-200 pt-6 mt-6">
-          <p className="text-sm">
-            © {new Date().getFullYear()} AI Pathshala. {lang === 'EN' ? "All rights reserved." : "સર્વાધિકાર સુરક્ષિત."}
+          <p className="text-sm text-brand-800 font-medium">
+            © 2026 Sarvottam AI Pathshala
           </p>
           <p className="text-xs mt-3 text-brand-600">
              {lang === 'EN' 
