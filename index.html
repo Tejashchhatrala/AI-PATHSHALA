@@ -76,8 +76,20 @@
               'grid-beam': 'gridBeam 3s linear infinite',
               'spin-slow': 'spin 12s linear infinite',
               'scroll': 'scroll 30s linear infinite',
+              'wiggle-interval': 'wiggleInterval 5s ease-in-out infinite',
+              'heartbeat': 'heartbeat 1.5s ease-in-out infinite',
             },
             keyframes: {
+              wiggleInterval: {
+                '0%, 100%': { transform: 'rotate(0deg)' },
+                '5%, 15%': { transform: 'rotate(-3deg)' },
+                '10%, 20%': { transform: 'rotate(3deg)' },
+                '25%': { transform: 'rotate(0deg)' },
+              },
+              heartbeat: {
+                '0%, 100%': { transform: 'scale(1)' },
+                '50%': { transform: 'scale(1.05)' },
+              },
               fadeIn: {
                 '0%': { opacity: '0' },
                 '100%': { opacity: '1' },
@@ -93,7 +105,7 @@
                 '100%': { transform: 'translate(0px, 0px) scale(1)' },
               },
               shimmer: {
-                '100%': { transform: 'translateX(100%)' },
+                '100%': { transform: 'translateX(200%)' },
               },
               float: {
                 '0%, 100%': { transform: 'translateY(0)' },

@@ -125,7 +125,7 @@ function App() {
       <div className="fixed bottom-0 left-0 w-full p-4 bg-white/90 backdrop-blur-md border-t border-brand-200 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] md:hidden z-40 pb-6">
         <button 
            onClick={scrollToEnroll}
-           className="flex items-center justify-center w-full font-bold text-white bg-brand-600 py-3.5 rounded-xl shadow-lg shadow-brand-500/30 active:scale-95 transition-transform cursor-pointer"
+           className="flex items-center justify-center w-full font-bold text-white bg-brand-600 py-3.5 rounded-xl shadow-lg shadow-brand-500/30 active:scale-95 transition-transform cursor-pointer animate-wiggle-interval"
         >
           {lang === 'EN' ? 'Book Free Call' : 'ફ્રી કોલ બુક કરો'}
         </button>
