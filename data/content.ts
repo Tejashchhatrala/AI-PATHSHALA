@@ -215,20 +215,20 @@ export const content: HomepageContent = {
       {
         title: {
           en: "Week 1 – AI Foundation",
-          gu: "Week 1 – AI Foundation"
+          gu: "સપ્તાહ 1 – AI ફાઉન્ડેશન"
         },
         items: [
           {
             en: "Free tools setup (ChatGPT, Gemini, NotebookLM)",
-            gu: "Free tools setup (ChatGPT, Gemini, NotebookLM)"
+            gu: "ફ્રી ટૂલ્સ સેટઅપ (ChatGPT, Gemini, NotebookLM)"
           },
           {
             en: "Ethical AI rules",
-            gu: "Ethical AI rules"
+            gu: "નૈતિક AI નિયમો"
           },
           {
             en: "Prompt basics",
-            gu: "Prompt basics in Gujarati"
+            gu: "પ્રોમ્પ્ટ બેઝિક્સ"
           },
           {
             en: "How AI works",
@@ -239,7 +239,7 @@ export const content: HomepageContent = {
       {
         title: {
           en: "Week 2 – AI as Personal Tutor",
-          gu: "Week 2 – AI as Personal Tutor"
+          gu: "સપ્તાહ 2 – AI પર્સનલ ટ્યુટર તરીકે"
         },
         items: [
           {
@@ -259,7 +259,7 @@ export const content: HomepageContent = {
       {
         title: {
           en: "Week 3 – Smart Revision System",
-          gu: "Week 3 – Smart Revision System"
+          gu: "સપ્તાહ 3 – સ્માર્ટ રિવિઝન સિસ્ટમ"
         },
         items: [
           {
@@ -268,31 +268,31 @@ export const content: HomepageContent = {
           },
           {
             en: "Weak chapter detection",
-            gu: "Weak chapter detection"
+            gu: "નબળા પ્રકરણોની ઓળખ"
           },
           {
             en: "Flashcards & Mock tests",
-            gu: "Flashcards & Mock tests"
+            gu: "ફ્લેશકાર્ડ્સ અને મોક ટેસ્ટ"
           }
         ]
       },
       {
         title: {
           en: "Week 4 – Exam Strategy & Independence",
-          gu: "Week 4 – Exam Strategy & Independence"
+          gu: "સપ્તાહ 4 – પરીક્ષા સ્ટ્રેટેજી અને આત્મનિર્ભરતા"
         },
         items: [
           {
             en: "Daily study planning",
-            gu: "Daily study planning"
+            gu: "દૈનિક અભ્યાસ આયોજન"
           },
           {
             en: "Board & Competitive strategy",
-            gu: "Board & Competitive strategy"
+            gu: "બોર્ડ અને સ્પર્ધાત્મક સ્ટ્રેટેજી"
           },
           {
             en: "Long-term self-study system",
-            gu: "Long-term self-study system"
+            gu: "લાંબા ગાળાની સેલ્ફ-સ્ટડી સિસ્ટમ"
           }
         ]
       }
