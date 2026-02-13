@@ -7,22 +7,22 @@ interface Props {
   lang: Language;
 }
 
+const ICONS = [
+  <Compass className="w-6 h-6 text-white" />,
+  <MessageSquare className="w-6 h-6 text-white" />,
+  <Trophy className="w-6 h-6 text-white" />,
+  <Briefcase className="w-6 h-6 text-white" />
+];
+
+const COLORS = [
+  "bg-brand-500",
+  "bg-brand-500",
+  "bg-brand-500",
+  "bg-brand-500"
+];
+
 export const HowItWorks: React.FC<Props> = ({ lang }) => {
   const t = content.howItWorks;
-
-  const icons = [
-    <Compass className="w-6 h-6 text-white" />,
-    <MessageSquare className="w-6 h-6 text-white" />,
-    <Trophy className="w-6 h-6 text-white" />,
-    <Briefcase className="w-6 h-6 text-white" />
-  ];
-
-  const colors = [
-    "bg-brand-500",
-    "bg-brand-500",
-    "bg-brand-500",
-    "bg-brand-500"
-  ];
 
   const scrollToEnroll = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -53,15 +53,15 @@ export const HowItWorks: React.FC<Props> = ({ lang }) => {
                 <div key={idx} className="relative flex items-center gap-6 group">
 
                    {/* Number/Icon Marker */}
-                   <div className={`hidden md:flex w-16 h-16 rounded-full border-4 border-white shadow-lg items-center justify-center z-10 shrink-0 ${colors[idx]}`}>
-                      {icons[idx]}
+                   <div className={`hidden md:flex w-16 h-16 rounded-full border-4 border-white shadow-lg items-center justify-center z-10 shrink-0 ${COLORS[idx]}`}>
+                      {ICONS[idx]}
                    </div>
 
                    {/* Content Box */}
                    <div className="flex-1 bg-white p-6 md:p-8 rounded-2xl border border-brand-100 shadow-sm hover:shadow-brand-200 transition-all hover:-translate-y-1">
                       <div className="flex items-center gap-4 mb-3">
-                         <div className={`md:hidden w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${colors[idx]}`}>
-                            {icons[idx]}
+                         <div className={`md:hidden w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${COLORS[idx]}`}>
+                            {ICONS[idx]}
                          </div>
                          <h3 className={`text-xl md:text-2xl font-bold text-brand-900 ${lang === 'GU' ? 'font-gujarati' : ''}`}>
                             {lang === 'EN' ? phase.title.en : phase.title.gu}

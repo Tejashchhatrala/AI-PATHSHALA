@@ -7,6 +7,14 @@ interface Props {
   lang: Language;
 }
 
+const ICONS = [
+  <User className="w-7 h-7" />,
+  <RefreshCw className="w-7 h-7" />,
+  <FileText className="w-7 h-7" />,
+  <Zap className="w-7 h-7" />,
+  <Calendar className="w-7 h-7" />
+];
+
 export const Introducing: React.FC<Props> = ({ lang }) => {
   const t = content.introduction;
 
@@ -17,14 +25,6 @@ export const Introducing: React.FC<Props> = ({ lang }) => {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
-
-  const icons = [
-    <User className="w-7 h-7" />,
-    <RefreshCw className="w-7 h-7" />,
-    <FileText className="w-7 h-7" />,
-    <Zap className="w-7 h-7" />,
-    <Calendar className="w-7 h-7" />
-  ];
 
   return (
     <section className="py-24 bg-white overflow-hidden">
@@ -46,7 +46,7 @@ export const Introducing: React.FC<Props> = ({ lang }) => {
                {t.features.map((feature, index) => (
                  <div key={index} className="flex gap-4 items-center p-4 bg-brand-50 rounded-2xl border border-brand-100 hover:border-brand-300 transition-colors">
                     <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shrink-0 text-brand-600 shadow-sm">
-                       {icons[index]}
+                       {ICONS[index]}
                     </div>
                     <div>
                        <h4 className={`font-bold text-brand-900 text-lg ${lang === 'GU' ? 'font-gujarati' : ''}`}>
