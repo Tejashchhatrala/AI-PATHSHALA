@@ -1,4 +1,3 @@
-import sys
 from playwright.sync_api import sync_playwright
 
 def verify_phone_validation(page, selector, context_name):
