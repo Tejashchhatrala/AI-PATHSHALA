@@ -123,6 +123,7 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
                   type="text"
                   name={FORM_FIELD_IDS.name}
                   required
+                  maxLength={100}
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:outline-none bg-gray-50 placeholder-gray-400"
@@ -137,10 +138,13 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
                   type="tel"
                   name={FORM_FIELD_IDS.phone}
                   required
+                  pattern="[0-9]{10}"
+                  maxLength={10}
+                  title={lang === 'EN' ? "Please enter a 10-digit WhatsApp number" : "કૃપા કરીને 10-અંકનો વોટ્સએપ નંબર દાખલ કરો"}
                   value={formData.phone}
-                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                  onChange={(e) => setFormData({...formData, phone: e.target.value.replace(/\D/g, '').slice(0, 10)})}
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:outline-none bg-gray-50 placeholder-gray-400"
-                  placeholder="98765 43210"
+                  placeholder="9876543210"
                 />
                 <input type="hidden" name={FORM_FIELD_IDS.grade} value="Exit Popup Lead" />
               </div>

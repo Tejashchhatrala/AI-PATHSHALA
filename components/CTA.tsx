@@ -107,6 +107,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                         type="text" 
                         name={FORM_FIELD_IDS.name} 
                         required
+                        maxLength={100}
                         value={formData.name}
                         onChange={(e) => setFormData({...formData, name: e.target.value})}
                         className="w-full px-4 py-3.5 rounded-xl border border-brand-200 focus:outline-none focus:ring-2 focus:ring-brand-600 bg-brand-50 transition-all font-medium placeholder:text-brand-300"
@@ -122,10 +123,13 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                         type="tel" 
                         name={FORM_FIELD_IDS.phone} 
                         required
+                        pattern="[0-9]{10}"
+                        maxLength={10}
+                        title={lang === 'EN' ? "Please enter a 10-digit WhatsApp number" : "કૃપા કરીને 10-અંકનો વોટ્સએપ નંબર દાખલ કરો"}
                         value={formData.phone}
-                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                        onChange={(e) => setFormData({...formData, phone: e.target.value.replace(/\D/g, '').slice(0, 10)})}
                         className="w-full px-4 py-3.5 rounded-xl border border-brand-200 focus:outline-none focus:ring-2 focus:ring-brand-600 bg-brand-50 transition-all font-medium placeholder:text-brand-300"
-                        placeholder="98797 37819"
+                        placeholder="9879737819"
                     />
                     </div>
 
@@ -137,6 +141,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                         type="text" 
                         name={FORM_FIELD_IDS.grade} 
                         required
+                        maxLength={50}
                         value={formData.grade}
                         onChange={(e) => setFormData({...formData, grade: e.target.value})}
                         className="w-full px-4 py-3.5 rounded-xl border border-brand-200 focus:outline-none focus:ring-2 focus:ring-brand-600 bg-brand-50 transition-all font-medium placeholder:text-brand-300"
