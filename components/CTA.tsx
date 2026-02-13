@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, Calendar, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Calendar, ShieldCheck, AlertCircle } from 'lucide-react';
 import { Language } from '../types';
 import { content } from '../data/content';
 import { GOOGLE_FORM_CTA_URL, GOOGLE_FORM_FIELD_IDS, WHATSAPP_PHONE_NUMBER } from '../constants';
@@ -11,9 +11,76 @@ interface Props {
 export const CTA: React.FC<Props> = ({ lang }) => {
   const t = content.finalCall;
   const [formData, setFormData] = useState({ name: '', phone: '', grade: '' });
+  const [errors, setErrors] = useState({ name: '', phone: '', grade: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const validateField = (name: string, value: string) => {
+    let error = '';
+    if (name === 'name' && !value.trim()) {
+      error = lang === 'EN' ? 'Name is required' : 'નામ લખવું જરૂરી છે';
+    }
+    if (name === 'phone') {
+      if (!value.trim()) {
+        error = lang === 'EN' ? 'WhatsApp number is required' : 'વોટ્સએપ નંબર લખવો જરૂરી છે';
+      } else if (value.length < 10) {
+        error = lang === 'EN' ? 'Invalid phone number' : 'અમાન્ય મોબાઈલ નંબર';
+      }
+    }
+    if (name === 'grade' && !value.trim()) {
+      error = lang === 'EN' ? 'Grade is required' : 'ધોરણ લખવું જરૂરી છે';
+    }
+    return error;
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    let fieldKey = '';
+    if (name === GOOGLE_FORM_FIELD_IDS.name) fieldKey = 'name';
+    if (name === GOOGLE_FORM_FIELD_IDS.phone) fieldKey = 'phone';
+    if (name === GOOGLE_FORM_FIELD_IDS.grade) fieldKey = 'grade';
+
+    if (fieldKey) {
+       const error = validateField(fieldKey, value);
+       setErrors(prev => ({ ...prev, [fieldKey]: error }));
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    let fieldKey = '' as keyof typeof formData;
+    if (name === GOOGLE_FORM_FIELD_IDS.name) fieldKey = 'name';
+    if (name === GOOGLE_FORM_FIELD_IDS.phone) fieldKey = 'phone';
+    if (name === GOOGLE_FORM_FIELD_IDS.grade) fieldKey = 'grade';
+
+    if (fieldKey) {
+        // Special handling for phone
+        const finalValue = fieldKey === 'phone' ? value.replace(/\D/g, '') : value;
+
+        setFormData(prev => ({ ...prev, [fieldKey]: finalValue }));
+
+        // Clear error if exists
+        if (errors[fieldKey]) {
+            setErrors(prev => ({ ...prev, [fieldKey]: '' }));
+        }
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
+    // Validate all fields
+    const nameError = validateField('name', formData.name);
+    const phoneError = validateField('phone', formData.phone);
+    const gradeError = validateField('grade', formData.grade);
+
+    if (nameError || phoneError || gradeError) {
+        e.preventDefault();
+        setErrors({
+            name: nameError,
+            phone: phoneError,
+            grade: gradeError
+        });
+        return;
+    }
+
     setIsSubmitting(true);
 
     // Prepare WhatsApp Message
@@ -86,6 +153,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                     target="hidden_iframe"
                     onSubmit={handleSubmit}
                     className="space-y-4"
+                    noValidate
                     >
                     <div className="group">
                     <label className="block text-sm font-bold text-brand-800 mb-1 ml-1 group-focus-within:text-brand-500 transition-colors">
@@ -96,10 +164,17 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                         name={GOOGLE_FORM_FIELD_IDS.name}
                         required
                         value={formData.name}
-                        onChange={(e) => setFormData({...formData, name: e.target.value})}
-                        className="w-full px-4 py-3.5 rounded-xl border border-brand-200 focus:outline-none focus:ring-2 focus:ring-brand-600 bg-brand-50 transition-all font-medium placeholder:text-brand-300 focus:scale-[1.02] focus:shadow-[0_0_15px_rgba(224,96,96,0.3)] origin-center"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={`w-full px-4 py-3.5 rounded-xl border ${errors.name ? 'border-brand-500 ring-1 ring-brand-500' : 'border-brand-200'} focus:outline-none focus:ring-2 focus:ring-brand-600 bg-brand-50 transition-all font-medium placeholder:text-brand-300 focus:scale-[1.02] focus:shadow-[0_0_15px_rgba(224,96,96,0.3)] origin-center`}
                         placeholder={lang === 'EN' ? "e.g. Rahul Patel" : "દા.ત. રાહુલ પટેલ"}
                     />
+                    {errors.name && (
+                        <div className="flex items-center gap-1 mt-1 text-brand-600 text-xs font-bold animate-fade-in">
+                            <AlertCircle className="w-3 h-3" />
+                            <span>{errors.name}</span>
+                        </div>
+                    )}
                     </div>
                     
                     <div className="group">
@@ -114,10 +189,17 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                         maxLength={10}
                         title={lang === 'EN' ? "Please enter a valid 10-digit phone number" : "કૃપા કરીને 10 અંકનો માન્ય મોબાઈલ નંબર દાખલ કરો"}
                         value={formData.phone}
-                        onChange={(e) => setFormData({...formData, phone: e.target.value.replace(/\D/g, '')})}
-                        className="w-full px-4 py-3.5 rounded-xl border border-brand-200 focus:outline-none focus:ring-2 focus:ring-brand-600 bg-brand-50 transition-all font-medium placeholder:text-brand-300 focus:scale-[1.02] focus:shadow-[0_0_15px_rgba(224,96,96,0.3)] origin-center"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={`w-full px-4 py-3.5 rounded-xl border ${errors.phone ? 'border-brand-500 ring-1 ring-brand-500' : 'border-brand-200'} focus:outline-none focus:ring-2 focus:ring-brand-600 bg-brand-50 transition-all font-medium placeholder:text-brand-300 focus:scale-[1.02] focus:shadow-[0_0_15px_rgba(224,96,96,0.3)] origin-center`}
                         placeholder="98797 37819"
                     />
+                    {errors.phone && (
+                        <div className="flex items-center gap-1 mt-1 text-brand-600 text-xs font-bold animate-fade-in">
+                            <AlertCircle className="w-3 h-3" />
+                            <span>{errors.phone}</span>
+                        </div>
+                    )}
                     </div>
 
                     <div className="group">
@@ -129,10 +211,17 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                         name={GOOGLE_FORM_FIELD_IDS.grade}
                         required
                         value={formData.grade}
-                        onChange={(e) => setFormData({...formData, grade: e.target.value})}
-                        className="w-full px-4 py-3.5 rounded-xl border border-brand-200 focus:outline-none focus:ring-2 focus:ring-brand-600 bg-brand-50 transition-all font-medium placeholder:text-brand-300 focus:scale-[1.02] focus:shadow-[0_0_15px_rgba(224,96,96,0.3)] origin-center"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={`w-full px-4 py-3.5 rounded-xl border ${errors.grade ? 'border-brand-500 ring-1 ring-brand-500' : 'border-brand-200'} focus:outline-none focus:ring-2 focus:ring-brand-600 bg-brand-50 transition-all font-medium placeholder:text-brand-300 focus:scale-[1.02] focus:shadow-[0_0_15px_rgba(224,96,96,0.3)] origin-center`}
                         placeholder={lang === 'EN' ? "e.g. 10th / BCA / Commerce" : "દા.ત. 10th / BCA / Commerce"}
                     />
+                    {errors.grade && (
+                        <div className="flex items-center gap-1 mt-1 text-brand-600 text-xs font-bold animate-fade-in">
+                            <AlertCircle className="w-3 h-3" />
+                            <span>{errors.grade}</span>
+                        </div>
+                    )}
                     </div>
 
                     <button 
