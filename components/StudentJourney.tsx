@@ -21,6 +21,8 @@ const COLORS = [
   "bg-brand-500"
 ];
 
+const TEXT_COLORS = COLORS.map(color => color.replace('bg-', 'text-'));
+
 const LIGHT_COLORS = [
   "bg-brand-50 border-brand-100",
   "bg-brand-50 border-brand-100",
@@ -54,7 +56,7 @@ export const StudentJourney: React.FC<Props> = ({ lang }) => {
                 <ul className="space-y-3">
                    {week.items.map((item, i) => (
                       <li key={i} className="flex items-start gap-3">
-                         <CheckCircle className={`w-5 h-5 shrink-0 mt-0.5 ${COLORS[idx].replace('bg-', 'text-')}`} />
+                         <CheckCircle className={`w-5 h-5 shrink-0 mt-0.5 ${TEXT_COLORS[idx]}`} />
                          <span className={`text-sm font-medium text-brand-800 ${lang === 'GU' ? 'font-gujarati' : ''}`}>
                             {lang === 'EN' ? item.en : item.gu}
                          </span>
