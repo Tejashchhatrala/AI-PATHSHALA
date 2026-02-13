@@ -131,8 +131,11 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
                   type="tel"
                   name={GOOGLE_FORM_FIELD_IDS.phone}
                   required
+                  pattern="[0-9]{10}"
+                  maxLength={10}
+                  title={lang === 'EN' ? "Please enter a valid 10-digit phone number" : "કૃપા કરીને 10 અંકનો માન્ય મોબાઈલ નંબર દાખલ કરો"}
                   value={formData.phone}
-                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                  onChange={(e) => setFormData({...formData, phone: e.target.value.replace(/\D/g, '')})}
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:outline-none bg-gray-50 placeholder-gray-400"
                   placeholder="98765 43210"
                 />
