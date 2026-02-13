@@ -7,14 +7,14 @@ interface Props {
   lang: Language;
 }
 
+const ICONS = [
+  <School className="w-8 h-8" />,
+  <GraduationCap className="w-8 h-8" />,
+  <Briefcase className="w-8 h-8" />
+];
+
 export const WhoIsThisFor: React.FC<Props> = ({ lang }) => {
   const t = content.audience;
-
-  const icons = [
-    <School className="w-8 h-8" />,
-    <GraduationCap className="w-8 h-8" />,
-    <Briefcase className="w-8 h-8" />
-  ];
 
   return (
     <section className="py-24 bg-brand-50">
@@ -32,7 +32,7 @@ export const WhoIsThisFor: React.FC<Props> = ({ lang }) => {
            {t.segments.map((segment, index) => (
              <div key={index} className="bg-white p-8 rounded-3xl shadow-sm border border-brand-200 hover:shadow-xl hover:-translate-y-2 transition-all group">
                 <div className="w-16 h-16 bg-brand-100 rounded-2xl flex items-center justify-center mb-6 text-brand-600 group-hover:bg-brand-600 group-hover:text-white transition-colors">
-                  {icons[index]}
+                  {ICONS[index]}
                 </div>
                 <h3 className={`text-2xl font-bold text-brand-900 mb-3 ${lang === 'GU' ? 'font-gujarati' : ''}`}>
                    {lang === 'EN' ? segment.title.en : segment.title.gu}
