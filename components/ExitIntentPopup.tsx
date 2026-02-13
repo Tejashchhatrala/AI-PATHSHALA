@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, ArrowRight, ShieldCheck } from 'lucide-react';
 import { Language } from '../types';
+import { GOOGLE_FORM_EXIT_POPUP_URL, GOOGLE_FORM_FIELD_IDS, WHATSAPP_PHONE_NUMBER } from '../constants';
 
 interface Props {
   lang: Language;
@@ -11,13 +12,6 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
   const [hasSeen, setHasSeen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  const GOOGLE_FORM_ACTION_URL = "https://docs.google.com/forms/d/1AxEX-loWlZHlCWXTtimPTezMqAbeKHPvTuBUjORRb3M/formResponse";
-  
-  const FORM_FIELD_IDS = {
-    name: "entry.549617858",
-    phone: "entry.1902268774",
-    grade: "entry.2145394662"
-  };
   const [formData, setFormData] = useState({ name: '', phone: '', grade: 'Popup Lead' });
 
   useEffect(() => {
@@ -55,7 +49,7 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
     setIsSubmitting(true);
     // WhatsApp redirect logic
     const message = `Hello Tejas Sir, I claimed the Free Prompt Library via the website popup.\n\n*Name:* ${formData.name}\n*Phone:* ${formData.phone}`;
-    const whatsappUrl = `https://wa.me/919879737819?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
 
     setTimeout(() => {
       window.location.href = whatsappUrl;
@@ -109,7 +103,7 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
            {/* Form */}
            <iframe name="popup_hidden_iframe" id="popup_hidden_iframe" style={{display: 'none'}}></iframe>
            <form 
-              action={GOOGLE_FORM_ACTION_URL} 
+              action={GOOGLE_FORM_EXIT_POPUP_URL}
               method="post" 
               target="popup_hidden_iframe"
               onSubmit={handleSubmit}
@@ -121,7 +115,7 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
                 </label>
                 <input 
                   type="text"
-                  name={FORM_FIELD_IDS.name}
+                  name={GOOGLE_FORM_FIELD_IDS.name}
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
@@ -135,14 +129,14 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
                 </label>
                 <input 
                   type="tel"
-                  name={FORM_FIELD_IDS.phone}
+                  name={GOOGLE_FORM_FIELD_IDS.phone}
                   required
                   value={formData.phone}
                   onChange={(e) => setFormData({...formData, phone: e.target.value})}
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:outline-none bg-gray-50 placeholder-gray-400"
                   placeholder="98765 43210"
                 />
-                <input type="hidden" name={FORM_FIELD_IDS.grade} value="Exit Popup Lead" />
+                <input type="hidden" name={GOOGLE_FORM_FIELD_IDS.grade} value="Exit Popup Lead" />
               </div>
               
               {/* Primary CTA */}

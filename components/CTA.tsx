@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ArrowRight, Calendar, ShieldCheck } from 'lucide-react';
 import { Language } from '../types';
 import { content } from '../data/content';
+import { GOOGLE_FORM_CTA_URL, GOOGLE_FORM_FIELD_IDS, WHATSAPP_PHONE_NUMBER } from '../constants';
 
 interface Props {
   lang: Language;
@@ -12,25 +13,12 @@ export const CTA: React.FC<Props> = ({ lang }) => {
   const [formData, setFormData] = useState({ name: '', phone: '', grade: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // ==============================
-  // ⚙️ SETUP COMPLETED
-  // ==============================
-  
-  const FORM_ACTION_URL = "https://docs.google.com/forms/d/e/1FAIpQLSepGWEDJ0ohH_e7XUK2TRrgB0gGNp9E3vnBKC4EY07F8K0jww/formResponse";
-  
-  const FORM_FIELD_IDS = {
-    name: "entry.549617858",
-    phone: "entry.1902268774",
-    grade: "entry.2145394662"
-  };
-  // ==============================
-
   const handleSubmit = (e: React.FormEvent) => {
     setIsSubmitting(true);
 
     // Prepare WhatsApp Message
     const message = `Hello Tejas Sir, I want to join the March 2026 Batch.\n\n*Name:* ${formData.name}\n*Grade:* ${formData.grade}\n*Phone:* ${formData.phone}`;
-    const whatsappUrl = `https://wa.me/919879737819?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
 
     setTimeout(() => {
         window.location.href = whatsappUrl;
@@ -93,7 +81,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                 <iframe name="hidden_iframe" id="hidden_iframe" style={{display: 'none'}}></iframe>
 
                 <form 
-                    action={FORM_ACTION_URL}
+                    action={GOOGLE_FORM_CTA_URL}
                     method="post" 
                     target="hidden_iframe"
                     onSubmit={handleSubmit}
@@ -105,7 +93,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                     </label>
                     <input 
                         type="text" 
-                        name={FORM_FIELD_IDS.name} 
+                        name={GOOGLE_FORM_FIELD_IDS.name}
                         required
                         value={formData.name}
                         onChange={(e) => setFormData({...formData, name: e.target.value})}
@@ -120,7 +108,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                     </label>
                     <input 
                         type="tel" 
-                        name={FORM_FIELD_IDS.phone} 
+                        name={GOOGLE_FORM_FIELD_IDS.phone}
                         required
                         value={formData.phone}
                         onChange={(e) => setFormData({...formData, phone: e.target.value})}
@@ -135,7 +123,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                     </label>
                     <input 
                         type="text" 
-                        name={FORM_FIELD_IDS.grade} 
+                        name={GOOGLE_FORM_FIELD_IDS.grade}
                         required
                         value={formData.grade}
                         onChange={(e) => setFormData({...formData, grade: e.target.value})}
