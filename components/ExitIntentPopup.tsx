@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, ArrowRight, ShieldCheck } from 'lucide-react';
+import { X, ArrowRight, ShieldCheck, AlertCircle } from 'lucide-react';
 import { Language } from '../types';
 import { GOOGLE_FORM_EXIT_POPUP_URL, GOOGLE_FORM_FIELD_IDS, WHATSAPP_PHONE_NUMBER } from '../constants';
 
@@ -13,6 +13,7 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   const [formData, setFormData] = useState({ name: '', phone: '', grade: 'Popup Lead' });
+  const [errors, setErrors] = useState({ name: '', phone: '' });
 
   useEffect(() => {
     // Check session storage
@@ -45,7 +46,65 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
     };
   }, [hasSeen]);
 
+  const validateField = (name: string, value: string) => {
+    let error = '';
+    if (name === 'name' && !value.trim()) {
+      error = lang === 'EN' ? 'Name is required' : 'નામ લખવું જરૂરી છે';
+    }
+    if (name === 'phone') {
+      if (!value.trim()) {
+        error = lang === 'EN' ? 'WhatsApp number is required' : 'વોટ્સએપ નંબર લખવો જરૂરી છે';
+      } else if (value.length < 10) {
+        error = lang === 'EN' ? 'Invalid phone number' : 'અમાન્ય મોબાઈલ નંબર';
+      }
+    }
+    return error;
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    let fieldKey = '' as keyof typeof formData;
+    if (name === GOOGLE_FORM_FIELD_IDS.name) fieldKey = 'name';
+    if (name === GOOGLE_FORM_FIELD_IDS.phone) fieldKey = 'phone';
+
+    if (fieldKey) {
+        // Special handling for phone
+        const finalValue = fieldKey === 'phone' ? value.replace(/\D/g, '') : value;
+
+        setFormData(prev => ({ ...prev, [fieldKey]: finalValue }));
+
+        // Clear error if exists
+        if (errors[fieldKey as keyof typeof errors]) {
+            setErrors(prev => ({ ...prev, [fieldKey]: '' }));
+        }
+    }
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    let fieldKey = '' as keyof typeof formData;
+    if (name === GOOGLE_FORM_FIELD_IDS.name) fieldKey = 'name';
+    if (name === GOOGLE_FORM_FIELD_IDS.phone) fieldKey = 'phone';
+
+    if (fieldKey) {
+       const error = validateField(fieldKey, value);
+       setErrors(prev => ({ ...prev, [fieldKey]: error }));
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
+    const nameError = validateField('name', formData.name);
+    const phoneError = validateField('phone', formData.phone);
+
+    if (nameError || phoneError) {
+        e.preventDefault();
+        setErrors({
+            name: nameError,
+            phone: phoneError
+        });
+        return;
+    }
+
     setIsSubmitting(true);
     // WhatsApp redirect logic
     const message = `Hello Tejas Sir, I claimed the Free Prompt Library via the website popup.\n\n*Name:* ${formData.name}\n*Phone:* ${formData.phone}`;
@@ -108,6 +167,7 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
               target="popup_hidden_iframe"
               onSubmit={handleSubmit}
               className="space-y-4"
+              noValidate
            >
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-1">
@@ -118,10 +178,17 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
                   name={GOOGLE_FORM_FIELD_IDS.name}
                   required
                   value={formData.name}
-                  onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:outline-none bg-gray-50 placeholder-gray-400"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className={`w-full px-4 py-3 rounded-xl border ${errors.name ? 'border-brand-500 ring-1 ring-brand-500' : 'border-gray-200'} focus:ring-2 focus:ring-brand-500 focus:outline-none bg-gray-50 placeholder-gray-400`}
                   placeholder="e.g. Amit Patel"
                 />
+                {errors.name && (
+                    <div className="flex items-center gap-1 mt-1 text-brand-600 text-xs font-bold animate-fade-in">
+                        <AlertCircle className="w-3 h-3" />
+                        <span>{errors.name}</span>
+                    </div>
+                )}
               </div>
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-1">
@@ -135,10 +202,17 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
                   maxLength={10}
                   title={lang === 'EN' ? "Please enter a valid 10-digit phone number" : "કૃપા કરીને 10 અંકનો માન્ય મોબાઈલ નંબર દાખલ કરો"}
                   value={formData.phone}
-                  onChange={(e) => setFormData({...formData, phone: e.target.value.replace(/\D/g, '')})}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:outline-none bg-gray-50 placeholder-gray-400"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className={`w-full px-4 py-3 rounded-xl border ${errors.phone ? 'border-brand-500 ring-1 ring-brand-500' : 'border-gray-200'} focus:ring-2 focus:ring-brand-500 focus:outline-none bg-gray-50 placeholder-gray-400`}
                   placeholder="98765 43210"
                 />
+                {errors.phone && (
+                    <div className="flex items-center gap-1 mt-1 text-brand-600 text-xs font-bold animate-fade-in">
+                        <AlertCircle className="w-3 h-3" />
+                        <span>{errors.phone}</span>
+                    </div>
+                )}
                 <input type="hidden" name={GOOGLE_FORM_FIELD_IDS.grade} value="Exit Popup Lead" />
               </div>
               
