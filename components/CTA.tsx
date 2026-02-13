@@ -109,7 +109,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                         required
                         value={formData.name}
                         onChange={(e) => setFormData({...formData, name: e.target.value})}
-                        className="w-full px-4 py-3.5 rounded-xl border border-brand-200 focus:outline-none focus:ring-2 focus:ring-brand-600 bg-brand-50 transition-all font-medium placeholder:text-brand-300"
+                        className="w-full px-4 py-3.5 rounded-xl border border-brand-200 focus:outline-none focus:ring-2 focus:ring-brand-600 bg-brand-50 transition-all font-medium placeholder:text-brand-300 focus:scale-[1.02] focus:shadow-[0_0_15px_rgba(224,96,96,0.3)] origin-center"
                         placeholder={lang === 'EN' ? "e.g. Rahul Patel" : "દા.ત. રાહુલ પટેલ"}
                     />
                     </div>
@@ -124,7 +124,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                         required
                         value={formData.phone}
                         onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                        className="w-full px-4 py-3.5 rounded-xl border border-brand-200 focus:outline-none focus:ring-2 focus:ring-brand-600 bg-brand-50 transition-all font-medium placeholder:text-brand-300"
+                        className="w-full px-4 py-3.5 rounded-xl border border-brand-200 focus:outline-none focus:ring-2 focus:ring-brand-600 bg-brand-50 transition-all font-medium placeholder:text-brand-300 focus:scale-[1.02] focus:shadow-[0_0_15px_rgba(224,96,96,0.3)] origin-center"
                         placeholder="98797 37819"
                     />
                     </div>
@@ -139,7 +139,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                         required
                         value={formData.grade}
                         onChange={(e) => setFormData({...formData, grade: e.target.value})}
-                        className="w-full px-4 py-3.5 rounded-xl border border-brand-200 focus:outline-none focus:ring-2 focus:ring-brand-600 bg-brand-50 transition-all font-medium placeholder:text-brand-300"
+                        className="w-full px-4 py-3.5 rounded-xl border border-brand-200 focus:outline-none focus:ring-2 focus:ring-brand-600 bg-brand-50 transition-all font-medium placeholder:text-brand-300 focus:scale-[1.02] focus:shadow-[0_0_15px_rgba(224,96,96,0.3)] origin-center"
                         placeholder={lang === 'EN' ? "e.g. 10th / BCA / Commerce" : "દા.ત. 10th / BCA / Commerce"}
                     />
                     </div>
@@ -147,7 +147,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                     <button 
                     type="submit"
                     disabled={isSubmitting}
-                    className="group relative w-full mt-6 py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold text-lg rounded-full shadow-[0_4px_20px_rgba(224,96,96,0.4)] transition-all transform active:scale-[0.98] hover:-translate-y-1 hover:scale-105 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed overflow-hidden"
+                    className="group relative w-full mt-6 py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold text-lg rounded-full shadow-[0_4px_20px_rgba(224,96,96,0.4)] transition-all transform active:scale-[0.98] hover:-translate-y-1 hover:scale-105 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed overflow-hidden animate-heartbeat hover:animate-none"
                     >
                     {isSubmitting ? (
                         <span className="animate-pulse">Processing...</span>
