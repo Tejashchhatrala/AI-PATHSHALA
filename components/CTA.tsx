@@ -110,8 +110,11 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                         type="tel" 
                         name={GOOGLE_FORM_FIELD_IDS.phone}
                         required
+                        pattern="[0-9]{10}"
+                        maxLength={10}
+                        title={lang === 'EN' ? "Please enter a valid 10-digit phone number" : "કૃપા કરીને 10 અંકનો માન્ય મોબાઈલ નંબર દાખલ કરો"}
                         value={formData.phone}
-                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                        onChange={(e) => setFormData({...formData, phone: e.target.value.replace(/\D/g, '')})}
                         className="w-full px-4 py-3.5 rounded-xl border border-brand-200 focus:outline-none focus:ring-2 focus:ring-brand-600 bg-brand-50 transition-all font-medium placeholder:text-brand-300 focus:scale-[1.02] focus:shadow-[0_0_15px_rgba(224,96,96,0.3)] origin-center"
                         placeholder="98797 37819"
                     />
