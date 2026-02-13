@@ -1,5 +1,6 @@
 import React from 'react';
 import { Language } from '../types';
+import { WEBSITE_URL } from '../constants';
 
 interface Props {
   lang: Language;
@@ -13,7 +14,9 @@ export const Footer: React.FC<Props> = ({ lang, onPrivacyClick }) => {
         <div className="mb-6">
            <h3 className="text-2xl text-brand-950 font-bold mb-2">AI Pathshala</h3>
            <p className="text-brand-800 text-sm mb-1 font-medium">An Initiative by Sarvottam</p>
-           <a href="https://sarvottamai.in" target="_blank" rel="noopener noreferrer" className="text-brand-600 hover:text-brand-800 text-sm font-medium transition-colors">sarvottamai.in</a>
+           <a href={WEBSITE_URL} target="_blank" rel="noopener noreferrer" className="text-brand-600 hover:text-brand-800 text-sm font-medium transition-colors">
+             {WEBSITE_URL.replace('https://', '')}
+           </a>
         </div>
         
         <div className="max-w-2xl mx-auto border-t border-brand-200 pt-6 mt-6">
