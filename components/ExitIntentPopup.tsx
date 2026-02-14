@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { X, ArrowRight, ShieldCheck, AlertCircle } from 'lucide-react';
 import { Language } from '../types';
 import { GOOGLE_FORM_EXIT_POPUP_URL, GOOGLE_FORM_FIELD_IDS, WHATSAPP_PHONE_NUMBER } from '../constants';
@@ -6,6 +6,21 @@ import { GOOGLE_FORM_EXIT_POPUP_URL, GOOGLE_FORM_FIELD_IDS, WHATSAPP_PHONE_NUMBE
 interface Props {
   lang: Language;
 }
+
+const validatePopupField = (name: string, value: string, lang: Language) => {
+  let error = '';
+  if (name === 'name' && !value.trim()) {
+    error = lang === 'EN' ? 'Name is required' : 'નામ લખવું જરૂરી છે';
+  }
+  if (name === 'phone') {
+    if (!value.trim()) {
+      error = lang === 'EN' ? 'WhatsApp number is required' : 'વોટ્સએપ નંબર લખવો જરૂરી છે';
+    } else if (value.length < 10) {
+      error = lang === 'EN' ? 'Invalid phone number' : 'અમાન્ય મોબાઈલ નંબર';
+    }
+  }
+  return error;
+};
 
 export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -46,22 +61,7 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
     };
   }, [hasSeen]);
 
-  const validateField = (name: string, value: string) => {
-    let error = '';
-    if (name === 'name' && !value.trim()) {
-      error = lang === 'EN' ? 'Name is required' : 'નામ લખવું જરૂરી છે';
-    }
-    if (name === 'phone') {
-      if (!value.trim()) {
-        error = lang === 'EN' ? 'WhatsApp number is required' : 'વોટ્સએપ નંબર લખવો જરૂરી છે';
-      } else if (value.length < 10) {
-        error = lang === 'EN' ? 'Invalid phone number' : 'અમાન્ય મોબાઈલ નંબર';
-      }
-    }
-    return error;
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     let fieldKey = '' as keyof typeof formData;
     if (name === GOOGLE_FORM_FIELD_IDS.name) fieldKey = 'name';
@@ -74,27 +74,30 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
         setFormData(prev => ({ ...prev, [fieldKey]: finalValue }));
 
         // Clear error if exists
-        if (errors[fieldKey as keyof typeof errors]) {
-            setErrors(prev => ({ ...prev, [fieldKey]: '' }));
-        }
+        setErrors(prev => {
+            if (prev[fieldKey as keyof typeof errors]) {
+                return { ...prev, [fieldKey]: '' };
+            }
+            return prev;
+        });
     }
-  };
+  }, []);
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+  const handleBlur = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     let fieldKey = '' as keyof typeof formData;
     if (name === GOOGLE_FORM_FIELD_IDS.name) fieldKey = 'name';
     if (name === GOOGLE_FORM_FIELD_IDS.phone) fieldKey = 'phone';
 
     if (fieldKey) {
-       const error = validateField(fieldKey, value);
+       const error = validatePopupField(fieldKey as string, value, lang);
        setErrors(prev => ({ ...prev, [fieldKey]: error }));
     }
-  };
+  }, [lang]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    const nameError = validateField('name', formData.name);
-    const phoneError = validateField('phone', formData.phone);
+  const handleSubmit = useCallback((e: React.FormEvent) => {
+    const nameError = validatePopupField('name', formData.name, lang);
+    const phoneError = validatePopupField('phone', formData.phone, lang);
 
     if (nameError || phoneError) {
         e.preventDefault();
@@ -114,7 +117,7 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
       window.location.href = whatsappUrl;
       setIsSubmitting(false);
     }, 1500);
-  };
+  }, [formData, lang]);
 
   if (!isVisible) return null;
 
