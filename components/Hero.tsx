@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowRight, Lock, Radio, ShieldCheck, Zap } from 'lucide-react';
 import { Language } from '../types';
 import { content } from '../data/content';
+import { scrollToElement } from '../utils';
 
 interface Props {
   lang: Language;
@@ -10,13 +11,7 @@ interface Props {
 export const Hero: React.FC<Props> = ({ lang }) => {
   const t = content.hero;
   
-  const scrollToEnroll = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const element = document.getElementById('enroll');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const scrollToEnroll = (e: React.MouseEvent) => scrollToElement('enroll', e);
 
   return (
     <div className="relative bg-brand-50 pt-32 pb-24 lg:pt-48 lg:pb-40 overflow-hidden">
