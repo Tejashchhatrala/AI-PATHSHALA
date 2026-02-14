@@ -1,6 +1,6 @@
 import { test, mock } from 'node:test';
 import assert from 'node:assert';
-import { throttle } from '../utils.ts';
+import { throttle, scrollToElement } from '../utils.ts';
 
 test('throttle utility', async (t) => {
   const timers = mock.timers;
@@ -98,5 +98,54 @@ test('throttle utility', async (t) => {
 
     timers.tick(1000);
     assert.strictEqual(func.mock.callCount(), 3);
+  });
+});
+
+test('scrollToElement utility', async (t) => {
+  // Mock document and getElementById
+  const mockScrollIntoView = mock.fn();
+  const mockGetElementById = mock.fn((id) => {
+    if (id === 'valid-id') {
+      return { scrollIntoView: mockScrollIntoView };
+    }
+    return null;
+  });
+
+  // Assign to global
+  global.document = {
+    getElementById: mockGetElementById,
+  } as any;
+
+  t.after(() => {
+    // Clean up global mock
+    delete (global as any).document;
+  });
+
+  await t.test('should call preventDefault if event provided', () => {
+    const mockPreventDefault = mock.fn();
+    // Use type assertion or satisfy the type requirement
+    scrollToElement('invalid-id', { preventDefault: mockPreventDefault });
+    assert.strictEqual(mockPreventDefault.mock.callCount(), 1);
+  });
+
+  await t.test('should find element and call scrollIntoView', () => {
+    // Clear previous calls
+    mockGetElementById.mock.resetCalls();
+    mockScrollIntoView.mock.resetCalls();
+
+    scrollToElement('valid-id');
+
+    assert.strictEqual(mockGetElementById.mock.callCount(), 1);
+    assert.strictEqual(mockGetElementById.mock.calls[0].arguments[0], 'valid-id');
+
+    assert.strictEqual(mockScrollIntoView.mock.callCount(), 1);
+    assert.deepStrictEqual(mockScrollIntoView.mock.calls[0].arguments[0], { behavior: 'smooth' });
+  });
+
+  await t.test('should do nothing if element not found', () => {
+    mockScrollIntoView.mock.resetCalls();
+    scrollToElement('invalid-id');
+
+    assert.strictEqual(mockScrollIntoView.mock.callCount(), 0);
   });
 });

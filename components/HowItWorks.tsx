@@ -2,6 +2,7 @@ import React from 'react';
 import { Flag, Compass, MessageSquare, Trophy, Briefcase, ArrowRight } from 'lucide-react';
 import { Language } from '../types';
 import { content } from '../data/content';
+import { scrollToElement } from '../utils';
 
 interface Props {
   lang: Language;
@@ -24,13 +25,7 @@ const COLORS = [
 export const HowItWorks: React.FC<Props> = ({ lang }) => {
   const t = content.howItWorks;
 
-  const scrollToEnroll = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const element = document.getElementById('enroll');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const scrollToEnroll = (e: React.MouseEvent) => scrollToElement('enroll', e);
 
   return (
     <section id="how-it-works" className="py-24 bg-white relative overflow-hidden">

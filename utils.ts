@@ -27,3 +27,16 @@ export function throttle<T extends (...args: any[]) => any>(
     }
   };
 }
+
+export const scrollToElement = (elementId: string, event?: { preventDefault: () => void }) => {
+  if (event) {
+    event.preventDefault();
+  }
+
+  if (typeof document !== 'undefined') {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+};

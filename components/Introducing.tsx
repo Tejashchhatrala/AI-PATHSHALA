@@ -2,6 +2,7 @@ import React from 'react';
 import { User, RefreshCw, FileText, Zap, ArrowRight, Brain, Calendar } from 'lucide-react';
 import { Language } from '../types';
 import { content } from '../data/content';
+import { scrollToElement } from '../utils';
 
 interface Props {
   lang: Language;
@@ -18,13 +19,7 @@ const ICONS = [
 export const Introducing: React.FC<Props> = ({ lang }) => {
   const t = content.introduction;
 
-  const scrollToEnroll = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const element = document.getElementById('enroll');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const scrollToEnroll = (e: React.MouseEvent) => scrollToElement('enroll', e);
 
   return (
     <section className="py-24 bg-white overflow-hidden">

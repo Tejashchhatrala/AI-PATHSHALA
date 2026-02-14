@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Brain } from 'lucide-react';
-import { throttle } from './utils';
+import { throttle, scrollToElement } from './utils';
 import { Language } from './types';
 import { LanguageToggle } from './components/LanguageToggle';
 import { Hero } from './components/Hero';
@@ -32,13 +32,7 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToEnroll = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const element = document.getElementById('enroll');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const scrollToEnroll = (e: React.MouseEvent) => scrollToElement('enroll', e);
 
   if (showPrivacy) {
     return <PrivacyPolicy lang={lang} onBack={() => setShowPrivacy(false)} />;
