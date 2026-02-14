@@ -40,3 +40,34 @@ export const scrollToElement = (elementId: string, event?: { preventDefault: () 
     }
   }
 };
+
+/**
+ * Sanitizes user input to prevent XSS and ensure data integrity.
+ * - Removes HTML tags and dangerous characters (<, >)
+ * - Optionally trims whitespace (default: true)
+ * - Enforces a maximum length
+ * - Preserves Unicode characters for Gujarati support
+ *
+ * @param input The raw input string
+ * @param maxLength The maximum allowed length (default: 100)
+ * @param trim Whether to trim whitespace (default: true)
+ * @returns The sanitized string
+ */
+export const sanitizeInput = (input: string, maxLength: number = 100, trim: boolean = true): string => {
+  if (typeof input !== 'string') return '';
+
+  // Remove < and > characters to neutralize HTML tags
+  let sanitized = input.replace(/[<>]/g, '');
+
+  // Trim leading/trailing whitespace if requested
+  if (trim) {
+    sanitized = sanitized.trim();
+  }
+
+  // Enforce max length
+  if (sanitized.length > maxLength) {
+    sanitized = sanitized.slice(0, maxLength);
+  }
+
+  return sanitized;
+};

@@ -3,6 +3,7 @@ import { ArrowRight, Calendar, ShieldCheck, AlertCircle } from 'lucide-react';
 import { Language } from '../types';
 import { content } from '../data/content';
 import { GOOGLE_FORM_CTA_URL, GOOGLE_FORM_FIELD_IDS, WHATSAPP_PHONE_NUMBER } from '../constants';
+import { sanitizeInput } from '../utils';
 
 interface Props {
   lang: Language;
@@ -54,7 +55,12 @@ export const CTA: React.FC<Props> = ({ lang }) => {
 
     if (fieldKey) {
         // Special handling for phone
-        const finalValue = fieldKey === 'phone' ? value.replace(/\D/g, '') : value;
+        let finalValue = value;
+        if (fieldKey === 'phone') {
+             finalValue = value.replace(/\D/g, '');
+        } else {
+             finalValue = sanitizeInput(value, 100, false);
+        }
 
         setFormData(prev => ({ ...prev, [fieldKey]: finalValue }));
 
