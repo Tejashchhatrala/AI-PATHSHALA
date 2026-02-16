@@ -7,7 +7,7 @@ interface Props {
   onBack: () => void;
 }
 
-export const PrivacyPolicy: React.FC<Props> = ({ lang, onBack }) => {
+const PrivacyPolicyComponent: React.FC<Props> = ({ lang, onBack }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -135,3 +135,5 @@ export const PrivacyPolicy: React.FC<Props> = ({ lang, onBack }) => {
     </div>
   );
 };
+
+export const PrivacyPolicy = React.memo(PrivacyPolicyComponent);
