@@ -32,7 +32,9 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToEnroll = (e: React.MouseEvent) => scrollToElement('enroll', e);
+  const scrollToEnroll = useCallback((e: React.MouseEvent) => {
+    scrollToElement('enroll', e);
+  }, []);
 
   const handleBack = useCallback(() => {
     setShowPrivacy(false);
