@@ -1,6 +1,6 @@
 import { test, mock } from 'node:test';
 import assert from 'node:assert';
-import { throttle, scrollToElement } from '../utils.ts';
+import { throttle, scrollToElement, sanitizeInput } from '../utils.ts';
 
 test('throttle utility', async (t) => {
   const timers = mock.timers;
@@ -147,5 +147,58 @@ test('scrollToElement utility', async (t) => {
     scrollToElement('invalid-id');
 
     assert.strictEqual(mockScrollIntoView.mock.callCount(), 0);
+  });
+});
+
+test('sanitizeInput utility', async (t) => {
+  await t.test('should remove HTML tags/characters', () => {
+    const input = '<script>alert("xss")</script>';
+    // We remove < and >, so the result should be scriptalert("xss")/script
+    const expected = 'scriptalert("xss")/script';
+    assert.strictEqual(sanitizeInput(input), expected);
+  });
+
+  await t.test('should trim whitespace', () => {
+    const input = '  hello  ';
+    assert.strictEqual(sanitizeInput(input), 'hello');
+  });
+
+  await t.test('should limit length', () => {
+    const input = 'a'.repeat(200);
+    const sanitized = sanitizeInput(input, 10);
+    assert.strictEqual(sanitized.length, 10);
+    assert.strictEqual(sanitized, 'aaaaaaaaaa');
+  });
+
+  await t.test('should preserve Gujarati characters', () => {
+    const input = 'નામ';
+    assert.strictEqual(sanitizeInput(input), 'નામ');
+  });
+
+  await t.test('should handle mixed input', () => {
+    const input = '  <script>નામ</script>  ';
+    const expected = 'scriptનામ/script';
+    assert.strictEqual(sanitizeInput(input), expected);
+  });
+
+  await t.test('should handle empty input', () => {
+    assert.strictEqual(sanitizeInput(''), '');
+  });
+
+  await t.test('should handle non-string input (graceful failure)', () => {
+    // @ts-ignore
+    assert.strictEqual(sanitizeInput(null), '');
+    // @ts-ignore
+    assert.strictEqual(sanitizeInput(undefined), '');
+  });
+
+  await t.test('should respect trim parameter', () => {
+    const input = '  hello  ';
+    // Default is true
+    assert.strictEqual(sanitizeInput(input), 'hello');
+    // Explicit true
+    assert.strictEqual(sanitizeInput(input, 100, true), 'hello');
+    // Explicit false
+    assert.strictEqual(sanitizeInput(input, 100, false), '  hello  ');
   });
 });
