@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Brain } from 'lucide-react';
 import { throttle, scrollToElement } from './utils';
 import { Language } from './types';
@@ -34,8 +34,12 @@ function App() {
 
   const scrollToEnroll = (e: React.MouseEvent) => scrollToElement('enroll', e);
 
+  const handleBack = useCallback(() => {
+    setShowPrivacy(false);
+  }, []);
+
   if (showPrivacy) {
-    return <PrivacyPolicy lang={lang} onBack={() => setShowPrivacy(false)} />;
+    return <PrivacyPolicy lang={lang} onBack={handleBack} />;
   }
 
   return (
