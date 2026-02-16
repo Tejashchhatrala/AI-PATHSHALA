@@ -38,6 +38,11 @@ function App() {
     setShowPrivacy(false);
   }, []);
 
+  const handlePrivacyClick = useCallback(() => {
+    setShowPrivacy(true);
+    window.scrollTo(0, 0);
+  }, []);
+
   if (showPrivacy) {
     return <PrivacyPolicy lang={lang} onBack={handleBack} />;
   }
@@ -114,7 +119,7 @@ function App() {
         <CTA lang={lang} />
       </main>
 
-      <Footer lang={lang} onPrivacyClick={() => { setShowPrivacy(true); window.scrollTo(0,0); }} />
+      <Footer lang={lang} onPrivacyClick={handlePrivacyClick} />
       
       {/* New Components */}
       <ExitIntentPopup lang={lang} />
