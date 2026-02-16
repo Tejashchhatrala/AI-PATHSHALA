@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Language } from '../types';
 import { WEBSITE_URL } from '../constants';
 
@@ -7,7 +7,7 @@ interface Props {
   onPrivacyClick: () => void;
 }
 
-export const Footer: React.FC<Props> = ({ lang, onPrivacyClick }) => {
+export const Footer = memo(({ lang, onPrivacyClick }: Props) => {
   return (
     <footer className="bg-brand-100 text-brand-800 py-12 border-t border-brand-200">
       <div className="container mx-auto px-4 text-center">
@@ -45,4 +45,4 @@ export const Footer: React.FC<Props> = ({ lang, onPrivacyClick }) => {
       </div>
     </footer>
   );
-};
+});
