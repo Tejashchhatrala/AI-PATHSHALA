@@ -74,6 +74,7 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
         if (fieldKey === 'phone') {
              finalValue = value.replace(/\D/g, '');
         } else {
+             // Sanitize input to prevent XSS
              finalValue = sanitizeInput(value, 100, false);
         }
 
