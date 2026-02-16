@@ -103,6 +103,7 @@ export const Authority: React.FC<Props> = ({ lang }) => {
                           src={logo.src}
                           alt={logo.name}
                           className={`${logo.height} w-auto object-contain`}
+                          loading="lazy"
                       />
                    ))}
                 </div>
