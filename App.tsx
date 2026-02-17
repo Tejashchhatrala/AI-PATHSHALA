@@ -18,10 +18,15 @@ import { ExitIntentPopup } from './components/ExitIntentPopup';
 import { StudentJourney } from './components/StudentJourney';
 import { FAQ } from './components/FAQ';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
+import { RefundPolicy } from './components/RefundPolicy';
+import { TermsAndConditions } from './components/TermsAndConditions';
+import { ContactUsPage } from './components/ContactUsPage';
+
+type View = 'home' | 'privacy' | 'refund' | 'terms' | 'contact';
 
 function App() {
   const [lang, setLang] = useState<Language>('GU');
-  const [showPrivacy, setShowPrivacy] = useState(false);
+  const [currentView, setCurrentView] = useState<View>('home');
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -32,21 +37,50 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Handle URL query parameters for routing
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const page = params.get('page');
+
+    if (page === 'refund' || page === 'refund-policy') {
+      setCurrentView('refund');
+    } else if (page === 'terms') {
+      setCurrentView('terms');
+    } else if (page === 'contact') {
+      setCurrentView('contact');
+    } else if (page === 'privacy') {
+      setCurrentView('privacy');
+    }
+  }, []);
+
   const scrollToEnroll = useCallback((e: React.MouseEvent) => {
     scrollToElement('enroll', e);
   }, []);
 
   const handleBack = useCallback(() => {
-    setShowPrivacy(false);
-  }, []);
-
-  const handlePrivacyClick = useCallback(() => {
-    setShowPrivacy(true);
+    setCurrentView('home');
+    // Optional: Reset URL to root without reloading
+    window.history.pushState({}, '', window.location.pathname);
     window.scrollTo(0, 0);
   }, []);
 
-  if (showPrivacy) {
+  const handlePrivacyClick = useCallback(() => {
+    setCurrentView('privacy');
+    window.scrollTo(0, 0);
+  }, []);
+
+  // Conditional Rendering for Legal/Info Pages
+  if (currentView === 'privacy') {
     return <PrivacyPolicy lang={lang} onBack={handleBack} />;
+  }
+  if (currentView === 'refund') {
+    return <RefundPolicy lang={lang} onBack={handleBack} />;
+  }
+  if (currentView === 'terms') {
+    return <TermsAndConditions lang={lang} onBack={handleBack} />;
+  }
+  if (currentView === 'contact') {
+    return <ContactUsPage lang={lang} onBack={handleBack} />;
   }
 
   return (
