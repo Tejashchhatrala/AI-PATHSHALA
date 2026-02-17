@@ -1,3 +1,4 @@
+
 export function throttle<T extends (...args: any[]) => any>(
   func: T,
   limit: number
@@ -70,4 +71,54 @@ export const sanitizeInput = (input: string, maxLength: number = 100, trim: bool
   }
 
   return sanitized;
+};
+
+/**
+ * Checks if a user has exceeded the rate limit for a given action.
+ * Uses localStorage to persist submission timestamps.
+ *
+ * @param key The unique key for the rate limit (e.g., 'cta_submission')
+ * @param limit The maximum number of allowed submissions
+ * @param windowMs The time window in milliseconds
+ * @returns true if the user is rate limited, false otherwise
+ */
+export const checkRateLimit = (key: string, limit: number, windowMs: number): boolean => {
+  if (typeof window === 'undefined' || !window.localStorage) return false;
+
+  try {
+    const rawData = localStorage.getItem(key);
+    const timestamps: number[] = rawData ? JSON.parse(rawData) : [];
+    const now = Date.now();
+
+    // Filter out timestamps older than the window
+    const validTimestamps = timestamps.filter(ts => now - ts < windowMs);
+
+    // Update localStorage with cleaned up timestamps (optional but good for maintenance)
+    if (validTimestamps.length !== timestamps.length) {
+       localStorage.setItem(key, JSON.stringify(validTimestamps));
+    }
+
+    return validTimestamps.length >= limit;
+  } catch (e) {
+    console.error('Rate limit check failed:', e);
+    return false; // Fail open to avoid blocking legitimate users on error
+  }
+};
+
+/**
+ * Records a successful submission timestamp for rate limiting.
+ *
+ * @param key The unique key for the rate limit
+ */
+export const recordSubmission = (key: string): void => {
+  if (typeof window === 'undefined' || !window.localStorage) return;
+
+  try {
+    const rawData = localStorage.getItem(key);
+    const timestamps: number[] = rawData ? JSON.parse(rawData) : [];
+    timestamps.push(Date.now());
+    localStorage.setItem(key, JSON.stringify(timestamps));
+  } catch (e) {
+    console.error('Failed to record submission:', e);
+  }
 };

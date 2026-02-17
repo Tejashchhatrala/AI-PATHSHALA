@@ -3,7 +3,7 @@ import { ArrowRight, Calendar, ShieldCheck, AlertCircle } from 'lucide-react';
 import { Language } from '../types';
 import { content } from '../data/content';
 import { GOOGLE_FORM_CTA_URL, GOOGLE_FORM_FIELD_IDS, WHATSAPP_PHONE_NUMBER } from '../constants';
-import { sanitizeInput } from '../utils';
+import { sanitizeInput, checkRateLimit, recordSubmission } from '../utils';
 
 interface Props {
   lang: Language;
@@ -11,8 +11,8 @@ interface Props {
 
 export const CTA: React.FC<Props> = ({ lang }) => {
   const t = content.finalCall;
-  const [formData, setFormData] = useState({ name: '', phone: '', grade: '' });
-  const [errors, setErrors] = useState({ name: '', phone: '', grade: '' });
+  const [formData, setFormData] = useState({ name: '', phone: '', grade: '', website_url: '' });
+  const [errors, setErrors] = useState({ name: '', phone: '', grade: '', form: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validateField = (name: string, value: string) => {
@@ -49,6 +49,8 @@ export const CTA: React.FC<Props> = ({ lang }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     let fieldKey = '' as keyof typeof formData;
+
+    if (name === 'website_url') fieldKey = 'website_url';
     if (name === GOOGLE_FORM_FIELD_IDS.name) fieldKey = 'name';
     if (name === GOOGLE_FORM_FIELD_IDS.phone) fieldKey = 'phone';
     if (name === GOOGLE_FORM_FIELD_IDS.grade) fieldKey = 'grade';
@@ -58,6 +60,8 @@ export const CTA: React.FC<Props> = ({ lang }) => {
         let finalValue = value;
         if (fieldKey === 'phone') {
              finalValue = value.replace(/\D/g, '');
+        } else if (fieldKey === 'website_url') {
+             finalValue = value;
         } else {
              finalValue = sanitizeInput(value, 100, false);
         }
@@ -65,13 +69,35 @@ export const CTA: React.FC<Props> = ({ lang }) => {
         setFormData(prev => ({ ...prev, [fieldKey]: finalValue }));
 
         // Clear error if exists
-        if (errors[fieldKey]) {
+        if (fieldKey !== 'website_url' && errors[fieldKey as keyof typeof errors]) {
             setErrors(prev => ({ ...prev, [fieldKey]: '' }));
         }
     }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
+    // 1. Honeypot Check (Silent Fail)
+    if (formData.website_url) {
+        e.preventDefault();
+        // Pretend to submit successfully to fool the bot
+        setIsSubmitting(true);
+        setTimeout(() => {
+            setIsSubmitting(false);
+            setFormData({ name: '', phone: '', grade: '', website_url: '' });
+        }, 1500);
+        return;
+    }
+
+    // 2. Rate Limiting Check
+    if (checkRateLimit('cta_submission', 3, 60 * 60 * 1000)) { // 3 per hour
+        e.preventDefault();
+        setErrors(prev => ({
+            ...prev,
+            form: lang === 'EN' ? 'Too many requests. Please try again later.' : 'ઘણી બધી વિનંતીઓ. કૃપા કરીને પછીથી ફરી પ્રયાસ કરો.'
+        }));
+        return;
+    }
+
     // Validate all fields
     const nameError = validateField('name', formData.name);
     const phoneError = validateField('phone', formData.phone);
@@ -82,10 +108,14 @@ export const CTA: React.FC<Props> = ({ lang }) => {
         setErrors({
             name: nameError,
             phone: phoneError,
-            grade: gradeError
+            grade: gradeError,
+            form: ''
         });
         return;
     }
+
+    // Record submission attempt
+    recordSubmission('cta_submission');
 
     setIsSubmitting(true);
 
@@ -161,6 +191,25 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                     className="space-y-4"
                     noValidate
                     >
+                    {/* Honeypot Field - Hidden from real users */}
+                    <div className="absolute opacity-0 -z-10 h-0 w-0 overflow-hidden">
+                        <input
+                            type="text"
+                            name="website_url"
+                            tabIndex={-1}
+                            autoComplete="off"
+                            value={formData.website_url}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    {errors.form && (
+                        <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm font-medium flex items-center gap-2">
+                            <AlertCircle className="w-4 h-4" />
+                            {errors.form}
+                        </div>
+                    )}
+
                     <div className="group">
                     <label className="block text-sm font-bold text-brand-800 mb-1 ml-1 group-focus-within:text-brand-500 transition-colors">
                         {lang === 'EN' ? "Student Name" : "વિદ્યાર્થીનું નામ"}

@@ -1,6 +1,6 @@
 import { test, mock } from 'node:test';
 import assert from 'node:assert';
-import { throttle, scrollToElement, sanitizeInput } from '../utils.ts';
+import { throttle, scrollToElement, sanitizeInput, checkRateLimit, recordSubmission } from '../utils.ts';
 
 test('throttle utility', async (t) => {
   const timers = mock.timers;
@@ -200,5 +200,85 @@ test('sanitizeInput utility', async (t) => {
     assert.strictEqual(sanitizeInput(input, 100, true), 'hello');
     // Explicit false
     assert.strictEqual(sanitizeInput(input, 100, false), '  hello  ');
+  });
+});
+
+test('Rate Limiting utilities', async (t) => {
+  const store: Record<string, string> = {};
+  const mockLocalStorage = {
+    getItem: mock.fn((key: string) => store[key] || null),
+    setItem: mock.fn((key: string, value: string) => {
+      store[key] = value;
+    }),
+    clear: () => {
+      for (const key in store) delete store[key];
+    }
+  };
+
+  // Mock global window and localStorage
+  global.window = {
+    localStorage: mockLocalStorage,
+  } as any;
+  global.localStorage = mockLocalStorage as any;
+
+  // Mock Date.now
+  const timers = mock.timers;
+  timers.enable({ apis: ['Date'] });
+  timers.setTime(1000); // Start at t=1000
+
+  t.after(() => {
+    delete (global as any).window;
+    delete (global as any).localStorage;
+    timers.reset();
+  });
+
+  t.beforeEach(() => {
+     mockLocalStorage.clear();
+     mockLocalStorage.getItem.mock.resetCalls();
+     mockLocalStorage.setItem.mock.resetCalls();
+     timers.setTime(1000);
+  });
+
+  await t.test('checkRateLimit should return false if no submissions', () => {
+    assert.strictEqual(checkRateLimit('test_key', 3, 10000), false);
+  });
+
+  await t.test('recordSubmission should add timestamp', () => {
+    recordSubmission('test_key');
+    assert.strictEqual(mockLocalStorage.setItem.mock.callCount(), 1);
+    const stored = JSON.parse(store['test_key']);
+    assert.strictEqual(stored.length, 1);
+    assert.strictEqual(stored[0], 1000);
+  });
+
+  await t.test('checkRateLimit should return true if limit exceeded', () => {
+    // Record 3 submissions
+    recordSubmission('test_key');
+    recordSubmission('test_key');
+    recordSubmission('test_key');
+
+    // Limit is 3, so checkRateLimit returns true if valid count >= limit
+    assert.strictEqual(checkRateLimit('test_key', 3, 10000), true);
+  });
+
+  await t.test('checkRateLimit should return false if below limit', () => {
+    recordSubmission('test_key');
+    recordSubmission('test_key');
+    assert.strictEqual(checkRateLimit('test_key', 3, 10000), false);
+  });
+
+  await t.test('should respect time window', () => {
+    // t=1000. Record one.
+    recordSubmission('test_key');
+
+    // Advance time beyond window (window=10000)
+    timers.setTime(12000);
+
+    // Old submission should be ignored
+    assert.strictEqual(checkRateLimit('test_key', 1, 10000), false);
+
+    // Also verify it cleaned up localStorage
+    const stored = JSON.parse(store['test_key']);
+    assert.strictEqual(stored.length, 0);
   });
 });
