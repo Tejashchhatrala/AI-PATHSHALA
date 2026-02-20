@@ -1,26 +1,28 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { Brain } from 'lucide-react';
 import { throttle, scrollToElement } from './utils';
 import { Language } from './types';
 import { LanguageToggle } from './components/LanguageToggle';
 import { Hero } from './components/Hero';
 import { TheRealProblem } from './components/TheRealProblem';
-import { WhyUs } from './components/WhyUs';
-import { Authority } from './components/Authority';
-import { Introducing } from './components/Introducing';
-import { WhatChanges } from './components/WhatChanges';
-import { WhoIsThisFor } from './components/WhoIsThisFor';
-import { HowItWorks } from './components/HowItWorks';
-import { Testimonials } from './components/Testimonials';
-import { CTA } from './components/CTA';
-import { Footer } from './components/Footer';
-import { ExitIntentPopup } from './components/ExitIntentPopup';
-import { StudentJourney } from './components/StudentJourney';
-import { FAQ } from './components/FAQ';
-import { PrivacyPolicy } from './components/PrivacyPolicy';
-import { RefundPolicy } from './components/RefundPolicy';
-import { TermsAndConditions } from './components/TermsAndConditions';
-import { ContactUsPage } from './components/ContactUsPage';
+
+// Lazy load components below the fold and conditional views
+const WhyUs = lazy(() => import('./components/WhyUs').then(m => ({ default: m.WhyUs })));
+const Authority = lazy(() => import('./components/Authority').then(m => ({ default: m.Authority })));
+const Introducing = lazy(() => import('./components/Introducing').then(m => ({ default: m.Introducing })));
+const WhatChanges = lazy(() => import('./components/WhatChanges').then(m => ({ default: m.WhatChanges })));
+const WhoIsThisFor = lazy(() => import('./components/WhoIsThisFor').then(m => ({ default: m.WhoIsThisFor })));
+const HowItWorks = lazy(() => import('./components/HowItWorks').then(m => ({ default: m.HowItWorks })));
+const Testimonials = lazy(() => import('./components/Testimonials').then(m => ({ default: m.Testimonials })));
+const CTA = lazy(() => import('./components/CTA').then(m => ({ default: m.CTA })));
+const Footer = lazy(() => import('./components/Footer').then(m => ({ default: m.Footer })));
+const ExitIntentPopup = lazy(() => import('./components/ExitIntentPopup').then(m => ({ default: m.ExitIntentPopup })));
+const StudentJourney = lazy(() => import('./components/StudentJourney').then(m => ({ default: m.StudentJourney })));
+const FAQ = lazy(() => import('./components/FAQ').then(m => ({ default: m.FAQ })));
+const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy').then(m => ({ default: m.PrivacyPolicy })));
+const RefundPolicy = lazy(() => import('./components/RefundPolicy').then(m => ({ default: m.RefundPolicy })));
+const TermsAndConditions = lazy(() => import('./components/TermsAndConditions').then(m => ({ default: m.TermsAndConditions })));
+const ContactUsPage = lazy(() => import('./components/ContactUsPage').then(m => ({ default: m.ContactUsPage })));
 
 type View = 'home' | 'privacy' | 'refund' | 'terms' | 'contact';
 
@@ -71,16 +73,32 @@ function App() {
 
   // Conditional Rendering for Legal/Info Pages
   if (currentView === 'privacy') {
-    return <PrivacyPolicy lang={lang} onBack={handleBack} />;
+    return (
+      <Suspense fallback={null}>
+        <PrivacyPolicy lang={lang} onBack={handleBack} />
+      </Suspense>
+    );
   }
   if (currentView === 'refund') {
-    return <RefundPolicy lang={lang} onBack={handleBack} />;
+    return (
+      <Suspense fallback={null}>
+        <RefundPolicy lang={lang} onBack={handleBack} />
+      </Suspense>
+    );
   }
   if (currentView === 'terms') {
-    return <TermsAndConditions lang={lang} onBack={handleBack} />;
+    return (
+      <Suspense fallback={null}>
+        <TermsAndConditions lang={lang} onBack={handleBack} />
+      </Suspense>
+    );
   }
   if (currentView === 'contact') {
-    return <ContactUsPage lang={lang} onBack={handleBack} />;
+    return (
+      <Suspense fallback={null}>
+        <ContactUsPage lang={lang} onBack={handleBack} />
+      </Suspense>
+    );
   }
 
   return (
@@ -124,41 +142,45 @@ function App() {
         {/* 2. The Real Problem (Agitation) */}
         <TheRealProblem lang={lang} />
         
-        {/* 3. Introducing (New Mechanism) */}
-        <Introducing lang={lang} />
+        <Suspense fallback={null}>
+          {/* 3. Introducing (New Mechanism) */}
+          <Introducing lang={lang} />
 
-        {/* 4. Student Journey (Timeline) */}
-        <StudentJourney lang={lang} />
+          {/* 4. Student Journey (Timeline) */}
+          <StudentJourney lang={lang} />
 
-        {/* 5. What Changes */}
-        <WhatChanges lang={lang} />
-        
-        {/* 6. Segmentation */}
-        <WhoIsThisFor lang={lang} />
+          {/* 5. What Changes */}
+          <WhatChanges lang={lang} />
 
-        {/* 7. How The System Works */}
-        <HowItWorks lang={lang} />
+          {/* 6. Segmentation */}
+          <WhoIsThisFor lang={lang} />
 
-        {/* 8. Why Parents Trust Us */}
-        <WhyUs lang={lang} />
-        
-        {/* 9. Meet Your Mentor */}
-        <Authority lang={lang} />
+          {/* 7. How The System Works */}
+          <HowItWorks lang={lang} />
 
-        {/* 10. Social Proof (Testimonials) */}
-        <Testimonials lang={lang} />
-        
-        {/* 11. FAQ Section */}
-        <FAQ lang={lang} />
+          {/* 8. Why Parents Trust Us */}
+          <WhyUs lang={lang} />
 
-        {/* 12. Final Action */}
-        <CTA lang={lang} />
+          {/* 9. Meet Your Mentor */}
+          <Authority lang={lang} />
+
+          {/* 10. Social Proof (Testimonials) */}
+          <Testimonials lang={lang} />
+
+          {/* 11. FAQ Section */}
+          <FAQ lang={lang} />
+
+          {/* 12. Final Action */}
+          <CTA lang={lang} />
+        </Suspense>
       </main>
 
-      <Footer lang={lang} onPrivacyClick={handlePrivacyClick} />
-      
-      {/* New Components */}
-      <ExitIntentPopup lang={lang} />
+      <Suspense fallback={null}>
+        <Footer lang={lang} onPrivacyClick={handlePrivacyClick} />
+
+        {/* New Components */}
+        <ExitIntentPopup lang={lang} />
+      </Suspense>
       
       {/* Mobile Floating CTA */}
       <div className="fixed bottom-0 left-0 w-full p-4 bg-white/90 backdrop-blur-md border-t border-brand-200 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] md:hidden z-40 pb-6">
