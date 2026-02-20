@@ -64,6 +64,10 @@ export const sanitizeInput = (input: string, maxLength: number = 100, trim: bool
     sanitized = sanitized.trim();
   }
 
+  // Prevent CSV Injection by removing dangerous starting characters
+  // We handle leading whitespace to ensure safety even if trim is false
+  sanitized = sanitized.replace(/^(\s*)[=+\-@\t\r]+/, '$1');
+
   // Enforce max length
   if (sanitized.length > maxLength) {
     sanitized = sanitized.slice(0, maxLength);
