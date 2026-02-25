@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { X, ArrowRight, ShieldCheck, AlertCircle } from 'lucide-react';
 import { Language } from '../types';
 import { GOOGLE_FORM_EXIT_POPUP_URL, GOOGLE_FORM_FIELD_IDS, WHATSAPP_PHONE_NUMBER } from '../constants';
-import { sanitizeInput } from '../utils';
+import { sanitizeInput, checkRateLimit, recordSubmission } from '../utils';
 
 interface Props {
   lang: Language;
@@ -28,8 +28,8 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
   const [hasSeen, setHasSeen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  const [formData, setFormData] = useState({ name: '', phone: '', grade: 'Popup Lead' });
-  const [errors, setErrors] = useState({ name: '', phone: '' });
+  const [formData, setFormData] = useState({ name: '', phone: '', grade: 'Popup Lead', website_url: '' });
+  const [errors, setErrors] = useState({ name: '', phone: '', form: '' });
 
   useEffect(() => {
     // Check session storage
@@ -65,6 +65,8 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     let fieldKey = '' as keyof typeof formData;
+
+    if (name === 'website_url') fieldKey = 'website_url';
     if (name === GOOGLE_FORM_FIELD_IDS.name) fieldKey = 'name';
     if (name === GOOGLE_FORM_FIELD_IDS.phone) fieldKey = 'phone';
 
@@ -73,6 +75,8 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
         let finalValue = value;
         if (fieldKey === 'phone') {
              finalValue = value.replace(/\D/g, '');
+        } else if (fieldKey === 'website_url') {
+             finalValue = value;
         } else {
              // Sanitize input to prevent XSS
              finalValue = sanitizeInput(value, 100, false);
@@ -82,7 +86,7 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
 
         // Clear error if exists
         setErrors(prev => {
-            if (prev[fieldKey as keyof typeof errors]) {
+            if (fieldKey !== 'website_url' && prev[fieldKey as keyof typeof errors]) {
                 return { ...prev, [fieldKey]: '' };
             }
             return prev;
@@ -103,6 +107,27 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
   }, [lang]);
 
   const handleSubmit = useCallback((e: React.FormEvent) => {
+    // 1. Honeypot Check
+    if (formData.website_url) {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setTimeout(() => {
+            setIsSubmitting(false);
+            setFormData({ name: '', phone: '', grade: 'Popup Lead', website_url: '' });
+        }, 1500);
+        return;
+    }
+
+    // 2. Rate Limiting Check
+    if (checkRateLimit('popup_submission', 3, 60 * 60 * 1000)) {
+        e.preventDefault();
+        setErrors(prev => ({
+            ...prev,
+            form: lang === 'EN' ? 'Too many requests. Please try again later.' : 'ઘણી બધી વિનંતીઓ. કૃપા કરીને પછીથી ફરી પ્રયાસ કરો.'
+        }));
+        return;
+    }
+
     const nameError = validatePopupField('name', formData.name, lang);
     const phoneError = validatePopupField('phone', formData.phone, lang);
 
@@ -110,10 +135,14 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
         e.preventDefault();
         setErrors({
             name: nameError,
-            phone: phoneError
+            phone: phoneError,
+            form: ''
         });
         return;
     }
+
+    // Record submission
+    recordSubmission('popup_submission');
 
     setIsSubmitting(true);
     // WhatsApp redirect logic
@@ -179,6 +208,25 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
               className="space-y-4"
               noValidate
            >
+              {/* Honeypot Field */}
+              <div className="absolute opacity-0 -z-10 h-0 w-0 overflow-hidden">
+                <input
+                    type="text"
+                    name="website_url"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={formData.website_url}
+                    onChange={handleChange}
+                />
+              </div>
+
+              {errors.form && (
+                <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm font-medium flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4" />
+                    {errors.form}
+                </div>
+              )}
+
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-1">
                    {lang === 'EN' ? "Your Name" : "વિદ્યાર્થીનું નામ"}
