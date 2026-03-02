@@ -10,3 +10,5 @@ export const GOOGLE_FORM_FIELD_IDS = {
 export const GOOGLE_FORM_CTA_URL = "https://docs.google.com/forms/d/e/1FAIpQLSepGWEDJ0ohH_e7XUK2TRrgB0gGNp9E3vnBKC4EY07F8K0jww/formResponse";
 
 export const GOOGLE_FORM_EXIT_POPUP_URL = "https://docs.google.com/forms/d/1AxEX-loWlZHlCWXTtimPTezMqAbeKHPvTuBUjORRb3M/formResponse";
+
+export const SCROLL_THRESHOLD = 20;

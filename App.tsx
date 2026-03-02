@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { Brain } from 'lucide-react';
 import { throttle, scrollToElement } from './utils';
 import { Language } from './types';
+import { SCROLL_THRESHOLD } from './constants';
 import { LanguageToggle } from './components/LanguageToggle';
 import { Hero } from './components/Hero';
 import { TheRealProblem } from './components/TheRealProblem';
@@ -33,7 +34,7 @@ function App() {
 
   useEffect(() => {
     const handleScroll = throttle(() => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > SCROLL_THRESHOLD);
     }, 100);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
