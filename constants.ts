@@ -1,4 +1,5 @@
 export const WHATSAPP_PHONE_NUMBER = "919879737819";
+export const PHONE_REGEX = /\D/g;
 export const WEBSITE_URL = "https://sarvottamai.in";
 
 export const GOOGLE_FORM_FIELD_IDS = {
