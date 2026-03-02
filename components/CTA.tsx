@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ArrowRight, Calendar, ShieldCheck, AlertCircle } from 'lucide-react';
 import { Language } from '../types';
 import { content } from '../data/content';
-import { GOOGLE_FORM_CTA_URL, GOOGLE_FORM_FIELD_IDS, WHATSAPP_PHONE_NUMBER } from '../constants';
+import { GOOGLE_FORM_CTA_URL, GOOGLE_FORM_FIELD_IDS, WHATSAPP_PHONE_NUMBER, PHONE_REGEX } from '../constants';
 import { sanitizeInput } from '../utils';
 
 interface Props {
@@ -57,7 +57,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
         // Special handling for phone
         let finalValue = value;
         if (fieldKey === 'phone') {
-             finalValue = value.replace(/\D/g, '');
+             finalValue = value.replace(PHONE_REGEX, '');
         } else {
              finalValue = sanitizeInput(value, 100, false);
         }
