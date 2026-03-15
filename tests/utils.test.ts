@@ -153,8 +153,8 @@ test('scrollToElement utility', async (t) => {
 test('sanitizeInput utility', async (t) => {
   await t.test('should remove HTML tags/characters', () => {
     const input = '<script>alert("xss")</script>';
-    // We remove < and >, so the result should be scriptalert("xss")/script
-    const expected = 'scriptalert("xss")/script';
+    // We escape tags and quotes
+    const expected = '&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;';
     assert.strictEqual(sanitizeInput(input), expected);
   });
 
@@ -177,7 +177,7 @@ test('sanitizeInput utility', async (t) => {
 
   await t.test('should handle mixed input', () => {
     const input = '  <script>નામ</script>  ';
-    const expected = 'scriptનામ/script';
+    const expected = '&lt;script&gt;નામ&lt;/script&gt;';
     assert.strictEqual(sanitizeInput(input), expected);
   });
 
