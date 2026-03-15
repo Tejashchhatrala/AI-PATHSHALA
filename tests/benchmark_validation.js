@@ -5,11 +5,9 @@ const lang = 'EN';
 const name = 'test';
 const value = '1234567890';
 
-// Case 1: Inline function creation (Current)
 function benchmarkInline() {
   const start = performance.now();
   for (let i = 0; i < iterations; i++) {
-    // Simulating component render where function is created
     const validateField = (name, value) => {
       let error = '';
       if (name === 'name' && !value.trim()) {
@@ -29,7 +27,6 @@ function benchmarkInline() {
   return performance.now() - start;
 }
 
-// Case 2: Static function (Optimized)
 const staticValidateField = (name, value, lang) => {
   let error = '';
   if (name === 'name' && !value.trim()) {
