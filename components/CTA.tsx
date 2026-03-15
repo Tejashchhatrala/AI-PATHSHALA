@@ -90,7 +90,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
     setIsSubmitting(true);
 
     // Prepare WhatsApp Message
-    const message = `Hello Tejas Sir, I want to join the April/May & June 2026 Batch.\n\n*Name:* ${formData.name}\n*Grade:* ${formData.grade}\n*Phone:* ${formData.phone}`;
+    const message = `Hello Tejas Sir, I would like to get more details about the AI Pathshala program.\n\n*Name:* ${formData.name}\n*Grade:* ${formData.grade}\n*Phone:* ${formData.phone}`;
     const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
 
     setTimeout(() => {
@@ -235,11 +235,12 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                     disabled={isSubmitting}
                     className="group relative w-full mt-6 py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold text-lg rounded-full shadow-[0_4px_20px_rgba(224,96,96,0.4)] transition-all transform active:scale-[0.98] hover:-translate-y-1 hover:scale-105 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed overflow-hidden animate-heartbeat hover:animate-none"
                     >
+                    <div className="absolute top-0 -left-[150%] w-[150%] h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 animate-shimmer" />
                     {isSubmitting ? (
                         <span className="animate-pulse">Processing...</span>
                     ) : (
                         <span className="relative z-10 flex items-center gap-2">
-                        {lang === 'EN' ? "Continue to WhatsApp" : "વોટ્સએપ પર આગળ વધો"}
+                        {lang === 'EN' ? "Get More Details on WhatsApp" : "વોટ્સએપ પર વધુ માહિતી મેળવો"}
                         <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
                         </span>
                     )}

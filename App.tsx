@@ -131,7 +131,7 @@ function App() {
                 onClick={scrollToEnroll}
                 className="hidden md:flex items-center gap-2 text-sm font-bold text-brand-900 bg-white hover:bg-brand-50 border border-brand-100 px-6 py-2.5 rounded-full transition-all shadow-sm hover:-translate-y-0.5 transform active:scale-95 cursor-pointer"
              >
-               {lang === 'EN' ? 'Book Free Call' : 'ફ્રી કોલ બુક કરો'}
+               {lang === 'EN' ? 'Get More Details' : 'વધુ માહિતી મેળવો'}
              </button>
              <LanguageToggle lang={lang} setLang={setLang} />
           </div>
@@ -140,50 +140,42 @@ function App() {
 
       {/* Main Content Sections - Strict Sales Funnel Flow */}
       <main>
-        {/* 1. Hook & Promise (Cream & Salmon Hero) */}
+        {/* 1. Hook & Promise (Hero Section) */}
         <Hero lang={lang} />
         
         {/* 2. The Real Problem (Agitation) */}
         <TheRealProblem lang={lang} />
 
         <Suspense fallback={null}>
-          {/* New 1: Why Camp Matters */}
-          <WhyCampMatters lang={lang} />
-
-          {/* 3. Introducing (New Mechanism) */}
+          {/* 3. The Solution (Introducing AI Pathshala) */}
           <Introducing lang={lang} />
 
-          {/* New 2: Future Ready Kids */}
-          <FutureReadyKids lang={lang} />
-
-          {/* New 3: Tools We Teach */}
+          {/* 4. The Mechanism: Why It Works */}
+          <WhyCampMatters lang={lang} />
           <ToolsWeTeach lang={lang} />
 
-          {/* 4. Student Journey (Timeline) */}
-          <StudentJourney lang={lang} />
-
-          {/* 5. What Changes */}
+          {/* 5. The Transformation: Before vs. After */}
           <WhatChanges lang={lang} />
+          <FutureReadyKids lang={lang} />
 
-          {/* 6. Segmentation */}
+          {/* 6. Audience Segmentation */}
           <WhoIsThisFor lang={lang} />
 
-          {/* 7. How The System Works */}
+          {/* 7. The Roadmap */}
+          <StudentJourney lang={lang} />
           <HowItWorks lang={lang} />
 
-          {/* 8. Why Parents Trust Us */}
+          {/* 8. Trust & Credibility */}
           <WhyUs lang={lang} />
-
-          {/* 9. Meet Your Mentor */}
           <Authority lang={lang} />
 
-          {/* 10. Social Proof (Testimonials) */}
+          {/* 9. Social Proof */}
           <Testimonials lang={lang} />
 
-          {/* 11. FAQ Section */}
+          {/* 10. Address Objections */}
           <FAQ lang={lang} />
 
-          {/* 12. Final Action */}
+          {/* 11. Final Action */}
           <CTA lang={lang} />
         </Suspense>
       </main>
@@ -201,7 +193,7 @@ function App() {
            onClick={scrollToEnroll}
            className="flex items-center justify-center w-full font-bold text-white bg-brand-600 py-3.5 rounded-xl shadow-lg shadow-brand-500/30 active:scale-95 transition-transform cursor-pointer animate-wiggle-interval"
         >
-          {lang === 'EN' ? 'Book Free Call' : 'ફ્રી કોલ બુક કરો'}
+          {lang === 'EN' ? 'Get More Details' : 'વધુ માહિતી મેળવો'}
         </button>
       </div>
     </div>

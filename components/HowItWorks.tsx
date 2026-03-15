@@ -73,11 +73,12 @@ export const HowItWorks: React.FC<Props> = ({ lang }) => {
           <div className="mt-16 text-center">
               <button
                   onClick={scrollToEnroll}
-                  className="group relative inline-flex items-center gap-3 text-white bg-brand-400 hover:bg-brand-500 px-10 py-5 rounded-full font-bold text-lg shadow-[0_4px_20px_rgba(255,148,148,0.4)] transition-all transform hover:-translate-y-1 hover:scale-105 overflow-hidden cursor-pointer"
+                  className="group relative inline-flex items-center gap-3 text-white bg-brand-600 hover:bg-brand-700 px-10 py-5 rounded-full font-bold text-lg shadow-[0_4px_20px_rgba(224,96,96,0.4)] transition-all transform hover:-translate-y-1 hover:scale-105 overflow-hidden cursor-pointer animate-heartbeat hover:animate-none"
               >
+                <div className="absolute top-0 -left-[150%] w-[150%] h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 animate-shimmer" />
                 <span className="relative z-10 flex items-center gap-2">
                   <Flag className="w-5 h-5" />
-                  {lang === 'EN' ? "Book Free Roadmap Call" : "ફ્રી રોડમેપ કોલ બુક કરો"}
+                  {lang === 'EN' ? "Get More Details" : "વધુ માહિતી મેળવો"}
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </button>

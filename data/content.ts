@@ -104,8 +104,8 @@ export const content: HomepageContent = {
       gu: "સમજણ, જવાબદાર ઉપયોગ અને ભવિષ્યની વિચારસરણી બનાવે છે. 30 દૈનિક નિષ્ણાત-માર્ગદર્શિત AI સત્રોમાં 20+ જનરેટિવ AI ટૂલ્સ શીખો."
     },
     cta: {
-      en: "Book Free Study Strategy Call",
-      gu: "ફ્રી સ્ટડી સ્ટ્રેટેજી કોલ બુક કરો"
+      en: "Get More Details",
+      gu: "વધુ માહિતી મેળવો"
     },
     features: [
       {
@@ -633,8 +633,8 @@ export const content: HomepageContent = {
       gu: "AI ના યુગમાં અભ્યાસ કરવાની સૌથી સમજદાર રીત."
     },
     cta: {
-      en: "Book Your Free Roadmap Call",
-      gu: "ફ્રી રોડમેપ કોલ બુક કરો"
+      en: "Get More Details",
+      gu: "વધુ માહિતી મેળવો"
     }
   }
 };
