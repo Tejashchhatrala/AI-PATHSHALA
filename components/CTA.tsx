@@ -9,29 +9,29 @@ interface Props {
   lang: Language;
 }
 
+const validateField = (name: string, value: string, lang: Language) => {
+  let error = '';
+  if (name === 'name' && !value.trim()) {
+    error = lang === 'EN' ? 'Name is required' : 'નામ લખવું જરૂરી છે';
+  }
+  if (name === 'phone') {
+    if (!value.trim()) {
+      error = lang === 'EN' ? 'WhatsApp number is required' : 'વોટ્સએપ નંબર લખવો જરૂરી છે';
+    } else if (value.length < 10) {
+      error = lang === 'EN' ? 'Invalid phone number' : 'અમાન્ય મોબાઈલ નંબર';
+    }
+  }
+  if (name === 'grade' && !value.trim()) {
+    error = lang === 'EN' ? 'Grade is required' : 'ધોરણ લખવું જરૂરી છે';
+  }
+  return error;
+};
+
 export const CTA: React.FC<Props> = ({ lang }) => {
   const t = content.finalCall;
   const [formData, setFormData] = useState({ name: '', phone: '', grade: '' });
   const [errors, setErrors] = useState({ name: '', phone: '', grade: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const validateField = (name: string, value: string) => {
-    let error = '';
-    if (name === 'name' && !value.trim()) {
-      error = lang === 'EN' ? 'Name is required' : 'નામ લખવું જરૂરી છે';
-    }
-    if (name === 'phone') {
-      if (!value.trim()) {
-        error = lang === 'EN' ? 'WhatsApp number is required' : 'વોટ્સએપ નંબર લખવો જરૂરી છે';
-      } else if (value.length < 10) {
-        error = lang === 'EN' ? 'Invalid phone number' : 'અમાન્ય મોબાઈલ નંબર';
-      }
-    }
-    if (name === 'grade' && !value.trim()) {
-      error = lang === 'EN' ? 'Grade is required' : 'ધોરણ લખવું જરૂરી છે';
-    }
-    return error;
-  };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -41,7 +41,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
     if (name === GOOGLE_FORM_FIELD_IDS.grade) fieldKey = 'grade';
 
     if (fieldKey) {
-       const error = validateField(fieldKey, value);
+       const error = validateField(fieldKey, value, lang);
        setErrors(prev => ({ ...prev, [fieldKey]: error }));
     }
   };
@@ -73,9 +73,9 @@ export const CTA: React.FC<Props> = ({ lang }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     // Validate all fields
-    const nameError = validateField('name', formData.name);
-    const phoneError = validateField('phone', formData.phone);
-    const gradeError = validateField('grade', formData.grade);
+    const nameError = validateField('name', formData.name, lang);
+    const phoneError = validateField('phone', formData.phone, lang);
+    const gradeError = validateField('grade', formData.grade, lang);
 
     if (nameError || phoneError || gradeError) {
         e.preventDefault();
