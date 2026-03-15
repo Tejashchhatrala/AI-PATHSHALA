@@ -8,6 +8,9 @@ import { Hero } from './components/Hero';
 import { TheRealProblem } from './components/TheRealProblem';
 
 // Lazy load components below the fold and conditional views
+const WhyCampMatters = lazy(() => import('./components/WhyCampMatters').then(m => ({ default: m.WhyCampMatters })));
+const FutureReadyKids = lazy(() => import('./components/FutureReadyKids').then(m => ({ default: m.FutureReadyKids })));
+const ToolsWeTeach = lazy(() => import('./components/ToolsWeTeach').then(m => ({ default: m.ToolsWeTeach })));
 const WhyUs = lazy(() => import('./components/WhyUs').then(m => ({ default: m.WhyUs })));
 const Authority = lazy(() => import('./components/Authority').then(m => ({ default: m.Authority })));
 const Introducing = lazy(() => import('./components/Introducing').then(m => ({ default: m.Introducing })));
@@ -142,10 +145,19 @@ function App() {
         
         {/* 2. The Real Problem (Agitation) */}
         <TheRealProblem lang={lang} />
-        
+
         <Suspense fallback={null}>
+          {/* New 1: Why Camp Matters */}
+          <WhyCampMatters lang={lang} />
+
           {/* 3. Introducing (New Mechanism) */}
           <Introducing lang={lang} />
+
+          {/* New 2: Future Ready Kids */}
+          <FutureReadyKids lang={lang} />
+
+          {/* New 3: Tools We Teach */}
+          <ToolsWeTeach lang={lang} />
 
           {/* 4. Student Journey (Timeline) */}
           <StudentJourney lang={lang} />
