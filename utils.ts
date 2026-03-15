@@ -56,8 +56,15 @@ export const scrollToElement = (elementId: string, event?: { preventDefault: () 
 export const sanitizeInput = (input: string, maxLength: number = 100, trim: boolean = true): string => {
   if (typeof input !== 'string') return '';
 
-  // Remove < and > characters to neutralize HTML tags
-  let sanitized = input.replace(/[<>]/g, '');
+  // Use an escaping approach instead of stripping to be non-lossy and more secure.
+  // This handles HTML tags, event handlers, and attribute injection by converting
+  // special characters into their HTML entity equivalents.
+  let sanitized = input
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;');
 
   // Trim leading/trailing whitespace if requested
   if (trim) {
@@ -66,6 +73,8 @@ export const sanitizeInput = (input: string, maxLength: number = 100, trim: bool
 
   // Prevent CSV Injection by removing dangerous starting characters
   // We handle leading whitespace to ensure safety even if trim is false
+  // Since we escaped &, <, >, ", ' - we only need to check the original dangerous characters
+  // which are now at the start of the potentially escaped string.
   sanitized = sanitized.replace(/^(\s*)[=+\-@\t\r]+/, '$1');
 
   // Enforce max length
