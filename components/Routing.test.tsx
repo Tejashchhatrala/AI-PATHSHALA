@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import App from '../App';
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import React from 'react';
 
 // Mock scrollIntoView since JSDOM doesn't support it
 Element.prototype.scrollIntoView = () => {};
