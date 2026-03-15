@@ -90,7 +90,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
     setIsSubmitting(true);
 
     // Prepare WhatsApp Message
-    const message = `Hello Tejas Sir, I want to join the March 2026 Batch.\n\n*Name:* ${formData.name}\n*Grade:* ${formData.grade}\n*Phone:* ${formData.phone}`;
+    const message = `Hello Tejas Sir, I want to join the April/May & June 2026 Batch.\n\n*Name:* ${formData.name}\n*Grade:* ${formData.grade}\n*Phone:* ${formData.phone}`;
     const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
 
     setTimeout(() => {
@@ -112,7 +112,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
           <div className="lg:w-1/2 text-center lg:text-left">
              <div className="inline-flex items-center gap-2 bg-brand-100 text-brand-700 px-3 py-1 rounded-full text-xs font-bold border border-brand-200 mb-6 shadow-sm">
                 <Calendar className="w-3 h-3" />
-                {lang === 'EN' ? "Admissions Open: March 2026 Batch" : "એડમિશન શરૂ: માર્ચ 2026 બેચ"}
+                {lang === 'EN' ? "Admissions Open: April/May & June 2026 Batch" : "એડમિશન શરૂ: એપ્રિલ/મે અને જૂન 2026 બેચ"}
              </div>
 
             <h2 className={`text-3xl md:text-5xl font-black mb-6 leading-tight ${lang === 'GU' ? 'font-gujarati' : ''}`}>
@@ -139,7 +139,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                 
                 {/* Professional Ribbon */}
                 <div className="absolute top-0 right-0 bg-brand-500 text-white text-[10px] font-bold px-4 py-1.5 rounded-bl-xl shadow-md z-20">
-                    MARCH 2026
+                    SUMMER 2026
                 </div>
 
                 <div className="mb-6">

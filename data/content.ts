@@ -86,22 +86,22 @@ export interface HomepageContent {
 export const content: HomepageContent = {
   hero: {
     badge: {
-      en: "Admissions Open – March 2026 Batch",
-      gu: "માર્ચ 2026 બેચ માટે એડમિશન શરૂ"
+      en: "Admissions Open – April/May & June 2026 Batch",
+      gu: "એપ્રિલ/મે અને જૂન 2026 બેચ માટે એડમિશન શરૂ"
     },
     headline: {
       line1: {
-        en: "Stop Memorizing. Start Understanding with AI.",
-        gu: "ગોખણપટ્ટી છોડો. AI સાથે સમજતા શીખો."
+        en: "AI Summer Camp For Students",
+        gu: "વિદ્યાર્થીઓ માટે AI સમર કેમ્પ"
       },
       line2: {
-        en: "Make AI Your Personal Tutor in 30 Days",
-        gu: "30 દિવસમાં AI ને તમારો પર્સનલ ટ્યુટર બનાવો"
+        en: "A structured AI program aligned with school learning",
+        gu: "શાળાના અભ્યાસ સાથે સંરેખિત સ્ટ્રક્ચર્ડ AI પ્રોગ્રામ"
       }
     },
     subheadline: {
-      en: "Concept Clarity • Faster Revision • Higher Marks • Less Stress",
-      gu: "કોન્સેપ્ટ ક્લિયર • ઝડપી રિવિઝન • વધારે માર્ક્સ • ઓછું ટેન્શન"
+      en: "Builds understanding, responsible use, and future-ready thinking. Learn 20+ Generative AI Tools in 30 Expert-Led AI Sessions Daily.",
+      gu: "સમજણ, જવાબદાર ઉપયોગ અને ભવિષ્યની વિચારસરણી બનાવે છે. 30 દૈનિક નિષ્ણાત-માર્ગદર્શિત AI સત્રોમાં 20+ જનરેટિવ AI ટૂલ્સ શીખો."
     },
     cta: {
       en: "Book Free Study Strategy Call",
@@ -109,20 +109,20 @@ export const content: HomepageContent = {
     },
     features: [
       {
-        en: "Live Zoom Classes",
-        gu: "લાઈવ Zoom ક્લાસ"
+        en: "20+ Generative AI Tools",
+        gu: "20+ જનરેટિવ AI ટૂલ્સ"
       },
       {
-        en: "Limited Seats",
-        gu: "મર્યાદિત સીટ્સ"
+        en: "8 Guided Projects (1-Month)",
+        gu: "8 માર્ગદર્શિત પ્રોજેક્ટ્સ (1-મહિનો)"
       },
       {
-        en: "Ethical AI Use",
-        gu: "નૈતિક AI ઉપયોગ"
+        en: "For Classes 5–12",
+        gu: "ધોરણ 5–12 માટે"
       },
       {
-        en: "Learn More About March Batch",
-        gu: "માર્ચ બેચ વિશે વધુ જાણો"
+        en: "Designed for Non-Coders",
+        gu: "નોન-કોડર્સ માટે રચાયેલ"
       }
     ]
   },

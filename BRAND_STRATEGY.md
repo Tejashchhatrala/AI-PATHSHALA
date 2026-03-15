@@ -329,7 +329,7 @@ Now I will rewrite your homepage in a cleaner, stronger positioning format.
 
 ## Hero Section
 
-Admissions Open – March 2026 Batch
+Admissions Open – April/May & June 2026 Batch
 
 ### Stop Memorizing. Start Thinking.
 
