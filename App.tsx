@@ -122,7 +122,9 @@ function App() {
             </div>
             <div className="flex flex-col">
               <span className={`font-black text-lg md:text-2xl text-brand-950 leading-none tracking-tight`}>AI Pathshala</span>
-              <span className="text-[10px] md:text-[11px] font-bold text-brand-600 leading-tight mt-0.5">AI-Based Study Method for Gujarati Students</span>
+              <span className="text-[10px] md:text-[11px] font-bold text-brand-600 leading-tight mt-0.5">
+                {lang === 'EN' ? "Gujarat's first AI study platform" : "ગુજરાતનું પ્રથમ AI સ્ટડી પ્લેટફોર્મ"}
+              </span>
             </div>
           </div>
           <div className="flex items-center gap-3 md:gap-6">
@@ -131,7 +133,7 @@ function App() {
                 onClick={scrollToEnroll}
                 className="hidden md:flex items-center gap-2 text-sm font-bold text-brand-900 bg-white hover:bg-brand-50 border border-brand-100 px-6 py-2.5 rounded-full transition-all shadow-sm hover:-translate-y-0.5 transform active:scale-95 cursor-pointer"
              >
-               {lang === 'EN' ? 'Get More Details' : 'વધુ માહિતી મેળવો'}
+               {lang === 'EN' ? 'Join Free on WhatsApp' : 'WhatsApp પર ફ્રી માં જોડાઓ'}
              </button>
              <LanguageToggle lang={lang} setLang={setLang} />
           </div>
@@ -193,7 +195,7 @@ function App() {
            onClick={scrollToEnroll}
            className="flex items-center justify-center w-full font-bold text-white bg-brand-600 py-3.5 rounded-xl shadow-lg shadow-brand-500/30 active:scale-95 transition-transform cursor-pointer animate-wiggle-interval"
         >
-          {lang === 'EN' ? 'Get More Details' : 'વધુ માહિતી મેળવો'}
+          {lang === 'EN' ? 'Join Free on WhatsApp' : 'WhatsApp પર ફ્રી માં જોડાઓ'}
         </button>
       </div>
     </div>

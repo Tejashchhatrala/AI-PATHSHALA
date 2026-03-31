@@ -86,43 +86,43 @@ export interface HomepageContent {
 export const content: HomepageContent = {
   hero: {
     badge: {
-      en: "Admissions Open – April/May & June 2026 Batch",
-      gu: "એપ્રિલ/મે અને જૂન 2026 બેચ માટે એડમિશન શરૂ"
+      en: "April Batch: 12 Seats Remaining. Closes April 15.",
+      gu: "એપ્રિલ બેચ: માત્ર 12 સીટ બાકી. 15 એપ્રિલે બંધ."
     },
     headline: {
       line1: {
-        en: "AI Summer Camp For Students",
-        gu: "વિદ્યાર્થીઓ માટે AI સમર કેમ્પ"
+        en: "Top Gujarat students are revising 2x faster using AI.",
+        gu: "ગુજરાતના ટોપ વિદ્યાર્થીઓ AI વાપરી 2 ગણો ઝડપથી રિવાઇઝ કરે છે."
       },
       line2: {
-        en: "A structured AI program aligned with school learning",
-        gu: "શાળાના અભ્યાસ સાથે સંરેખિત સ્ટ્રક્ચર્ડ AI પ્રોગ્રામ"
+        en: "Now for your child. ₹0 — Completely Free.",
+        gu: "હવે તમારા બાળક માટે. ₹0 — 100% ફ્રી."
       }
     },
     subheadline: {
-      en: "Builds understanding, responsible use, and future-ready thinking. Learn 20+ Generative AI Tools in 30 Expert-Led AI Sessions Daily.",
-      gu: "સમજણ, જવાબદાર ઉપયોગ અને ભવિષ્યની વિચારસરણી બનાવે છે. 30 દૈનિક નિષ્ણાત-માર્ગદર્શિત AI સત્રોમાં 20+ જનરેટિવ AI ટૂલ્સ શીખો."
+      en: "They study 12 hours but still fear exams. Help them build an ethical AI study system to improve marks independently.",
+      gu: "બાળક 12 કલાક વાંચે છે છતાં પરીક્ષાનો ડર છે. સ્વતંત્ર રીતે માર્ક્સ વધારવા માટે તેમને નૈતિક AI સ્ટડી સિસ્ટમ બનાવવામાં મદદ કરો."
     },
     cta: {
-      en: "Get More Details",
-      gu: "વધુ માહિતી મેળવો"
+      en: "Join Free on WhatsApp",
+      gu: "WhatsApp પર ફ્રી માં જોડાઓ"
     },
     features: [
       {
-        en: "20+ Generative AI Tools",
-        gu: "20+ જનરેટિવ AI ટૂલ્સ"
+        en: "Learn ChatGPT, Gemini, NotebookLM",
+        gu: "ChatGPT, Gemini, NotebookLM શીખો"
       },
       {
-        en: "8 Guided Projects (1-Month)",
-        gu: "8 માર્ગદર્શિત પ્રોજેક્ટ્સ (1-મહિનો)"
+        en: "Board & Competitive Exam Focused",
+        gu: "બોર્ડ અને સ્પર્ધાત્મક પરીક્ષા પર ફોકસ"
       },
       {
-        en: "For Classes 5–12",
-        gu: "ધોરણ 5–12 માટે"
+        en: "Ethical AI Use (No Cheating)",
+        gu: "AI નો નૈતિક ઉપયોગ (ચીટિંગ નહીં)"
       },
       {
-        en: "Designed for Non-Coders",
-        gu: "નોન-કોડર્સ માટે રચાયેલ"
+        en: "100% Free WhatsApp Class",
+        gu: "100% ફ્રી WhatsApp ક્લાસ"
       }
     ]
   },
@@ -625,16 +625,16 @@ export const content: HomepageContent = {
   },
   finalCall: {
     title: {
-      en: "The future belongs to students who understand — not memorize.",
-      gu: "ભવિષ્ય સમજદાર વિદ્યાર્થીઓનું છે."
+      en: "Your child deserves a smarter study system. Not harder hours.",
+      gu: "તમારા બાળકને સ્માર્ટ સ્ટડી સિસ્ટમની જરૂર છે. વધુ કલાકોની નહીં."
     },
     subtitle: {
-      en: "The Smarter Way to Study in the Age of AI.",
-      gu: "AI ના યુગમાં અભ્યાસ કરવાની સૌથી સમજદાર રીત."
+      en: "Join 200+ Gujarati students already using AI to study better. April batch closing soon.",
+      gu: "200+ ગુજરાતી વિદ્યાર્થીઓ AI વાપરી ભણી રહ્યા છે. એપ્રિલ બેચ ટૂંક સમયમાં બંધ."
     },
     cta: {
-      en: "Get More Details",
-      gu: "વધુ માહિતી મેળવો"
+      en: "Join Free on WhatsApp",
+      gu: "WhatsApp પર ફ્રી માં જોડાઓ"
     }
   }
 };

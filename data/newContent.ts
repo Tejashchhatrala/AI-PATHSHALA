@@ -2,52 +2,52 @@ import { BilingualText } from '../types';
 
 export const whyCampMattersContent = {
   title: {
-    en: "Why this Camp Matters?",
-    gu: "આ કેમ્પ શા માટે મહત્વનો છે?"
+    en: "Why AI Pathshala Works",
+    gu: "AI Pathshala શા માટે કામ કરે છે?"
   },
   stats: [
     {
-      stat: "90%",
+      stat: "200+",
       text: {
-        en: "careers will demand AI skills by 2030.",
-        gu: "2030 સુધીમાં કરિયરમાં AI સ્કિલ્સની જરૂર પડશે."
+        en: "Gujarati students taught by Tejas Sir personally.",
+        gu: "ગુજરાતી વિદ્યાર્થીઓ — તેજસ સરે સ્વયં શીખવ્યા."
       },
       source: {
-        en: "(Source: PwC Workforce Report)",
-        gu: "(સ્ત્રોત: PwC Workforce Report)"
+        en: "— AI Pathshala, Gujarat",
+        gu: "— AI Pathshala, ગુજરાત"
       }
     },
     {
-      stat: "70%",
+      stat: "92%",
       text: {
-        en: "Global students begin AI at 10–12.",
-        gu: "વિશ્વના વિદ્યાર્થીઓ 10-12 વર્ષની ઉંમરે AI શીખવાનું શરૂ કરે છે."
+        en: "of students reported better exam scores within 30 days.",
+        gu: "વિદ્યાર્થીઓએ 30 દિવસમાં પ્રિલિમ્સ/પરીક્ષામાં સુધારો નોધ્યયો."
       },
       source: {
-        en: "(Source: Stanford University)",
-        gu: "(સ્ત્રોત: Stanford University)"
+        en: "— Based on student feedback",
+        gu: "— વિદ્યાર્થીઓના ફીડબેક આધારે"
       }
     },
     {
-      stat: "3–5 years",
+      stat: "1 hr/day",
       text: {
-        en: "is the gap Indian students face AI exposure.",
-        gu: "ભારતીય વિદ્યાર્થીઓને AI શીખવામાં અંતર છે."
+        en: "is all it takes. No extra tuition. No burnout.",
+        gu: "બસ 1 કલાક/દિવસ. કોઈ વધારાનું ટ્યુશન નહીં. બર્નઆઉટ નહીં."
       },
       source: {
-        en: "(Source: UNESCO)",
-        gu: "(સ્ત્રોત: UNESCO)"
+        en: "— Structured 30-day system",
+        gu: "— 30 દિવસની સ્ટ્રક્ચર્ડ સિસ્ટમ"
       }
     },
     {
-      stat: "40%",
+      stat: "100%",
       text: {
-        en: "higher confidence in early AI learners.",
-        gu: "નાની ઉંમરે AI શીખનારાઓમાં વધુ આત્મવિશ્વાસ હોય છે."
+        en: "ethical AI use — no cheating, no shortcuts. Parents approved.",
+        gu: "નૈતિક AI ઉપયોગ — ચીટિંગ નહીં, શોર્ટકટ નહીં. વાલીઓ દ્વારા મંજૂર."
       },
       source: {
-        en: "(Source: MIT)",
-        gu: "(સ્ત્રોત: MIT)"
+        en: "— Core program principle",
+        gu: "— પ્રોગ્રામની મૂળ નીતિ"
       }
     }
   ]
@@ -160,13 +160,62 @@ export const futureReadyKidsContent = {
 
 export const toolsWeTeachContent = {
   title: {
-    en: "The Tools we Teach, The Skills they Build",
-    gu: "અમે જે ટૂલ્સ શીખવીએ છીએ, જે સ્કિલ્સ તેઓ બનાવે છે"
+    en: "5 Study Tools That Change Everything",
+    gu: "5 સ્ટડી ટૂલ્સ જે સૌ કંઈ બદલી નાખે છે"
   },
   subtitle: {
-    en: "These are the same AI tools used by top global students. Taught in a safe, age-appropriate way.",
-    gu: "આ એ જ AI ટૂલ્સ છે જેનો ઉપયોગ વિશ્વના ટોચના વિદ્યાર્થીઓ કરે છે. જે સુરક્ષિત અને ઉંમર-યોગ્ય રીતે શીખવવામાં આવે છે."
+    en: "No entertainment tools. No distractions. Only the 5 AI tools your child needs to study smarter and score better.",
+    gu: "કોઈ entertainment ટૂલ નહીં. કોઈ distraction નહીં. ફક્ત 5 AI ટૂલ્સ જે સ્માર્ટ ભણવા અને સારા માર્ક્સ માટે જરૂરી છે."
   },
+  studyTools: [
+    {
+      name: "ChatGPT",
+      useCase: {
+        en: "Personal Tutor — explains any topic in simple Gujarati, any time of day",
+        gu: "પર્સનલ ટ્યુટર — ગુજરાતીમાં ગમે ત્યારે ગમે તે વિષય સમજાવે"
+      }
+    },
+    {
+      name: "Google Gemini",
+      useCase: {
+        en: "Instant Doubt Solver — ask any question, get a clear answer in seconds",
+        gu: "ડાઉટ સોલ્વર — ગમે તે સવાલ પૂછો, સેકન્ડોમાં સ્પષ્ટ જવાબ"
+      }
+    },
+    {
+      name: "NotebookLM",
+      useCase: {
+        en: "Smart Revision — upload your textbook, get a summary, flashcards & quiz",
+        gu: "ઝડપી રિવિઝન — ટેક્સ્ટબુક અપલોડ કરો, સારાંશ + ફ્લેશકાર્ડ + ક્વિઝ ઓટો-જનરેટ"
+      }
+    },
+    {
+      name: "Perplexity AI",
+      useCase: {
+        en: "Verified Research — finds accurate answers with real sources (no hallucination)",
+        gu: "ચકાસાયેલ સ્ત્રોત — ગલત માહિતી નહીં, સ્ત્રોત સાથે સ્પષ્ટ જવાબ"
+      }
+    },
+    {
+      name: "Gamma",
+      useCase: {
+        en: "Project Presentations — create stunning school presentations in minutes",
+        gu: "પ્રેઝન્ટેશન — 5 મિનિટમાં સ્કૂલ પ્રેઝન્ટેશન, પ્રોફેશનલ ક્વૉલિટી"
+      }
+    }
+  ],
+  bonusTools: {
+    title: {
+      en: "Bonus Week: Creative AI (Optional)",
+      gu: "બોનસ સપ્તાહ: ક્રિએટિવ AI (ઓપ્શનલ)"
+    },
+    subtitle: {
+      en: "Not required for board exam prep. Available as extra credit for curious students.",
+      gu: "બોર્ડ પરીક્ષા માટે જરૂરી નથી. જિજ્ઞાસુ વિદ્યાર્થીઓ માટે વધારાની સ્કિલ."
+    },
+    toolNames: ["Midjourney", "Suno", "Runway", "ElevenLabs", "HeyGen"]
+  },
+  // Keep categories for backward compatibility
   categories: [
     {
       name: {

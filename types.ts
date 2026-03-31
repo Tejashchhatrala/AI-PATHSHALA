@@ -7,6 +7,9 @@ export interface BilingualText {
 
 export interface Testimonial {
   name: string;
-  role: string;
+  role: BilingualText;
   text: BilingualText;
+  school?: string;
+  result?: string;
+  avatarColor?: string;
 }

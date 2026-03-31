@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, Calendar, ShieldCheck, AlertCircle } from 'lucide-react';
+import { Calendar, ShieldCheck, AlertCircle } from 'lucide-react';
 import { Language } from '../types';
 import { content } from '../data/content';
 import { GOOGLE_FORM_CTA_URL, GOOGLE_FORM_FIELD_IDS, WHATSAPP_PHONE_NUMBER, PHONE_REGEX } from '../constants';
@@ -240,8 +240,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                         <span className="animate-pulse">Processing...</span>
                     ) : (
                         <span className="relative z-10 flex items-center gap-2">
-                        {lang === 'EN' ? "Get More Details on WhatsApp" : "વોટ્સએપ પર વધુ માહિતી મેળવો"}
-                        <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                        {lang === 'EN' ? "Join Free on WhatsApp →" : "WhatsApp પર ફ્રી માં જોડાઓ →"}
                         </span>
                     )}
                     </button>
