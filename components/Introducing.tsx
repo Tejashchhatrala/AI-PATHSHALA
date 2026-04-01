@@ -59,7 +59,7 @@ export const Introducing: React.FC<Props> = ({ lang }) => {
                >
                   <div className="absolute top-0 -left-[150%] w-[150%] h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 animate-shimmer" />
                   <span className="relative z-10 flex items-center gap-2">
-                     {lang === 'EN' ? "Join Free on WhatsApp" : "WhatsApp પર ફ્રી માં જોડાઓ"}
+                     {lang === 'EN' ? "Book Free Consultation" : "ફ્રી કન્સલ્ટેશન બુક કરો"}
                      <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
                   </span>
                </button>

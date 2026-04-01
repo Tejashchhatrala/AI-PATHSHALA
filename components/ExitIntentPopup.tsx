@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { X, ArrowRight, ShieldCheck, AlertCircle } from 'lucide-react';
+import { X, ArrowRight, ShieldCheck, AlertCircle, PhoneCall } from 'lucide-react';
 import { Language } from '../types';
 import { GOOGLE_FORM_EXIT_POPUP_URL, GOOGLE_FORM_FIELD_IDS, WHATSAPP_PHONE_NUMBER, PHONE_REGEX } from '../constants';
 import { sanitizeInput } from '../utils';
@@ -117,7 +117,7 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
 
     setIsSubmitting(true);
     // WhatsApp redirect logic
-    const message = `Hello Tejas Sir, I claimed the Free Prompt Library via the website popup.\n\n*Name:* ${formData.name}\n*Phone:* ${formData.phone}`;
+    const message = `Hello Tejas Sir, I would like to book the Free 15-Minute Consultation (via website popup) to see if the course is right for my child.\n\n*Name:* ${formData.name}\n*Phone:* ${formData.phone}`;
     const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
 
     setTimeout(() => {
@@ -130,14 +130,15 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-brand-950/80 backdrop-blur-sm animate-fade-in">
-      <div className="relative bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden animate-fade-in-up">
+      <div className="relative bg-white rounded-[2rem] shadow-2xl max-w-lg w-full overflow-hidden animate-fade-in-up border border-brand-100">
         
         {/* Close Button */}
         <button 
           onClick={() => setIsVisible(false)}
-          className="absolute top-4 right-4 p-2 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors z-20 cursor-pointer"
+          className="absolute top-5 right-5 p-2 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors z-20 cursor-pointer"
+          aria-label="Close popup"
         >
-          <X className="w-5 h-5 text-gray-500" />
+          <X className="w-5 h-5 text-gray-600" />
         </button>
 
         {/* Content Body */}
@@ -145,28 +146,25 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
            
            <div className="text-center space-y-4 mb-8">
              {/* Headline */}
-             <h3 className={`text-2xl md:text-3xl font-black text-brand-600 leading-tight ${lang === 'GU' ? 'font-gujarati' : ''}`}>
+             <div className="flex justify-center mb-4">
+               <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center">
+                 <PhoneCall className="w-8 h-8 text-blue-500" />
+               </div>
+             </div>
+             
+             <h3 className={`text-2xl md:text-3xl font-black text-brand-950 leading-tight ${lang === 'GU' ? 'font-gujarati' : ''}`}>
                {lang === 'EN'
-                 ? "Wait! Don't Leave Without This Exam Advantage."
-                 : "ઊભા રહો! શું તમે આ 50 AI પરીક્ષા પ્રોમ્પ્ટ વગર જશો?"}
+                 ? "Unsure if AI Pathshala is right for your child?"
+                 : "શું તમને ખાતરી નથી કે AI Pathshala તમારા બાળક માટે યોગ્ય છે?"}
              </h3>
 
              {/* Subheadline */}
-             <p className={`text-gray-600 text-lg font-medium leading-snug ${lang === 'GU' ? 'font-gujarati' : ''}`}>
+             <p className={`text-gray-600 text-base font-medium leading-relaxed ${lang === 'GU' ? 'font-gujarati' : ''}`}>
                {lang === 'EN'
-                 ? "50 AI Exam Prompts Designed for Grades 9–12. Revise 2x Faster. Score Higher. Study Smarter. Built from the Tejas AI Study System™."
-                 : "ધોરણ 9–12 માટે ખાસ તૈયાર. 2x ઝડપી રિવિઝન. વધુ માર્ક્સ. ઓછું ટેન્શન. Tejas AI Study System™ પરથી તૈયાર."}
+                 ? "Book a free 15-minute consultation call directly with Tejas Sir. We'll discuss your child's study challenges and clear any doubts about the ₹3,999 program."
+                 : "તેજસ સર સાથે સીધો ફ્રી 15-મિનિટ કન્સલ્ટેશન કૉલ બુક કરો. આપણે તમારા બાળકની અભ્યાસની સમસ્યાઓ ચર્ચા કરીશું અને ₹3,999 પ્રોગ્રામ વિશે કોઈપણ શંકાઓ દૂર કરીશું."}
              </p>
 
-             {/* Micro-Proof */}
-             <div className="inline-flex items-center gap-2 bg-brand-50 px-4 py-2 rounded-full border border-brand-100">
-               <div className="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></div>
-               <p className={`text-brand-800 text-sm font-bold ${lang === 'GU' ? 'font-gujarati' : ''}`}>
-                 {lang === 'EN'
-                   ? "Already helping 300+ Gujarati students improve marks."
-                   : "300+ વિદ્યાર્થીઓ આ પ્રોમ્પ્ટથી પહેલેથી જ ફાયદો લઈ રહ્યા છે."}
-               </p>
-             </div>
            </div>
 
            {/* Form */}
@@ -180,8 +178,8 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
               noValidate
            >
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-1">
-                   {lang === 'EN' ? "Your Name" : "વિદ્યાર્થીનું નામ"}
+                <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wide">
+                   {lang === 'EN' ? "Parent's Name" : "વાલીનું નામ"}
                 </label>
                 <input 
                   type="text"
@@ -190,18 +188,18 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
                   value={formData.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className={`w-full px-4 py-3 rounded-xl border ${errors.name ? 'border-brand-500 ring-1 ring-brand-500' : 'border-gray-200'} focus:ring-2 focus:ring-brand-500 focus:outline-none bg-gray-50 placeholder-gray-400`}
+                  className={`w-full px-5 py-4 rounded-xl border-2 ${errors.name ? 'border-red-400 ring-4 ring-red-400/20' : 'border-gray-200'} focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none bg-gray-50 placeholder-gray-400 font-semibold transition-all`}
                   placeholder="e.g. Amit Patel"
                 />
                 {errors.name && (
-                    <div className="flex items-center gap-1 mt-1 text-brand-600 text-xs font-bold animate-fade-in">
-                        <AlertCircle className="w-3 h-3" />
+                    <div className="flex items-center gap-1.5 mt-2 text-red-500 text-xs font-bold animate-fade-in">
+                        <AlertCircle className="w-3" />
                         <span>{errors.name}</span>
                     </div>
                 )}
               </div>
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-1">
+                <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wide">
                    {lang === 'EN' ? "WhatsApp Number" : "વોટ્સએપ નંબર"}
                 </label>
                 <input 
@@ -214,12 +212,12 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
                   value={formData.phone}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className={`w-full px-4 py-3 rounded-xl border ${errors.phone ? 'border-brand-500 ring-1 ring-brand-500' : 'border-gray-200'} focus:ring-2 focus:ring-brand-500 focus:outline-none bg-gray-50 placeholder-gray-400`}
+                  className={`w-full px-5 py-4 rounded-xl border-2 ${errors.phone ? 'border-red-400 ring-4 ring-red-400/20' : 'border-gray-200'} focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none bg-gray-50 placeholder-gray-400 font-semibold transition-all`}
                   placeholder="98765 43210"
                 />
                 {errors.phone && (
-                    <div className="flex items-center gap-1 mt-1 text-brand-600 text-xs font-bold animate-fade-in">
-                        <AlertCircle className="w-3 h-3" />
+                    <div className="flex items-center gap-1.5 mt-2 text-red-500 text-xs font-bold animate-fade-in">
+                        <AlertCircle className="w-3" />
                         <span>{errors.phone}</span>
                     </div>
                 )}
@@ -230,11 +228,11 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
               <button 
                 type="submit"
                 disabled={isSubmitting}
-                className="group relative w-full mt-6 py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-brand-500/30 transition-all transform active:scale-[0.98] hover:-translate-y-1 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed overflow-hidden"
+                className="group relative w-full mt-6 py-4.5 bg-blue-600 hover:bg-blue-700 text-white font-black text-[17px] rounded-xl shadow-[0_8px_25px_rgba(37,99,235,0.3)] transition-all transform active:scale-[0.98] hover:-translate-y-1 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed overflow-hidden border border-blue-500"
               >
                  {isSubmitting ? 'Processing...' : (
-                   <span className="relative z-10 flex items-center gap-2">
-                     {lang === 'EN' ? "Yes, Send Me The Study Upgrade PDF" : "હા! મને Study Upgrade PDF મોકલો"}
+                   <span className="relative z-10 flex items-center gap-2 tracking-wide">
+                     {lang === 'EN' ? "Book Free 15-Min Call" : "ફ્રી 15-મિનિટ કૉલ બુક કરો"}
                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                    </span>
                  )}
@@ -245,17 +243,17 @@ export const ExitIntentPopup: React.FC<Props> = ({ lang }) => {
            <div className="mt-6 text-center space-y-4">
              <button 
                onClick={() => setIsVisible(false)} 
-               className={`text-sm text-gray-400 hover:text-gray-600 transition-colors cursor-pointer ${lang === 'GU' ? 'font-gujarati' : ''}`}
+               className={`text-sm text-gray-400 hover:text-gray-600 transition-colors cursor-pointer font-medium ${lang === 'GU' ? 'font-gujarati' : ''}`}
              >
-               {lang === 'EN' ? "No, I’ll Stick To Old Study Methods" : "ના, હું જૂની ગોખણપટ્ટી જ ચાલુ રાખીશ"}
+               {lang === 'EN' ? "I'm ready to enroll directly" : "હું સીધા જ એડમિશન લેવા માટે તૈયાર છું"}
              </button>
 
-             <div className="flex items-center justify-center gap-1.5 text-xs text-gray-400">
-               <ShieldCheck className="w-3 h-3" />
+             <div className="flex items-center justify-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-400">
+               <ShieldCheck className="w-3.5 h-3.5" />
                <span>
                  {lang === 'EN'
-                   ? "100% Free. No Spam. PDF delivered instantly on WhatsApp."
-                   : "100% ફ્રી. કોઈ સ્પામ નહીં. PDF તરત વોટ્સએપ પર મળશે."}
+                   ? "No Credit Card Required"
+                   : "કોઈ ક્રેડિટ કાર્ડ જરૂરી નથી"}
                </span>
              </div>
            </div>

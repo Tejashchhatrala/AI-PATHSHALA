@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, ShieldCheck, AlertCircle } from 'lucide-react';
+import { Calendar, ShieldCheck, AlertCircle, IndianRupee } from 'lucide-react';
 import { Language } from '../types';
 import { content } from '../data/content';
 import { GOOGLE_FORM_CTA_URL, GOOGLE_FORM_FIELD_IDS, WHATSAPP_PHONE_NUMBER, PHONE_REGEX } from '../constants';
@@ -89,8 +89,8 @@ export const CTA: React.FC<Props> = ({ lang }) => {
 
     setIsSubmitting(true);
 
-    // Prepare WhatsApp Message
-    const message = `Hello Tejas Sir, I would like to get more details about the AI Pathshala program.\n\n*Name:* ${formData.name}\n*Grade:* ${formData.grade}\n*Phone:* ${formData.phone}`;
+    // Prepare WhatsApp Message for Consultation Waitlist
+    const message = `Hello Tejas Sir, I would like to book a free 15-minute consultation to see if the AI Pathshala course (₹3,999) is a good fit for my child.\n\n*Name:* ${formData.name}\n*Grade:* ${formData.grade}\n*Phone:* ${formData.phone}`;
     const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
 
     setTimeout(() => {
@@ -100,54 +100,67 @@ export const CTA: React.FC<Props> = ({ lang }) => {
   };
 
   return (
-    <section id="enroll" className="py-24 bg-gradient-to-br from-brand-200 to-brand-100 text-brand-950 relative overflow-hidden">
+    <section id="enroll" className="py-24 bg-gradient-to-br from-brand-900 to-brand-950 text-white relative overflow-hidden">
       {/* Background elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-brand-50 rounded-full opacity-50 blur-[100px] animate-pulse"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-white rounded-full opacity-50 blur-[100px]"></div>
+      <div className="absolute top-0 right-0 w-96 h-96 bg-brand-800 rounded-full opacity-30 blur-[100px] animate-pulse"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-red-900 rounded-full opacity-30 blur-[100px]"></div>
       
-      <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10 w-full max-w-7xl">
+        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-20">
           
           {/* Text Content */}
           <div className="lg:w-1/2 text-center lg:text-left">
-             <div className="inline-flex items-center gap-2 bg-brand-100 text-brand-700 px-3 py-1 rounded-full text-xs font-bold border border-brand-200 mb-6 shadow-sm">
-                <Calendar className="w-3 h-3" />
-                {lang === 'EN' ? "Admissions Open: April/May & June 2026 Batch" : "એડમિશન શરૂ: એપ્રિલ/મે અને જૂન 2026 બેચ"}
+             <div className="inline-flex items-center gap-2 bg-brand-800/50 text-brand-200 px-4 py-1.5 rounded-full text-xs font-bold border border-brand-700 mb-6 shadow-sm backdrop-blur-sm">
+                <Calendar className="w-4 h-4" />
+                {lang === 'EN' ? "Admissions Open: April 2026 Batch" : "એડમિશન શરૂ: એપ્રિલ 2026 બેચ"}
              </div>
 
-            <h2 className={`text-3xl md:text-5xl font-black mb-6 leading-tight ${lang === 'GU' ? 'font-gujarati' : ''}`}>
+             {/* Pricing Spotlight */}
+             <div className="mb-6 flex flex-col justify-center lg:justify-start items-center lg:items-start">
+               <span className="text-brand-300 font-bold uppercase tracking-widest text-sm mb-1">
+                 {lang === 'EN' ? "Full 30-Day Program" : "સંપૂર્ણ 30-દિવસનો પ્રોગ્રામ"}
+               </span>
+               <div className="flex items-baseline gap-3">
+                 <span className="text-4xl lg:text-5xl font-black text-white flex items-center">
+                   <IndianRupee className="w-8 h-8 lg:w-10 lg:h-10 text-emerald-400" />
+                   3,999
+                 </span>
+                 <span className="line-through text-brand-500/80 text-xl lg:text-2xl font-semibold flex items-center">
+                   <IndianRupee className="w-5 h-5" /> 8,999
+                 </span>
+               </div>
+             </div>
+
+            <h2 className={`text-[2rem] md:text-5xl font-black mb-6 leading-[1.15] text-white ${lang === 'GU' ? 'font-gujarati' : ''}`}>
               {lang === 'EN' ? t.title.en : t.title.gu}
             </h2>
             
-            <p className={`text-brand-800 mb-8 text-lg md:text-2xl font-bold leading-relaxed ${lang === 'GU' ? 'font-gujarati' : ''}`}>
-               {lang === 'EN' ? "AI Pathshala" : "AI Pathshala"}<br/>
-               <span className="text-brand-600 font-normal">{lang === 'EN' ? t.subtitle.en : t.subtitle.gu}</span>
+            <p className={`text-brand-100/90 mb-8 text-lg font-medium leading-relaxed max-w-xl ${lang === 'GU' ? 'font-gujarati' : ''}`}>
+               {lang === 'EN' ? t.subtitle.en : t.subtitle.gu}
             </p>
 
-            <div className="flex items-center gap-2 text-xs text-brand-700 justify-center lg:justify-start">
-               <ShieldCheck className="w-4 h-4" />
-               {lang === 'EN' ? "Your data is safe. No spam." : "તમારો ડેટા સુરક્ષિત છે. કોઈ સ્પામ નહીં."}
+            <div className="flex flex-col gap-3 text-sm font-semibold text-brand-200 justify-center lg:justify-start">
+               <div className="flex items-center gap-2 justify-center lg:justify-start">
+                 <ShieldCheck className="w-5 h-5 text-emerald-400" />
+                 {lang === 'EN' ? "100% Secure. 15-Minute Free Consultation." : "૧૦૦% સલામત. 15-મિનિટ ફ્રી કન્સલ્ટેશન."}
+               </div>
             </div>
           </div>
 
           {/* Form Card */}
           <div className="lg:w-1/2 w-full max-w-md">
-            {/* Pulsing Border Effect */}
             <div className="relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-brand-300 to-brand-400 rounded-3xl blur opacity-60 animate-pulse"></div>
-                <div className="bg-white rounded-3xl p-8 shadow-2xl relative overflow-hidden text-brand-950 transform transition-all">
+                <div className="absolute -inset-1 bg-gradient-to-br from-brand-400 to-emerald-400 rounded-3xl blur opacity-30 animate-pulse"></div>
+                <div className="bg-white rounded-3xl p-8 lg:p-10 shadow-2xl relative overflow-hidden text-brand-950">
                 
-                {/* Professional Ribbon */}
-                <div className="absolute top-0 right-0 bg-brand-500 text-white text-[10px] font-bold px-4 py-1.5 rounded-bl-xl shadow-md z-20">
-                    SUMMER 2026
-                </div>
-
-                <div className="mb-6">
-                    <h3 className={`text-2xl font-bold text-brand-950 ${lang === 'GU' ? 'font-gujarati' : ''}`}>
-                       {lang === 'EN' ? t.cta.en : t.cta.gu}
+                <div className="mb-8 text-center">
+                    <h3 className={`text-2xl font-black text-brand-950 mb-2 ${lang === 'GU' ? 'font-gujarati' : ''}`}>
+                       {lang === 'EN' ? "Book Free Consultation" : "ફ્રી કન્સલ્ટેશન બુક કરો"}
                     </h3>
-                    <p className="text-brand-600 text-sm mt-1">
-                        {lang === 'EN' ? "Fill this to start your journey." : "તમારી સફર શરૂ કરવા માટે આ ભરો."}
+                    <p className="text-brand-600 text-[13px] font-semibold leading-relaxed">
+                        {lang === 'EN' 
+                          ? "Fill this form to schedule a free 15-min call with Tejas Sir to check if this AI course is right for your child." 
+                          : "તમારા બાળક માટે આ AI કોર્સ યોગ્ય છે કે નહીં તે જાણવા માટે તેજસ સર સાથે ફ્રી 15-મિનિટ કૉલ બુક કરવા આ ફોર્મ ભરો."}
                     </p>
                 </div>
 
@@ -158,11 +171,11 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                     method="post" 
                     target="hidden_iframe"
                     onSubmit={handleSubmit}
-                    className="space-y-4"
+                    className="space-y-5"
                     noValidate
                     >
                     <div className="group">
-                    <label className="block text-sm font-bold text-brand-800 mb-1 ml-1 group-focus-within:text-brand-500 transition-colors">
+                    <label className="block text-[13px] font-bold text-gray-700 mb-1.5 uppercase tracking-wide">
                         {lang === 'EN' ? "Student Name" : "વિદ્યાર્થીનું નામ"}
                     </label>
                     <input 
@@ -172,20 +185,20 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                         value={formData.name}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        className={`w-full px-4 py-3.5 rounded-xl border ${errors.name ? 'border-brand-500 ring-1 ring-brand-500' : 'border-brand-200'} focus:outline-none focus:ring-2 focus:ring-brand-600 bg-brand-50 transition-all font-medium placeholder:text-brand-300 focus:scale-[1.02] focus:shadow-[0_0_15px_rgba(224,96,96,0.3)] origin-center`}
+                        className={`w-full px-5 py-4 rounded-xl border-2 ${errors.name ? 'border-red-400 ring-4 ring-red-400/20' : 'border-gray-200'} focus:outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-500/20 bg-gray-50 transition-all font-semibold placeholder:text-gray-400 placeholder:font-medium`}
                         placeholder={lang === 'EN' ? "e.g. Rahul Patel" : "દા.ત. રાહુલ પટેલ"}
                     />
                     {errors.name && (
-                        <div className="flex items-center gap-1 mt-1 text-brand-600 text-xs font-bold animate-fade-in">
-                            <AlertCircle className="w-3 h-3" />
+                        <div className="flex items-center gap-1.5 mt-2 text-red-500 text-xs font-bold animate-fade-in">
+                            <AlertCircle className="w-3.5 h-3.5" />
                             <span>{errors.name}</span>
                         </div>
                     )}
                     </div>
                     
                     <div className="group">
-                    <label className="block text-sm font-bold text-brand-800 mb-1 ml-1 group-focus-within:text-brand-500 transition-colors">
-                        {lang === 'EN' ? "WhatsApp Number" : "વોટ્સએપ નંબર"}
+                    <label className="block text-[13px] font-bold text-gray-700 mb-1.5 uppercase tracking-wide">
+                        {lang === 'EN' ? "Parent's WhatsApp Number" : "વાલીનો વોટ્સએપ નંબર"}
                     </label>
                     <input 
                         type="tel" 
@@ -197,19 +210,19 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                         value={formData.phone}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        className={`w-full px-4 py-3.5 rounded-xl border ${errors.phone ? 'border-brand-500 ring-1 ring-brand-500' : 'border-brand-200'} focus:outline-none focus:ring-2 focus:ring-brand-600 bg-brand-50 transition-all font-medium placeholder:text-brand-300 focus:scale-[1.02] focus:shadow-[0_0_15px_rgba(224,96,96,0.3)] origin-center`}
+                        className={`w-full px-5 py-4 rounded-xl border-2 ${errors.phone ? 'border-red-400 ring-4 ring-red-400/20' : 'border-gray-200'} focus:outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-500/20 bg-gray-50 transition-all font-semibold placeholder:text-gray-400 placeholder:font-medium`}
                         placeholder="98797 37819"
                     />
                     {errors.phone && (
-                        <div className="flex items-center gap-1 mt-1 text-brand-600 text-xs font-bold animate-fade-in">
-                            <AlertCircle className="w-3 h-3" />
+                        <div className="flex items-center gap-1.5 mt-2 text-red-500 text-xs font-bold animate-fade-in">
+                            <AlertCircle className="w-3.5 h-3.5" />
                             <span>{errors.phone}</span>
                         </div>
                     )}
                     </div>
 
                     <div className="group">
-                    <label className="block text-sm font-bold text-brand-800 mb-1 ml-1 group-focus-within:text-brand-500 transition-colors">
+                    <label className="block text-[13px] font-bold text-gray-700 mb-1.5 uppercase tracking-wide">
                         {lang === 'EN' ? "Grade / Stream" : "ધોરણ / પ્રવાહ"}
                     </label>
                     <input 
@@ -219,35 +232,36 @@ export const CTA: React.FC<Props> = ({ lang }) => {
                         value={formData.grade}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        className={`w-full px-4 py-3.5 rounded-xl border ${errors.grade ? 'border-brand-500 ring-1 ring-brand-500' : 'border-brand-200'} focus:outline-none focus:ring-2 focus:ring-brand-600 bg-brand-50 transition-all font-medium placeholder:text-brand-300 focus:scale-[1.02] focus:shadow-[0_0_15px_rgba(224,96,96,0.3)] origin-center`}
+                        className={`w-full px-5 py-4 rounded-xl border-2 ${errors.grade ? 'border-red-400 ring-4 ring-red-400/20' : 'border-gray-200'} focus:outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-500/20 bg-gray-50 transition-all font-semibold placeholder:text-gray-400 placeholder:font-medium`}
                         placeholder={lang === 'EN' ? "e.g. 10th / BCA / Commerce" : "દા.ત. 10th / BCA / Commerce"}
                     />
                     {errors.grade && (
-                        <div className="flex items-center gap-1 mt-1 text-brand-600 text-xs font-bold animate-fade-in">
-                            <AlertCircle className="w-3 h-3" />
+                        <div className="flex items-center gap-1.5 mt-2 text-red-500 text-xs font-bold animate-fade-in">
+                            <AlertCircle className="w-3.5 h-3.5" />
                             <span>{errors.grade}</span>
                         </div>
                     )}
                     </div>
 
                     <button 
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="group relative w-full mt-6 py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold text-lg rounded-full shadow-[0_4px_20px_rgba(224,96,96,0.4)] transition-all transform active:scale-[0.98] hover:-translate-y-1 hover:scale-105 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed overflow-hidden animate-heartbeat hover:animate-none"
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full mt-4 py-4.5 bg-[#25D366] hover:bg-[#1ebe5a] text-white font-black text-lg rounded-xl shadow-[0_8px_25px_rgba(37,211,102,0.3)] transition-all transform active:scale-[0.98] hover:-translate-y-1 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
                     >
-                    <div className="absolute top-0 -left-[150%] w-[150%] h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 animate-shimmer" />
-                    {isSubmitting ? (
-                        <span className="animate-pulse">Processing...</span>
-                    ) : (
-                        <span className="relative z-10 flex items-center gap-2">
-                        {lang === 'EN' ? "Join Free on WhatsApp →" : "WhatsApp પર ફ્રી માં જોડાઓ →"}
-                        </span>
-                    )}
+                      {isSubmitting ? (
+                          <span className="animate-pulse">Processing...</span>
+                      ) : (
+                          <span>
+                            {lang === 'EN' ? "Book Free Call on WhatsApp →" : "WhatsApp પર કૉલ બુક કરો →"}
+                          </span>
+                      )}
                     </button>
                     
-                    <p className="text-center text-xs text-brand-400 mt-4 flex items-center justify-center gap-1">
-                    {lang === 'EN' ? "100% Free. No Payment Required." : "૧૦૦% ફ્રી. કોઈ પેમેન્ટ કરવાની જરૂર નથી."}
-                    </p>
+                    <div className="text-center mt-5">
+                      <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">
+                        {lang === 'EN' ? "No Credit Card Required for Consultation" : "કન્સલ્ટેશન માટે કોઈ ક્રેડિટ કાર્ડ જરૂરી નથી"}
+                      </p>
+                    </div>
                 </form>
                 </div>
             </div>

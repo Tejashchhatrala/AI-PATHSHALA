@@ -133,7 +133,7 @@ function App() {
                 onClick={scrollToEnroll}
                 className="hidden md:flex items-center gap-2 text-sm font-bold text-brand-900 bg-white hover:bg-brand-50 border border-brand-100 px-6 py-2.5 rounded-full transition-all shadow-sm hover:-translate-y-0.5 transform active:scale-95 cursor-pointer"
              >
-               {lang === 'EN' ? 'Join Free on WhatsApp' : 'WhatsApp પર ફ્રી માં જોડાઓ'}
+               {lang === 'EN' ? 'Book Free Consultation' : 'ફ્રી કન્સલ્ટેશન બુક કરો'}
              </button>
              <LanguageToggle lang={lang} setLang={setLang} />
           </div>
@@ -195,7 +195,7 @@ function App() {
            onClick={scrollToEnroll}
            className="flex items-center justify-center w-full font-bold text-white bg-brand-600 py-3.5 rounded-xl shadow-lg shadow-brand-500/30 active:scale-95 transition-transform cursor-pointer animate-wiggle-interval"
         >
-          {lang === 'EN' ? 'Join Free on WhatsApp' : 'WhatsApp પર ફ્રી માં જોડાઓ'}
+          {lang === 'EN' ? 'Book Free Consultation' : 'ફ્રી કન્સલ્ટેશન બુક કરો'}
         </button>
       </div>
     </div>

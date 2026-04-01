@@ -9,6 +9,10 @@ export interface HomepageContent {
     };
     subheadline: BilingualText;
     cta: BilingualText;
+    socialProof: {
+      text: BilingualText;
+      avatars: string[];
+    };
     features: BilingualText[];
   };
   problem: {
@@ -95,8 +99,8 @@ export const content: HomepageContent = {
         gu: "ગુજરાતના ટોપ વિદ્યાર્થીઓ AI વાપરી 2 ગણો ઝડપથી રિવાઇઝ કરે છે."
       },
       line2: {
-        en: "Now for your child. ₹0 — Completely Free.",
-        gu: "હવે તમારા બાળક માટે. ₹0 — 100% ફ્રી."
+        en: "Now for your child. ₹3,999 (was ₹8,999).",
+        gu: "હવે તમારા બાળક માટે. ₹3,999 (પહેલાં ₹8,999)."
       }
     },
     subheadline: {
@@ -104,8 +108,20 @@ export const content: HomepageContent = {
       gu: "બાળક 12 કલાક વાંચે છે છતાં પરીક્ષાનો ડર છે. સ્વતંત્ર રીતે માર્ક્સ વધારવા માટે તેમને નૈતિક AI સ્ટડી સિસ્ટમ બનાવવામાં મદદ કરો."
     },
     cta: {
-      en: "Join Free on WhatsApp",
-      gu: "WhatsApp પર ફ્રી માં જોડાઓ"
+      en: "Book Free 15-Min Consultation",
+      gu: "ફ્રી 15-મિનિટ કન્સલ્ટેશન બુક કરો"
+    },
+    socialProof: {
+      text: {
+        en: "Join 200+ Gujarati Parents & Students",
+        gu: "200+ ગુજરાતી વાલીઓ અને વિદ્યાર્થીઓ સાથે જોડાઓ"
+      },
+      avatars: [
+        "https://i.pravatar.cc/100?img=12",
+        "https://i.pravatar.cc/100?img=21",
+        "https://i.pravatar.cc/100?img=52",
+        "https://i.pravatar.cc/100?img=60",
+      ]
     },
     features: [
       {
@@ -121,8 +137,8 @@ export const content: HomepageContent = {
         gu: "AI નો નૈતિક ઉપયોગ (ચીટિંગ નહીં)"
       },
       {
-        en: "100% Free WhatsApp Class",
-        gu: "100% ફ્રી WhatsApp ક્લાસ"
+        en: "Dedicated Strategy Calls",
+        gu: "માર્ગદર્શન અને સ્ટ્રેટેજી સેશન્સ"
       }
     ]
   },
@@ -629,12 +645,12 @@ export const content: HomepageContent = {
       gu: "તમારા બાળકને સ્માર્ટ સ્ટડી સિસ્ટમની જરૂર છે. વધુ કલાકોની નહીં."
     },
     subtitle: {
-      en: "Join 200+ Gujarati students already using AI to study better. April batch closing soon.",
-      gu: "200+ ગુજરાતી વિદ્યાર્થીઓ AI વાપરી ભણી રહ્યા છે. એપ્રિલ બેચ ટૂંક સમયમાં બંધ."
+      en: "Join 200+ Gujarati students already using AI to study better. Secure your spot in the April batch for just ₹3,999 (was ₹8,999).",
+      gu: "200+ ગુજરાતી વિદ્યાર્થીઓ AI વાપરી ભણી રહ્યા છે. માત્ર ₹3,999 માં એપ્રિલ બેચમાં તમારી સીટ બુક કરો (પહેલાં ₹8,999)."
     },
     cta: {
-      en: "Join Free on WhatsApp",
-      gu: "WhatsApp પર ફ્રી માં જોડાઓ"
+      en: "Book Free 15-Min Consultation",
+      gu: "ફ્રી 15-મિનિટ કન્સલ્ટેશન બુક કરો"
     }
   }
 };
