@@ -1,5 +1,4 @@
-import React from 'react';
-import { Star, Quote } from 'lucide-react';
+import React, { useRef, useEffect } from 'react';
 import { Language } from '../types';
 import { content } from '../data/content';
 
@@ -7,45 +6,85 @@ interface Props {
   lang: Language;
 }
 
-const STARS_ARRAY = [...Array(5)];
-
 export const Testimonials: React.FC<Props> = ({ lang }) => {
   const t = content.testimonials;
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll animation
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    let animationFrame: number;
+    let scrollPos = 0;
+    let isPaused = false;
+
+    const scroll = () => {
+      if (!isPaused && track) {
+        scrollPos += 0.5;
+        if (scrollPos >= track.scrollWidth - track.clientWidth) {
+          scrollPos = 0;
+        }
+        track.scrollLeft = scrollPos;
+      }
+      animationFrame = requestAnimationFrame(scroll);
+    };
+
+    const handleMouseEnter = () => { isPaused = true; };
+    const handleMouseLeave = () => { isPaused = false; };
+    const handleTouchStart = () => { isPaused = true; };
+    const handleTouchEnd = () => {
+      // Sync scrollPos after touch
+      setTimeout(() => {
+        scrollPos = track.scrollLeft;
+        isPaused = false;
+      }, 2000);
+    };
+
+    track.addEventListener('mouseenter', handleMouseEnter);
+    track.addEventListener('mouseleave', handleMouseLeave);
+    track.addEventListener('touchstart', handleTouchStart);
+    track.addEventListener('touchend', handleTouchEnd);
+
+    animationFrame = requestAnimationFrame(scroll);
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      track.removeEventListener('mouseenter', handleMouseEnter);
+      track.removeEventListener('mouseleave', handleMouseLeave);
+      track.removeEventListener('touchstart', handleTouchStart);
+      track.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, []);
 
   return (
-    <section className="py-24 bg-white">
-      <div className="container mx-auto px-4 sm:px-6">
-        <div className="text-center mb-16">
-          <h2 className={`text-3xl md:text-5xl font-black text-brand-950 mb-6 ${lang === 'GU' ? 'font-gujarati' : ''}`}>
-             {lang === 'EN' ? t.title.en : t.title.gu}
+    <section className="section section-dark">
+      <div className="container">
+        <div className="section-header reveal">
+          <div className="section-eyebrow">{lang === 'EN' ? t.eyebrow.en : t.eyebrow.gu}</div>
+          <h2 className="heading-lg section-title" style={{ whiteSpace: 'pre-line' }}>
+            {lang === 'EN' ? t.title.en : t.title.gu}
           </h2>
         </div>
+      </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {t.items.map((item, i) => (
-            <div key={i} className="bg-brand-50/40 p-8 rounded-3xl border border-brand-100 shadow-lg hover:shadow-xl transition-all relative group flex flex-col h-full">
-              <Quote className="absolute top-6 right-6 w-10 h-10 text-brand-100 group-hover:text-brand-200 transition-colors" />
-
-              <div className="mb-6">
-                 <div className="flex mb-3">
-                    {STARS_ARRAY.map((_, i) => (
-                      <Star key={i} className="w-4 h-4 text-brand-400 fill-current" />
-                    ))}
-                 </div>
-                 <p className={`text-brand-800 leading-relaxed font-medium text-lg italic ${lang === 'GU' ? 'font-gujarati' : ''}`}>
-                   "{lang === 'EN' ? item.text.en : item.text.gu}"
-                 </p>
-              </div>
-
-              <div className="mt-auto pt-4 border-t border-brand-200">
-                  <h4 className="font-bold text-brand-900 text-lg">{item.name}</h4>
-                  <p className={`text-sm text-brand-600 font-medium ${lang === 'GU' ? 'font-gujarati' : ''}`}>
-                    {lang === 'EN' ? item.role.en : item.role.gu}
-                  </p>
+      {/* Full-width testimonials track */}
+      <div className="testimonials-track" ref={trackRef} style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
+        {/* Duplicate for infinite scroll effect */}
+        {[...t.items, ...t.items].map((item, i) => (
+          <div key={i} className="testimonial-card">
+            <div className="testimonial-text">
+              "{lang === 'EN' ? item.text.en : item.text.gu}"
+            </div>
+            <div className="testimonial-author">
+              <div className="testimonial-avatar">{item.initials}</div>
+              <div>
+                <div className="testimonial-name">{item.name}</div>
+                <div className="testimonial-role">{lang === 'EN' ? item.role.en : item.role.gu}</div>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </section>
   );

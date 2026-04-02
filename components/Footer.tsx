@@ -1,46 +1,56 @@
 import React, { memo } from 'react';
 import { Language } from '../types';
+import { content } from '../data/content';
 import { WEBSITE_URL } from '../constants';
 
 interface Props {
   lang: Language;
   onPrivacyClick: () => void;
+  onRefundClick: () => void;
+  onTermsClick: () => void;
+  onContactClick: () => void;
 }
 
-export const Footer = memo(({ lang, onPrivacyClick }: Props) => {
+export const Footer = memo(({ lang, onPrivacyClick, onRefundClick, onTermsClick, onContactClick }: Props) => {
+  const t = content.footer;
+
   return (
-    <footer className="bg-brand-100 text-brand-800 py-12 border-t border-brand-200">
-      <div className="container mx-auto px-4 text-center">
-        <div className="mb-6">
-           <h3 className="text-2xl text-brand-950 font-bold mb-2">AI Pathshala</h3>
-           <p className="text-brand-800 text-sm mb-1 font-medium">An Initiative by Sarvottam</p>
-           <a href={WEBSITE_URL} target="_blank" rel="noopener noreferrer" className="text-brand-600 hover:text-brand-800 text-sm font-medium transition-colors">
-             {WEBSITE_URL.replace('https://', '')}
-           </a>
+    <footer className="footer">
+      <div className="container">
+        <div className="footer-brand">AI Pathshala</div>
+        <p style={{ fontSize: '0.8rem', color: 'var(--color-text-tertiary)', marginBottom: '0.5rem' }}>
+          {lang === 'EN' ? t.tagline.en : t.tagline.gu}
+        </p>
+        <a
+          href={WEBSITE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ fontSize: '0.75rem', color: 'var(--color-text-tertiary)' }}
+        >
+          {WEBSITE_URL.replace('https://', '')}
+        </a>
+
+        <div className="footer-links">
+          <button onClick={onPrivacyClick} className="footer-link" style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+            {lang === 'EN' ? "Privacy Policy" : "પ્રાઇવસી પોલિસી"}
+          </button>
+          <button onClick={onRefundClick} className="footer-link" style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+            {lang === 'EN' ? "Refund Policy" : "રિફંડ પોલિસી"}
+          </button>
+          <button onClick={onTermsClick} className="footer-link" style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+            {lang === 'EN' ? "Terms & Conditions" : "નિયમો અને શરતો"}
+          </button>
+          <button onClick={onContactClick} className="footer-link" style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+            {lang === 'EN' ? "Contact Us" : "અમારો સંપર્ક"}
+          </button>
         </div>
-        
-        <div className="max-w-2xl mx-auto border-t border-brand-200 pt-6 mt-6">
-          <p className="text-sm text-brand-800 font-medium">
-            © 2026 Sarvottam AI Pathshala
-          </p>
-          <div className="flex items-center justify-center gap-4 mt-2 mb-1">
-             <button onClick={onPrivacyClick} className="text-xs text-brand-600 hover:text-brand-800 underline font-medium cursor-pointer">
-               {lang === 'EN' ? "Privacy Policy" : "પ્રાઇવસી પોલિસી"}
-             </button>
-          </div>
-          <p className="text-xs mt-3 text-brand-600">
-             {lang === 'EN' 
-               ? "Founded by Tejas Chhatrala, Gujarat's Top AI Educator." 
-               : "સ્થાપક: તેજસ છત્રાળા, ગુજરાતના ટોપ AI એજ્યુકેટર."}
-          </p>
-          
-          <div className="mt-8 text-[10px] text-brand-500 leading-relaxed">
-             <p>
-                {lang === 'EN' 
-                 ? "Disclaimer: Results may vary from student to student. This program teaches the use of AI tools for educational purposes. We do not encourage plagiarism or cheating in exams. Students are advised to use these tools ethically for learning and understanding concepts only."
-                 : "ડિસ્ક્લેમર: દરેક વિદ્યાર્થી પ્રમાણે પરિણામો અલગ હોઈ શકે છે. આ પ્રોગ્રામ માત્ર શૈક્ષણિક હેતુ માટે AI ટૂલ્સનો ઉપયોગ શીખવે છે. અમે પરીક્ષામાં ચોરી કે પ્લેગિયરિઝમને પ્રોત્સાહન આપતા નથી. વિદ્યાર્થીઓને સલાહ આપવામાં આવે છે કે તેઓ માત્ર શીખવા અને સમજવા માટે જ આ સાધનોનો નૈતિક ઉપયોગ કરે."}
-             </p>
-          </div>
+
+        <div className="footer-copy">
+          <p>© 2026 Sarvottam AI Pathshala. {lang === 'EN' ? 'Founded by Tejas Chhatrala.' : 'સ્થાપક: તેજસ છત્રાળા.'}</p>
+        </div>
+
+        <div style={{ maxWidth: '600px', margin: '1.5rem auto 0', fontSize: '0.65rem', color: 'var(--color-text-tertiary)', lineHeight: 1.6 }}>
+          {lang === 'EN' ? t.disclaimer.en : t.disclaimer.gu}
         </div>
       </div>
     </footer>

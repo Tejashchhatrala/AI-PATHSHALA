@@ -1,88 +1,35 @@
-import React, { useCallback } from 'react';
-import { Flag, Compass, MessageSquare, Trophy, Briefcase, ArrowRight } from 'lucide-react';
+import React from 'react';
 import { Language } from '../types';
 import { content } from '../data/content';
-import { scrollToElement } from '../utils';
 
 interface Props {
   lang: Language;
 }
 
-const ICONS = [
-  <Compass className="w-6 h-6 text-white" />,
-  <MessageSquare className="w-6 h-6 text-white" />,
-  <Trophy className="w-6 h-6 text-white" />,
-  <Briefcase className="w-6 h-6 text-white" />
-];
-
-const COLORS = [
-  "bg-brand-500",
-  "bg-brand-500",
-  "bg-brand-500",
-  "bg-brand-500"
-];
-
 export const HowItWorks: React.FC<Props> = ({ lang }) => {
   const t = content.howItWorks;
 
-  const scrollToEnroll = useCallback((e: React.MouseEvent) => scrollToElement('enroll', e), []);
-
   return (
-    <section id="how-it-works" className="py-24 bg-white relative overflow-hidden">
-      {/* Background Decor */}
-      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] opacity-50"></div>
-
-      <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className={`text-3xl md:text-5xl font-black text-brand-950 mt-6 mb-6 leading-tight ${lang === 'GU' ? 'font-gujarati' : ''}`}>
+    <section className="section section-dark">
+      <div className="container">
+        <div className="section-header reveal">
+          <div className="section-eyebrow">{lang === 'EN' ? t.eyebrow.en : t.eyebrow.gu}</div>
+          <h2 className="heading-lg section-title" style={{ whiteSpace: 'pre-line' }}>
             {lang === 'EN' ? t.title.en : t.title.gu}
           </h2>
         </div>
 
-        <div className="max-w-4xl mx-auto">
-           <div className="space-y-8 relative">
-              {/* Vertical Line for Mobile/Desktop */}
-              <div className="absolute left-8 top-4 bottom-4 w-1 bg-brand-100 hidden md:block"></div>
-
-              {t.phases.map((phase, idx) => (
-                <div key={idx} className="relative flex items-center gap-6 group">
-
-                   {/* Number/Icon Marker */}
-                   <div className={`hidden md:flex w-16 h-16 rounded-full border-4 border-white shadow-lg items-center justify-center z-10 shrink-0 ${COLORS[idx]}`}>
-                      {ICONS[idx]}
-                   </div>
-
-                   {/* Content Box */}
-                   <div className="flex-1 bg-white p-6 md:p-8 rounded-2xl border border-brand-100 shadow-sm hover:shadow-brand-200 transition-all hover:-translate-y-1">
-                      <div className="flex items-center gap-4 mb-3">
-                         <div className={`md:hidden w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${COLORS[idx]}`}>
-                            {ICONS[idx]}
-                         </div>
-                         <h3 className={`text-xl md:text-2xl font-bold text-brand-900 ${lang === 'GU' ? 'font-gujarati' : ''}`}>
-                            {lang === 'EN' ? phase.title.en : phase.title.gu}
-                         </h3>
-                      </div>
-                      <p className={`text-brand-700 text-lg leading-relaxed ${lang === 'GU' ? 'font-gujarati' : ''}`}>
-                         {lang === 'EN' ? phase.description.en : phase.description.gu}
-                      </p>
-                   </div>
-                </div>
-              ))}
-           </div>
-
-          <div className="mt-16 text-center">
-              <button
-                  onClick={scrollToEnroll}
-                  className="group relative inline-flex items-center gap-3 text-white bg-brand-600 hover:bg-brand-700 px-10 py-5 rounded-full font-bold text-lg shadow-[0_4px_20px_rgba(224,96,96,0.4)] transition-all transform hover:-translate-y-1 hover:scale-105 overflow-hidden cursor-pointer animate-heartbeat hover:animate-none"
-              >
-                <div className="absolute top-0 -left-[150%] w-[150%] h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 animate-shimmer" />
-                <span className="relative z-10 flex items-center gap-2">
-                  <Flag className="w-5 h-5" />
-                  {lang === 'EN' ? "Book Free Consultation" : "ફ્રી કન્સલ્ટેશન બુક કરો"}
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </button>
-          </div>
+        <div className="steps-grid stagger-children" style={{ maxWidth: '900px', margin: '0 auto' }}>
+          {t.steps.map((step, i) => (
+            <div key={i} className="step-card">
+              <h3 className="step-title">
+                {lang === 'EN' ? step.title.en : step.title.gu}
+              </h3>
+              <p className="step-desc">
+                {lang === 'EN' ? step.description.en : step.description.gu}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

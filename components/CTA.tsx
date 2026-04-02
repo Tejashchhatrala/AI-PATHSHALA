@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, ShieldCheck, AlertCircle, IndianRupee } from 'lucide-react';
+import { Check, ShieldCheck, AlertCircle, MessageCircle } from 'lucide-react';
 import { Language } from '../types';
 import { content } from '../data/content';
 import { GOOGLE_FORM_CTA_URL, GOOGLE_FORM_FIELD_IDS, WHATSAPP_PHONE_NUMBER, PHONE_REGEX } from '../constants';
@@ -12,25 +12,22 @@ interface Props {
 const validateField = (name: string, value: string, lang: Language) => {
   let error = '';
   if (name === 'name' && !value.trim()) {
-    error = lang === 'EN' ? 'Name is required' : 'નામ લખવું જરૂરી છે';
+    error = lang === 'EN' ? 'Name is required' : 'નામ ભરવું જરૂરી છે';
   }
   if (name === 'phone') {
     if (!value.trim()) {
-      error = lang === 'EN' ? 'WhatsApp number is required' : 'વોટ્સએપ નંબર લખવો જરૂરી છે';
+      error = lang === 'EN' ? 'WhatsApp number is required' : 'WhatsApp નંબર ભરવો જરૂરી છે';
     } else if (value.length < 10) {
-      error = lang === 'EN' ? 'Invalid phone number' : 'અમાન્ય મોબાઈલ નંબર';
+      error = lang === 'EN' ? 'Enter a valid 10-digit number' : 'માન્ય 10 અંકનો નંબર ભરો';
     }
-  }
-  if (name === 'grade' && !value.trim()) {
-    error = lang === 'EN' ? 'Grade is required' : 'ધોરણ લખવું જરૂરી છે';
   }
   return error;
 };
 
 export const CTA: React.FC<Props> = ({ lang }) => {
-  const t = content.finalCall;
-  const [formData, setFormData] = useState({ name: '', phone: '', grade: '' });
-  const [errors, setErrors] = useState({ name: '', phone: '', grade: '' });
+  const t = content.cta;
+  const [formData, setFormData] = useState({ name: '', phone: '' });
+  const [errors, setErrors] = useState({ name: '', phone: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -38,11 +35,9 @@ export const CTA: React.FC<Props> = ({ lang }) => {
     let fieldKey = '';
     if (name === GOOGLE_FORM_FIELD_IDS.name) fieldKey = 'name';
     if (name === GOOGLE_FORM_FIELD_IDS.phone) fieldKey = 'phone';
-    if (name === GOOGLE_FORM_FIELD_IDS.grade) fieldKey = 'grade';
-
     if (fieldKey) {
-       const error = validateField(fieldKey, value, lang);
-       setErrors(prev => ({ ...prev, [fieldKey]: error }));
+      const error = validateField(fieldKey, value, lang);
+      setErrors(prev => ({ ...prev, [fieldKey]: error }));
     }
   };
 
@@ -51,220 +46,177 @@ export const CTA: React.FC<Props> = ({ lang }) => {
     let fieldKey = '' as keyof typeof formData;
     if (name === GOOGLE_FORM_FIELD_IDS.name) fieldKey = 'name';
     if (name === GOOGLE_FORM_FIELD_IDS.phone) fieldKey = 'phone';
-    if (name === GOOGLE_FORM_FIELD_IDS.grade) fieldKey = 'grade';
 
     if (fieldKey) {
-        // Special handling for phone
-        let finalValue = value;
-        if (fieldKey === 'phone') {
-             finalValue = value.replace(PHONE_REGEX, '');
-        } else {
-             finalValue = sanitizeInput(value, 100, false);
-        }
-
-        setFormData(prev => ({ ...prev, [fieldKey]: finalValue }));
-
-        // Clear error if exists
-        if (errors[fieldKey]) {
-            setErrors(prev => ({ ...prev, [fieldKey]: '' }));
-        }
+      let finalValue = value;
+      if (fieldKey === 'phone') {
+        finalValue = value.replace(PHONE_REGEX, '');
+      } else {
+        finalValue = sanitizeInput(value, 100, false);
+      }
+      setFormData(prev => ({ ...prev, [fieldKey]: finalValue }));
+      if (errors[fieldKey]) {
+        setErrors(prev => ({ ...prev, [fieldKey]: '' }));
+      }
     }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    // Validate all fields
     const nameError = validateField('name', formData.name, lang);
     const phoneError = validateField('phone', formData.phone, lang);
-    const gradeError = validateField('grade', formData.grade, lang);
 
-    if (nameError || phoneError || gradeError) {
-        e.preventDefault();
-        setErrors({
-            name: nameError,
-            phone: phoneError,
-            grade: gradeError
-        });
-        return;
+    if (nameError || phoneError) {
+      e.preventDefault();
+      setErrors({ name: nameError, phone: phoneError });
+      return;
     }
 
     setIsSubmitting(true);
 
-    // Prepare WhatsApp Message for Consultation Waitlist
-    const message = `Hello Tejas Sir, I would like to book a free 15-minute consultation to see if the AI Pathshala course (₹3,999) is a good fit for my child.\n\n*Name:* ${formData.name}\n*Grade:* ${formData.grade}\n*Phone:* ${formData.phone}`;
+    const message = `Hello Tejas Sir, I want to enroll in the AI Pathshala course (₹3,999).\n\n*Name:* ${formData.name}\n*Phone:* ${formData.phone}`;
     const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
 
     setTimeout(() => {
-        window.location.href = whatsappUrl;
-        setIsSubmitting(false);
+      window.location.href = whatsappUrl;
+      setIsSubmitting(false);
     }, 1500);
   };
 
   return (
-    <section id="enroll" className="py-24 bg-gradient-to-br from-brand-900 to-brand-950 text-white relative overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-brand-800 rounded-full opacity-30 blur-[100px] animate-pulse"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-red-900 rounded-full opacity-30 blur-[100px]"></div>
-      
-      <div className="container mx-auto px-4 sm:px-6 relative z-10 w-full max-w-7xl">
-        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-20">
-          
-          {/* Text Content */}
-          <div className="lg:w-1/2 text-center lg:text-left">
-             <div className="inline-flex items-center gap-2 bg-brand-800/50 text-brand-200 px-4 py-1.5 rounded-full text-xs font-bold border border-brand-700 mb-6 shadow-sm backdrop-blur-sm">
-                <Calendar className="w-4 h-4" />
-                {lang === 'EN' ? "Admissions Open: April 2026 Batch" : "એડમિશન શરૂ: એપ્રિલ 2026 બેચ"}
-             </div>
+    <section id="enroll" className="section cta-section" style={{ paddingBottom: '6rem' }}>
+      {/* Background glows */}
+      <div className="cta-bg-glow" style={{ background: 'var(--color-accent)', top: '-200px', right: '-200px' }} />
+      <div className="cta-bg-glow" style={{ background: '#7c3aed', bottom: '-200px', left: '-200px' }} />
 
-             {/* Pricing Spotlight */}
-             <div className="mb-6 flex flex-col justify-center lg:justify-start items-center lg:items-start">
-               <span className="text-brand-300 font-bold uppercase tracking-widest text-sm mb-1">
-                 {lang === 'EN' ? "Full 30-Day Program" : "સંપૂર્ણ 30-દિવસનો પ્રોગ્રામ"}
-               </span>
-               <div className="flex items-baseline gap-3">
-                 <span className="text-4xl lg:text-5xl font-black text-white flex items-center">
-                   <IndianRupee className="w-8 h-8 lg:w-10 lg:h-10 text-emerald-400" />
-                   3,999
-                 </span>
-                 <span className="line-through text-brand-500/80 text-xl lg:text-2xl font-semibold flex items-center">
-                   <IndianRupee className="w-5 h-5" /> 8,999
-                 </span>
-               </div>
-             </div>
+      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+        {/* Header */}
+        <div className="section-header reveal">
+          <div className="section-eyebrow">{lang === 'EN' ? t.eyebrow.en : t.eyebrow.gu}</div>
+          <h2 className="heading-lg section-title" style={{ whiteSpace: 'pre-line' }}>
+            {lang === 'EN' ? t.title.en : t.title.gu}
+          </h2>
+          <p className="section-subtitle">
+            {lang === 'EN' ? t.subtitle.en : t.subtitle.gu}
+          </p>
+        </div>
 
-            <h2 className={`text-[2rem] md:text-5xl font-black mb-6 leading-[1.15] text-white ${lang === 'GU' ? 'font-gujarati' : ''}`}>
-              {lang === 'EN' ? t.title.en : t.title.gu}
-            </h2>
-            
-            <p className={`text-brand-100/90 mb-8 text-lg font-medium leading-relaxed max-w-xl ${lang === 'GU' ? 'font-gujarati' : ''}`}>
-               {lang === 'EN' ? t.subtitle.en : t.subtitle.gu}
-            </p>
+        {/* Two column: Features + Form */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '3rem', maxWidth: '900px', margin: '0 auto' }} className="reveal">
+          {/* Pricing + Features column */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+            {/* Price card */}
+            <div className="glass-card-strong" style={{ padding: '2rem', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-accent)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>
+                {lang === 'EN' ? 'Complete 30-Day Program' : 'સંપૂર્ણ 30 દિવસનો પ્રોગ્રામ'}
+              </div>
+              <div className="cta-price-amount">{t.price}</div>
+              <div className="cta-price-period" style={{ marginTop: '0.5rem' }}>
+                {lang === 'EN' ? 'One-time payment' : 'એક વખતની ચૂકવણી'}
+              </div>
+            </div>
 
-            <div className="flex flex-col gap-3 text-sm font-semibold text-brand-200 justify-center lg:justify-start">
-               <div className="flex items-center gap-2 justify-center lg:justify-start">
-                 <ShieldCheck className="w-5 h-5 text-emerald-400" />
-                 {lang === 'EN' ? "100% Secure. 15-Minute Free Consultation." : "૧૦૦% સલામત. 15-મિનિટ ફ્રી કન્સલ્ટેશન."}
-               </div>
+            {/* Features list */}
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <ul className="cta-features">
+                {t.features.map((f, i) => (
+                  <li key={i} className="cta-feature">
+                    <Check style={{ width: 18, height: 18 }} />
+                    <span>{lang === 'EN' ? f.en : f.gu}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 
           {/* Form Card */}
-          <div className="lg:w-1/2 w-full max-w-md">
-            <div className="relative">
-                <div className="absolute -inset-1 bg-gradient-to-br from-brand-400 to-emerald-400 rounded-3xl blur opacity-30 animate-pulse"></div>
-                <div className="bg-white rounded-3xl p-8 lg:p-10 shadow-2xl relative overflow-hidden text-brand-950">
-                
-                <div className="mb-8 text-center">
-                    <h3 className={`text-2xl font-black text-brand-950 mb-2 ${lang === 'GU' ? 'font-gujarati' : ''}`}>
-                       {lang === 'EN' ? "Book Free Consultation" : "ફ્રી કન્સલ્ટેશન બુક કરો"}
-                    </h3>
-                    <p className="text-brand-600 text-[13px] font-semibold leading-relaxed">
-                        {lang === 'EN' 
-                          ? "Fill this form to schedule a free 15-min call with Tejas Sir to check if this AI course is right for your child." 
-                          : "તમારા બાળક માટે આ AI કોર્સ યોગ્ય છે કે નહીં તે જાણવા માટે તેજસ સર સાથે ફ્રી 15-મિનિટ કૉલ બુક કરવા આ ફોર્મ ભરો."}
-                    </p>
-                </div>
-
-                <iframe name="hidden_iframe" id="hidden_iframe" style={{display: 'none'}}></iframe>
-
-                <form 
-                    action={GOOGLE_FORM_CTA_URL}
-                    method="post" 
-                    target="hidden_iframe"
-                    onSubmit={handleSubmit}
-                    className="space-y-5"
-                    noValidate
-                    >
-                    <div className="group">
-                    <label className="block text-[13px] font-bold text-gray-700 mb-1.5 uppercase tracking-wide">
-                        {lang === 'EN' ? "Student Name" : "વિદ્યાર્થીનું નામ"}
-                    </label>
-                    <input 
-                        type="text" 
-                        name={GOOGLE_FORM_FIELD_IDS.name}
-                        required
-                        value={formData.name}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className={`w-full px-5 py-4 rounded-xl border-2 ${errors.name ? 'border-red-400 ring-4 ring-red-400/20' : 'border-gray-200'} focus:outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-500/20 bg-gray-50 transition-all font-semibold placeholder:text-gray-400 placeholder:font-medium`}
-                        placeholder={lang === 'EN' ? "e.g. Rahul Patel" : "દા.ત. રાહુલ પટેલ"}
-                    />
-                    {errors.name && (
-                        <div className="flex items-center gap-1.5 mt-2 text-red-500 text-xs font-bold animate-fade-in">
-                            <AlertCircle className="w-3.5 h-3.5" />
-                            <span>{errors.name}</span>
-                        </div>
-                    )}
-                    </div>
-                    
-                    <div className="group">
-                    <label className="block text-[13px] font-bold text-gray-700 mb-1.5 uppercase tracking-wide">
-                        {lang === 'EN' ? "Parent's WhatsApp Number" : "વાલીનો વોટ્સએપ નંબર"}
-                    </label>
-                    <input 
-                        type="tel" 
-                        name={GOOGLE_FORM_FIELD_IDS.phone}
-                        required
-                        pattern="[0-9]{10}"
-                        maxLength={10}
-                        title={lang === 'EN' ? "Please enter a valid 10-digit phone number" : "કૃપા કરીને 10 અંકનો માન્ય મોબાઈલ નંબર દાખલ કરો"}
-                        value={formData.phone}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className={`w-full px-5 py-4 rounded-xl border-2 ${errors.phone ? 'border-red-400 ring-4 ring-red-400/20' : 'border-gray-200'} focus:outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-500/20 bg-gray-50 transition-all font-semibold placeholder:text-gray-400 placeholder:font-medium`}
-                        placeholder="98797 37819"
-                    />
-                    {errors.phone && (
-                        <div className="flex items-center gap-1.5 mt-2 text-red-500 text-xs font-bold animate-fade-in">
-                            <AlertCircle className="w-3.5 h-3.5" />
-                            <span>{errors.phone}</span>
-                        </div>
-                    )}
-                    </div>
-
-                    <div className="group">
-                    <label className="block text-[13px] font-bold text-gray-700 mb-1.5 uppercase tracking-wide">
-                        {lang === 'EN' ? "Grade / Stream" : "ધોરણ / પ્રવાહ"}
-                    </label>
-                    <input 
-                        type="text" 
-                        name={GOOGLE_FORM_FIELD_IDS.grade}
-                        required
-                        value={formData.grade}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className={`w-full px-5 py-4 rounded-xl border-2 ${errors.grade ? 'border-red-400 ring-4 ring-red-400/20' : 'border-gray-200'} focus:outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-500/20 bg-gray-50 transition-all font-semibold placeholder:text-gray-400 placeholder:font-medium`}
-                        placeholder={lang === 'EN' ? "e.g. 10th / BCA / Commerce" : "દા.ત. 10th / BCA / Commerce"}
-                    />
-                    {errors.grade && (
-                        <div className="flex items-center gap-1.5 mt-2 text-red-500 text-xs font-bold animate-fade-in">
-                            <AlertCircle className="w-3.5 h-3.5" />
-                            <span>{errors.grade}</span>
-                        </div>
-                    )}
-                    </div>
-
-                    <button 
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full mt-4 py-4.5 bg-[#25D366] hover:bg-[#1ebe5a] text-white font-black text-lg rounded-xl shadow-[0_8px_25px_rgba(37,211,102,0.3)] transition-all transform active:scale-[0.98] hover:-translate-y-1 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
-                    >
-                      {isSubmitting ? (
-                          <span className="animate-pulse">Processing...</span>
-                      ) : (
-                          <span>
-                            {lang === 'EN' ? "Book Free Call on WhatsApp →" : "WhatsApp પર કૉલ બુક કરો →"}
-                          </span>
-                      )}
-                    </button>
-                    
-                    <div className="text-center mt-5">
-                      <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">
-                        {lang === 'EN' ? "No Credit Card Required for Consultation" : "કન્સલ્ટેશન માટે કોઈ ક્રેડિટ કાર્ડ જરૂરી નથી"}
-                      </p>
-                    </div>
-                </form>
-                </div>
+          <div className="cta-card">
+            <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+              <h3 className="heading-sm" style={{ marginBottom: '0.5rem' }}>
+                {lang === 'EN' ? t.formTitle.en : t.formTitle.gu}
+              </h3>
+              <p style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>
+                {lang === 'EN' ? t.formSubtitle.en : t.formSubtitle.gu}
+              </p>
             </div>
+
+            <iframe name="hidden_iframe" id="hidden_iframe" style={{ display: 'none' }} />
+
+            <form
+              action={GOOGLE_FORM_CTA_URL}
+              method="post"
+              target="hidden_iframe"
+              onSubmit={handleSubmit}
+              noValidate
+            >
+              <div className="form-group">
+                <label className="form-label">
+                  {lang === 'EN' ? "Student's Name" : "વિદ્યાર્થીનું નામ"}
+                </label>
+                <input
+                  type="text"
+                  name={GOOGLE_FORM_FIELD_IDS.name}
+                  required
+                  value={formData.name}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className={`form-input ${errors.name ? 'error' : ''}`}
+                  placeholder={lang === 'EN' ? "e.g. Rahul Patel" : "દા.ત. રાહુલ પટેલ"}
+                />
+                {errors.name && (
+                  <div className="form-error" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                    <AlertCircle style={{ width: 14, height: 14 }} />
+                    {errors.name}
+                  </div>
+                )}
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">
+                  {lang === 'EN' ? "WhatsApp Number" : "WhatsApp નંબર"}
+                </label>
+                <input
+                  type="tel"
+                  name={GOOGLE_FORM_FIELD_IDS.phone}
+                  required
+                  pattern="[0-9]{10}"
+                  maxLength={10}
+                  value={formData.phone}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className={`form-input ${errors.phone ? 'error' : ''}`}
+                  placeholder="98797 37819"
+                />
+                {errors.phone && (
+                  <div className="form-error" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                    <AlertCircle style={{ width: 14, height: 14 }} />
+                    {errors.phone}
+                  </div>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="btn btn-whatsapp btn-shimmer w-full"
+                style={{ marginTop: '1rem' }}
+              >
+                {isSubmitting ? (
+                  <span style={{ opacity: 0.7 }}>Processing...</span>
+                ) : (
+                  <>
+                    <MessageCircle style={{ width: 20, height: 20 }} />
+                    {lang === 'EN' ? t.buttonText.en : t.buttonText.gu}
+                  </>
+                )}
+              </button>
+
+              <div style={{ textAlign: 'center', marginTop: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.375rem' }}>
+                <ShieldCheck style={{ width: 14, height: 14, color: 'var(--color-success)' }} />
+                <span style={{ fontSize: '0.75rem', color: 'var(--color-text-tertiary)', fontWeight: 500 }}>
+                  {lang === 'EN' ? t.guarantee.en : t.guarantee.gu}
+                </span>
+              </div>
+            </form>
           </div>
         </div>
       </div>

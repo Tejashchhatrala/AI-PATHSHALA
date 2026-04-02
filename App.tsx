@@ -1,28 +1,23 @@
-import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
+import React, { useState, useEffect, useCallback, useRef, lazy, Suspense } from 'react';
 import { Brain } from 'lucide-react';
 import { throttle, scrollToElement } from './utils';
 import { Language } from './types';
+import { content } from './data/content';
 import { SCROLL_THRESHOLD } from './constants';
-import { LanguageToggle } from './components/LanguageToggle';
 import { Hero } from './components/Hero';
-import { TheRealProblem } from './components/TheRealProblem';
+import { ProblemSolution } from './components/ProblemSolution';
 
-// Lazy load components below the fold and conditional views
-const WhyCampMatters = lazy(() => import('./components/WhyCampMatters').then(m => ({ default: m.WhyCampMatters })));
-const FutureReadyKids = lazy(() => import('./components/FutureReadyKids').then(m => ({ default: m.FutureReadyKids })));
-const ToolsWeTeach = lazy(() => import('./components/ToolsWeTeach').then(m => ({ default: m.ToolsWeTeach })));
-const WhyUs = lazy(() => import('./components/WhyUs').then(m => ({ default: m.WhyUs })));
-const Authority = lazy(() => import('./components/Authority').then(m => ({ default: m.Authority })));
-const Introducing = lazy(() => import('./components/Introducing').then(m => ({ default: m.Introducing })));
-const WhatChanges = lazy(() => import('./components/WhatChanges').then(m => ({ default: m.WhatChanges })));
-const WhoIsThisFor = lazy(() => import('./components/WhoIsThisFor').then(m => ({ default: m.WhoIsThisFor })));
+// Lazy load below-the-fold components
+const Curriculum = lazy(() => import('./components/Curriculum').then(m => ({ default: m.Curriculum })));
+const ToolsShowcase = lazy(() => import('./components/ToolsShowcase').then(m => ({ default: m.ToolsShowcase })));
 const HowItWorks = lazy(() => import('./components/HowItWorks').then(m => ({ default: m.HowItWorks })));
+const Authority = lazy(() => import('./components/Authority').then(m => ({ default: m.Authority })));
 const Testimonials = lazy(() => import('./components/Testimonials').then(m => ({ default: m.Testimonials })));
+const FAQSection = lazy(() => import('./components/FAQSection').then(m => ({ default: m.FAQSection })));
 const CTA = lazy(() => import('./components/CTA').then(m => ({ default: m.CTA })));
 const Footer = lazy(() => import('./components/Footer').then(m => ({ default: m.Footer })));
-const ExitIntentPopup = lazy(() => import('./components/ExitIntentPopup').then(m => ({ default: m.ExitIntentPopup })));
-const StudentJourney = lazy(() => import('./components/StudentJourney').then(m => ({ default: m.StudentJourney })));
-const FAQ = lazy(() => import('./components/FAQ').then(m => ({ default: m.FAQ })));
+
+// Legal pages
 const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy').then(m => ({ default: m.PrivacyPolicy })));
 const RefundPolicy = lazy(() => import('./components/RefundPolicy').then(m => ({ default: m.RefundPolicy })));
 const TermsAndConditions = lazy(() => import('./components/TermsAndConditions').then(m => ({ default: m.TermsAndConditions })));
@@ -31,7 +26,7 @@ const ContactUsPage = lazy(() => import('./components/ContactUsPage').then(m => 
 type View = 'home' | 'privacy' | 'refund' | 'terms' | 'contact';
 
 function App() {
-  const [lang, setLang] = useState<Language>('GU');
+  const [lang, setLang] = useState<Language>('EN');
   const [currentView, setCurrentView] = useState<View>('home');
   const [scrolled, setScrolled] = useState(false);
 
@@ -43,29 +38,42 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Handle URL query parameters for routing
+  // Intersection Observer for scroll reveal animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    document.querySelectorAll('.reveal, .stagger-children').forEach((el) => {
+      observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [currentView]);
+
+  // URL-based routing
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const page = params.get('page');
-
-    if (page === 'refund' || page === 'refund-policy') {
-      setCurrentView('refund');
-    } else if (page === 'terms') {
-      setCurrentView('terms');
-    } else if (page === 'contact') {
-      setCurrentView('contact');
-    } else if (page === 'privacy') {
-      setCurrentView('privacy');
-    }
+    if (page === 'refund' || page === 'refund-policy') setCurrentView('refund');
+    else if (page === 'terms') setCurrentView('terms');
+    else if (page === 'contact') setCurrentView('contact');
+    else if (page === 'privacy') setCurrentView('privacy');
   }, []);
 
-  const scrollToEnroll = useCallback((e: React.MouseEvent) => {
+  const scrollToEnroll = useCallback((e?: React.MouseEvent) => {
     scrollToElement('enroll', e);
   }, []);
 
   const handleBack = useCallback(() => {
     setCurrentView('home');
-    // Optional: Reset URL to root without reloading
     window.history.pushState({}, '', window.location.pathname);
     window.scrollTo(0, 0);
   }, []);
@@ -75,127 +83,107 @@ function App() {
     window.scrollTo(0, 0);
   }, []);
 
-  // Conditional Rendering for Legal/Info Pages
-  if (currentView === 'privacy') {
-    return (
-      <Suspense fallback={null}>
-        <PrivacyPolicy lang={lang} onBack={handleBack} />
-      </Suspense>
-    );
-  }
-  if (currentView === 'refund') {
-    return (
-      <Suspense fallback={null}>
-        <RefundPolicy lang={lang} onBack={handleBack} />
-      </Suspense>
-    );
-  }
-  if (currentView === 'terms') {
-    return (
-      <Suspense fallback={null}>
-        <TermsAndConditions lang={lang} onBack={handleBack} />
-      </Suspense>
-    );
-  }
-  if (currentView === 'contact') {
-    return (
-      <Suspense fallback={null}>
-        <ContactUsPage lang={lang} onBack={handleBack} />
-      </Suspense>
-    );
-  }
+  const handleRefundClick = useCallback(() => {
+    setCurrentView('refund');
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleTermsClick = useCallback(() => {
+    setCurrentView('terms');
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleContactClick = useCallback(() => {
+    setCurrentView('contact');
+    window.scrollTo(0, 0);
+  }, []);
+
+  // Legal pages
+  if (currentView === 'privacy') return <Suspense fallback={null}><PrivacyPolicy lang={lang} onBack={handleBack} /></Suspense>;
+  if (currentView === 'refund') return <Suspense fallback={null}><RefundPolicy lang={lang} onBack={handleBack} /></Suspense>;
+  if (currentView === 'terms') return <Suspense fallback={null}><TermsAndConditions lang={lang} onBack={handleBack} /></Suspense>;
+  if (currentView === 'contact') return <Suspense fallback={null}><ContactUsPage lang={lang} onBack={handleBack} /></Suspense>;
+
+  const t = content.nav;
 
   return (
-    <div className={`min-h-screen bg-brand-50 text-brand-950 pb-24 md:pb-0 ${lang === 'GU' ? 'font-gujarati' : 'font-sans'}`}>
-      {/* Navigation / Header */}
-      <nav 
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
-          scrolled 
-            ? 'bg-white/90 backdrop-blur-lg border-brand-100 shadow-sm py-3' 
-            : 'bg-transparent border-transparent py-5'
-        }`}
-      >
-        <div className="container mx-auto px-4 sm:px-6 flex items-center justify-between">
-          <div className="flex items-center gap-3 cursor-pointer group" onClick={() => window.scrollTo(0,0)}>
-            <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-brand-400 to-brand-500 rounded-xl flex items-center justify-center text-white font-bold text-xl md:text-2xl shadow-[0_4px_15px_rgba(255,148,148,0.4)] transform group-hover:scale-105 transition-transform duration-300">
-              <Brain className="w-6 h-6 md:w-7 md:h-7" />
+    <div className={lang === 'GU' ? 'font-gujarati' : ''}>
+      {/* Navigation */}
+      <nav className={`nav ${scrolled ? 'nav-scrolled' : ''}`}>
+        <div className="container">
+          <div className="nav-inner">
+            <div className="nav-logo" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+              <div className="nav-logo-icon">
+                <Brain style={{ width: 22, height: 22 }} />
+              </div>
+              <div>
+                <div className="nav-logo-text">AI Pathshala</div>
+                <div className="nav-logo-subtitle">
+                  {lang === 'EN' ? t.subtitle.en : t.subtitle.gu}
+                </div>
+              </div>
             </div>
-            <div className="flex flex-col">
-              <span className={`font-black text-lg md:text-2xl text-brand-950 leading-none tracking-tight`}>AI Pathshala</span>
-              <span className="text-[10px] md:text-[11px] font-bold text-brand-600 leading-tight mt-0.5">
-                {lang === 'EN' ? "Gujarat's first AI study platform" : "ગુજરાતનું પ્રથમ AI સ્ટડી પ્લેટફોર્મ"}
-              </span>
-            </div>
-          </div>
-          <div className="flex items-center gap-3 md:gap-6">
-             {/* Simple CTA in Nav */}
-             <button 
+
+            <div className="nav-actions">
+              {/* Language Toggle */}
+              <div className="lang-toggle">
+                <button
+                  className={lang === 'EN' ? 'active' : ''}
+                  onClick={() => setLang('EN')}
+                >
+                  EN
+                </button>
+                <button
+                  className={lang === 'GU' ? 'active' : ''}
+                  onClick={() => setLang('GU')}
+                >
+                  ગુ
+                </button>
+              </div>
+
+              {/* Desktop CTA */}
+              <button
                 onClick={scrollToEnroll}
-                className="hidden md:flex items-center gap-2 text-sm font-bold text-brand-900 bg-white hover:bg-brand-50 border border-brand-100 px-6 py-2.5 rounded-full transition-all shadow-sm hover:-translate-y-0.5 transform active:scale-95 cursor-pointer"
-             >
-               {lang === 'EN' ? 'Book Free Consultation' : 'ફ્રી કન્સલ્ટેશન બુક કરો'}
-             </button>
-             <LanguageToggle lang={lang} setLang={setLang} />
+                className="btn btn-primary nav-cta-desktop"
+                style={{ padding: '0.5rem 1.25rem', fontSize: '0.85rem' }}
+              >
+                {lang === 'EN' ? t.cta.en : t.cta.gu}
+              </button>
+            </div>
           </div>
         </div>
       </nav>
 
-      {/* Main Content Sections - Strict Sales Funnel Flow */}
+      {/* Main Content */}
       <main>
-        {/* 1. Hook & Promise (Hero Section) */}
         <Hero lang={lang} />
-        
-        {/* 2. The Real Problem (Agitation) */}
-        <TheRealProblem lang={lang} />
+        <ProblemSolution lang={lang} />
 
         <Suspense fallback={null}>
-          {/* 3. The Solution (Introducing AI Pathshala) */}
-          <Introducing lang={lang} />
-
-          {/* 4. The Mechanism: Why It Works */}
-          <WhyCampMatters lang={lang} />
-          <ToolsWeTeach lang={lang} />
-
-          {/* 5. The Transformation: Before vs. After */}
-          <WhatChanges lang={lang} />
-          <FutureReadyKids lang={lang} />
-
-          {/* 6. Audience Segmentation */}
-          <WhoIsThisFor lang={lang} />
-
-          {/* 7. The Roadmap */}
-          <StudentJourney lang={lang} />
+          <Curriculum lang={lang} />
+          <ToolsShowcase lang={lang} />
           <HowItWorks lang={lang} />
-
-          {/* 8. Trust & Credibility */}
-          <WhyUs lang={lang} />
           <Authority lang={lang} />
-
-          {/* 9. Social Proof */}
           <Testimonials lang={lang} />
-
-          {/* 10. Address Objections */}
-          <FAQ lang={lang} />
-
-          {/* 11. Final Action */}
+          <FAQSection lang={lang} />
           <CTA lang={lang} />
         </Suspense>
       </main>
 
       <Suspense fallback={null}>
-        <Footer lang={lang} onPrivacyClick={handlePrivacyClick} />
-
-        {/* New Components */}
-        <ExitIntentPopup lang={lang} />
+        <Footer
+          lang={lang}
+          onPrivacyClick={handlePrivacyClick}
+          onRefundClick={handleRefundClick}
+          onTermsClick={handleTermsClick}
+          onContactClick={handleContactClick}
+        />
       </Suspense>
-      
+
       {/* Mobile Floating CTA */}
-      <div className="fixed bottom-0 left-0 w-full p-4 bg-white/90 backdrop-blur-md border-t border-brand-200 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] md:hidden z-40 pb-6">
-        <button 
-           onClick={scrollToEnroll}
-           className="flex items-center justify-center w-full font-bold text-white bg-brand-600 py-3.5 rounded-xl shadow-lg shadow-brand-500/30 active:scale-95 transition-transform cursor-pointer animate-wiggle-interval"
-        >
-          {lang === 'EN' ? 'Book Free Consultation' : 'ફ્રી કન્સલ્ટેશન બુક કરો'}
+      <div className="mobile-cta">
+        <button onClick={scrollToEnroll} className="btn btn-whatsapp btn-shimmer">
+          {lang === 'EN' ? content.cta.buttonText.en : content.cta.buttonText.gu}
         </button>
       </div>
     </div>
