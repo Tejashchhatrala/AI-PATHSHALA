@@ -1,14 +1,19 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { FAQ } from './FAQ';
+import { FAQSection } from './FAQSection';
+import { ScrollRevealProvider } from './ScrollRevealContext';
 import { content } from '../data/content';
 
 describe('FAQ Component', () => {
   it('renders correctly in English', () => {
-    render(<FAQ lang="EN" />);
+    render(
+      <ScrollRevealProvider>
+        <FAQSection lang="EN" />
+      </ScrollRevealProvider>
+    );
 
-    // Check title
-    expect(screen.getByText(content.faq.title.en)).toBeInTheDocument();
+    // Check title (handle white-space rendering if needed, or get by role)
+    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(content.faq.title.en.replace('\n', ' '));
 
     // Check questions
     content.faq.items.forEach((item) => {
@@ -17,10 +22,14 @@ describe('FAQ Component', () => {
   });
 
   it('renders correctly in Gujarati', () => {
-    render(<FAQ lang="GU" />);
+    render(
+      <ScrollRevealProvider>
+        <FAQSection lang="GU" />
+      </ScrollRevealProvider>
+    );
 
     // Check title
-    expect(screen.getByText(content.faq.title.gu)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(content.faq.title.gu.replace('\n', ' '));
 
     // Check questions
     content.faq.items.forEach((item) => {
@@ -29,7 +38,11 @@ describe('FAQ Component', () => {
   });
 
   it('toggles answer visibility on click', () => {
-    render(<FAQ lang="EN" />);
+    render(
+      <ScrollRevealProvider>
+        <FAQSection lang="EN" />
+      </ScrollRevealProvider>
+    );
 
     const firstQuestion = content.faq.items[0].question.en;
     const firstAnswer = content.faq.items[0].answer.en;
@@ -45,28 +58,30 @@ describe('FAQ Component', () => {
     // So the answer container is indeed next sibling of button.
     const answerContainer = questionButton!.nextElementSibling;
 
-    // Initially closed
-    expect(answerContainer).toHaveClass('max-h-0');
-    expect(answerContainer).toHaveClass('opacity-0');
+    // Initially closed, check class 'open'
+    const faqItem = questionButton!.closest('.faq-item');
+    expect(faqItem).not.toHaveClass('open');
 
     // Click to open
     fireEvent.click(questionButton!);
 
     // Should be open
-    expect(answerContainer).toHaveClass('max-h-96');
-    expect(answerContainer).toHaveClass('opacity-100');
+    expect(faqItem).toHaveClass('open');
     expect(screen.getByText(firstAnswer)).toBeInTheDocument();
 
     // Click to close
     fireEvent.click(questionButton!);
 
     // Should be closed
-    expect(answerContainer).toHaveClass('max-h-0');
-    expect(answerContainer).toHaveClass('opacity-0');
+    expect(faqItem).not.toHaveClass('open');
   });
 
   it('only allows one item to be open at a time', () => {
-    render(<FAQ lang="EN" />);
+    render(
+      <ScrollRevealProvider>
+        <FAQSection lang="EN" />
+      </ScrollRevealProvider>
+    );
 
     const firstQuestion = content.faq.items[0].question.en;
     const secondQuestion = content.faq.items[1].question.en;
@@ -74,18 +89,19 @@ describe('FAQ Component', () => {
     const firstButton = screen.getByText(firstQuestion).closest('button');
     const secondButton = screen.getByText(secondQuestion).closest('button');
 
+    const firstItem = firstButton!.closest('.faq-item');
+    const secondItem = secondButton!.closest('.faq-item');
+
     // Open first
     fireEvent.click(firstButton!);
-    const firstAnswerContainer = firstButton!.nextElementSibling;
-    expect(firstAnswerContainer).toHaveClass('max-h-96');
+    expect(firstItem).toHaveClass('open');
 
     // Open second
     fireEvent.click(secondButton!);
-    const secondAnswerContainer = secondButton!.nextElementSibling;
 
     // First should close
-    expect(firstAnswerContainer).toHaveClass('max-h-0');
+    expect(firstItem).not.toHaveClass('open');
     // Second should open
-    expect(secondAnswerContainer).toHaveClass('max-h-96');
+    expect(secondItem).toHaveClass('open');
   });
 });

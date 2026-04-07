@@ -6,6 +6,7 @@ import { content } from './data/content';
 import { SCROLL_THRESHOLD } from './constants';
 import { Hero } from './components/Hero';
 import { ProblemSolution } from './components/ProblemSolution';
+import { ScrollRevealProvider } from './components/ScrollRevealContext';
 
 // Lazy load below-the-fold components
 const Curriculum = lazy(() => import('./components/Curriculum').then(m => ({ default: m.Curriculum })));
@@ -37,26 +38,6 @@ function App() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  // Intersection Observer for scroll reveal animations
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
-    );
-
-    document.querySelectorAll('.reveal, .stagger-children').forEach((el) => {
-      observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, [currentView]);
 
   // URL-based routing
   useEffect(() => {
@@ -107,8 +88,9 @@ function App() {
   const t = content.nav;
 
   return (
-    <div className={lang === 'GU' ? 'font-gujarati' : ''}>
-      {/* Navigation */}
+    <ScrollRevealProvider>
+      <div className={lang === 'GU' ? 'font-gujarati' : ''}>
+        {/* Navigation */}
       <nav className={`nav ${scrolled ? 'nav-scrolled' : ''}`}>
         <div className="container">
           <div className="nav-inner">
@@ -180,13 +162,14 @@ function App() {
         />
       </Suspense>
 
-      {/* Mobile Floating CTA */}
-      <div className="mobile-cta">
-        <button onClick={scrollToEnroll} className="btn btn-whatsapp btn-shimmer">
-          {lang === 'EN' ? content.cta.buttonText.en : content.cta.buttonText.gu}
-        </button>
+        {/* Mobile Floating CTA */}
+        <div className="mobile-cta">
+          <button onClick={scrollToEnroll} className="btn btn-whatsapp btn-shimmer">
+            {lang === 'EN' ? content.cta.buttonText.en : content.cta.buttonText.gu}
+          </button>
+        </div>
       </div>
-    </div>
+    </ScrollRevealProvider>
   );
 }
 

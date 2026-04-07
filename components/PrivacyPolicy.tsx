@@ -8,6 +8,10 @@ interface Props {
 }
 
 export const PrivacyPolicy: React.FC<Props> = ({ lang, onBack }) => {
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="legal-page">
       <div className="container">

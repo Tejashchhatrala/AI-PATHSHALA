@@ -1,6 +1,7 @@
 import React from 'react';
 import { Language } from '../types';
 import { content } from '../data/content';
+import { useScrollReveal } from './ScrollRevealContext';
 
 interface Props {
   lang: Language;
@@ -8,11 +9,12 @@ interface Props {
 
 export const Curriculum: React.FC<Props> = ({ lang }) => {
   const t = content.curriculum;
+  const revealRef = useScrollReveal();
 
   return (
     <section className="section section-dark">
       <div className="container">
-        <div className="section-header reveal">
+        <div className="section-header reveal" ref={revealRef}>
           <div className="section-eyebrow">{lang === 'EN' ? t.eyebrow.en : t.eyebrow.gu}</div>
           <h2 className="heading-lg section-title" style={{ whiteSpace: 'pre-line' }}>
             {lang === 'EN' ? t.title.en : t.title.gu}
@@ -22,7 +24,7 @@ export const Curriculum: React.FC<Props> = ({ lang }) => {
           </p>
         </div>
 
-        <div className="curriculum-grid stagger-children">
+        <div className="curriculum-grid stagger-children" ref={revealRef}>
           {t.weeks.map((week, i) => (
             <div key={i} className="week-card">
               <div className="week-number">

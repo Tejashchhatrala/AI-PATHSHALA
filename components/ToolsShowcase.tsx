@@ -1,6 +1,7 @@
 import React from 'react';
 import { Language } from '../types';
 import { content } from '../data/content';
+import { useScrollReveal } from './ScrollRevealContext';
 
 interface Props {
   lang: Language;
@@ -8,11 +9,12 @@ interface Props {
 
 export const ToolsShowcase: React.FC<Props> = ({ lang }) => {
   const t = content.tools;
+  const revealRef = useScrollReveal();
 
   return (
     <section className="section section-darker">
       <div className="container">
-        <div className="section-header reveal">
+        <div className="section-header reveal" ref={revealRef}>
           <div className="section-eyebrow">{lang === 'EN' ? t.eyebrow.en : t.eyebrow.gu}</div>
           <h2 className="heading-lg section-title" style={{ whiteSpace: 'pre-line' }}>
             {lang === 'EN' ? t.title.en : t.title.gu}
@@ -22,7 +24,7 @@ export const ToolsShowcase: React.FC<Props> = ({ lang }) => {
           </p>
         </div>
 
-        <div className="tools-grid stagger-children">
+        <div className="tools-grid stagger-children" ref={revealRef}>
           {t.items.map((tool, i) => (
             <div key={i} className="tool-card">
               <div className="tool-icon">{tool.icon}</div>
@@ -36,7 +38,7 @@ export const ToolsShowcase: React.FC<Props> = ({ lang }) => {
         </div>
 
         {/* Bonus Tools */}
-        <div className="reveal" style={{ marginTop: '3rem', textAlign: 'center' }}>
+        <div className="reveal" ref={revealRef} style={{ marginTop: '3rem', textAlign: 'center' }}>
           <div className="glass-card" style={{ display: 'inline-block', padding: '1.5rem 2.5rem' }}>
             <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--color-accent)', marginBottom: '0.75rem' }}>
               {lang === 'EN' ? t.bonusTitle.en : t.bonusTitle.gu}
