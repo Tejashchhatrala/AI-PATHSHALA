@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Language } from '../types';
 import { content } from '../data/content';
+import { useScrollReveal } from './ScrollRevealContext';
 
 interface Props {
   lang: Language;
@@ -8,6 +9,7 @@ interface Props {
 
 export const Testimonials: React.FC<Props> = ({ lang }) => {
   const t = content.testimonials;
+  const revealRef = useScrollReveal();
   const trackRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll animation
@@ -60,7 +62,7 @@ export const Testimonials: React.FC<Props> = ({ lang }) => {
   return (
     <section className="section section-dark">
       <div className="container">
-        <div className="section-header reveal">
+        <div className="section-header reveal" ref={revealRef}>
           <div className="section-eyebrow">{lang === 'EN' ? t.eyebrow.en : t.eyebrow.gu}</div>
           <h2 className="heading-lg section-title" style={{ whiteSpace: 'pre-line' }}>
             {lang === 'EN' ? t.title.en : t.title.gu}

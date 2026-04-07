@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Plus } from 'lucide-react';
 import { Language } from '../types';
 import { content } from '../data/content';
+import { useScrollReveal } from './ScrollRevealContext';
 
 interface Props {
   lang: Language;
@@ -9,6 +10,7 @@ interface Props {
 
 export const FAQSection: React.FC<Props> = ({ lang }) => {
   const t = content.faq;
+  const revealRef = useScrollReveal();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggle = (i: number) => {
@@ -18,14 +20,14 @@ export const FAQSection: React.FC<Props> = ({ lang }) => {
   return (
     <section className="section section-darker">
       <div className="container">
-        <div className="section-header reveal">
+        <div className="section-header reveal" ref={revealRef}>
           <div className="section-eyebrow">{lang === 'EN' ? t.eyebrow.en : t.eyebrow.gu}</div>
           <h2 className="heading-lg section-title" style={{ whiteSpace: 'pre-line' }}>
             {lang === 'EN' ? t.title.en : t.title.gu}
           </h2>
         </div>
 
-        <div className="faq-list reveal">
+        <div className="faq-list reveal" ref={revealRef}>
           {t.items.map((item, i) => (
             <div key={i} className={`faq-item ${openIndex === i ? 'open' : ''}`}>
               <button className="faq-question" onClick={() => toggle(i)}>

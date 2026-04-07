@@ -16,15 +16,15 @@ describe('PrivacyPolicy Component', () => {
 
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Privacy Policy');
     expect(screen.getByText('Back to Home')).toBeInTheDocument();
-    expect(screen.getByText(/Effective Date: February 2026/i)).toBeInTheDocument();
+    expect(screen.getByText(/Last Updated: April 2026/i)).toBeInTheDocument();
   });
 
   it('renders correctly in Gujarati', () => {
     render(<PrivacyPolicy lang="GU" onBack={mockOnBack} />);
 
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('પ્રાઇવસી પોલિસી');
-    expect(screen.getByText('પાછા જાઓ')).toBeInTheDocument();
-    expect(screen.getByText(/અમલીકરણ તારીખ: ફેબ્રુઆરી 2026/i)).toBeInTheDocument();
+    expect(screen.getByText('હોમ પર પાછા')).toBeInTheDocument();
+    expect(screen.getByText(/છેલ્લું અપડેટ: એપ્રિલ 2026/i)).toBeInTheDocument();
   });
 
   it('scrolls to top on mount', () => {

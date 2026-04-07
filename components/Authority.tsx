@@ -2,6 +2,7 @@ import React from 'react';
 import { Award, ShieldCheck } from 'lucide-react';
 import { Language } from '../types';
 import { content } from '../data/content';
+import { useScrollReveal } from './ScrollRevealContext';
 
 interface Props {
   lang: Language;
@@ -9,6 +10,7 @@ interface Props {
 
 export const Authority: React.FC<Props> = ({ lang }) => {
   const t = content.mentor;
+  const revealRef = useScrollReveal();
   const baseUrl = (import.meta.env && import.meta.env.BASE_URL) || '/';
 
   const getAssetPath = (path: string) => {
@@ -47,14 +49,14 @@ export const Authority: React.FC<Props> = ({ lang }) => {
   return (
     <section className="section section-darker">
       <div className="container">
-        <div className="section-header reveal">
+        <div className="section-header reveal" ref={revealRef}>
           <div className="section-eyebrow">{lang === 'EN' ? t.eyebrow.en : t.eyebrow.gu}</div>
           <h2 className="heading-lg section-title">
             {lang === 'EN' ? t.name.en : t.name.gu}
           </h2>
         </div>
 
-        <div className="reveal mentor-card">
+        <div className="reveal mentor-card" ref={revealRef}>
           {/* Photo */}
           <div className="mentor-photo">
             <img
@@ -96,7 +98,7 @@ export const Authority: React.FC<Props> = ({ lang }) => {
         </div>
 
         {/* Certificates Grid */}
-        <div className="reveal" style={{ marginTop: '3rem' }}>
+        <div className="reveal" style={{ marginTop: '3rem' }} ref={revealRef}>
           <h3 className="heading-sm" style={{ textAlign: 'center', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', color: 'var(--color-text-secondary)' }}>
             <Award style={{ width: 20, height: 20, color: 'var(--color-accent)' }} />
             {lang === 'EN' ? t.certTitle.en : t.certTitle.gu}
