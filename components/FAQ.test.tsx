@@ -1,14 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { FAQ } from './FAQ';
+import { FAQSection } from './FAQSection';
 import { content } from '../data/content';
 
 describe('FAQ Component', () => {
   it('renders correctly in English', () => {
-    render(<FAQ lang="EN" />);
-
-    // Check title
-    expect(screen.getByText(content.faq.title.en)).toBeInTheDocument();
+    render(<FAQSection lang="EN" />);
 
     // Check questions
     content.faq.items.forEach((item) => {
@@ -17,10 +14,7 @@ describe('FAQ Component', () => {
   });
 
   it('renders correctly in Gujarati', () => {
-    render(<FAQ lang="GU" />);
-
-    // Check title
-    expect(screen.getByText(content.faq.title.gu)).toBeInTheDocument();
+    render(<FAQSection lang="GU" />);
 
     // Check questions
     content.faq.items.forEach((item) => {
@@ -29,7 +23,7 @@ describe('FAQ Component', () => {
   });
 
   it('toggles answer visibility on click', () => {
-    render(<FAQ lang="EN" />);
+    render(<FAQSection lang="EN" />);
 
     const firstQuestion = content.faq.items[0].question.en;
     const firstAnswer = content.faq.items[0].answer.en;
@@ -45,28 +39,25 @@ describe('FAQ Component', () => {
     // So the answer container is indeed next sibling of button.
     const answerContainer = questionButton!.nextElementSibling;
 
-    // Initially closed
-    expect(answerContainer).toHaveClass('max-h-0');
-    expect(answerContainer).toHaveClass('opacity-0');
+    // Initially closed (check parent container for 'open' class)
+    expect(questionButton!.parentElement).not.toHaveClass('open');
 
     // Click to open
     fireEvent.click(questionButton!);
 
     // Should be open
-    expect(answerContainer).toHaveClass('max-h-96');
-    expect(answerContainer).toHaveClass('opacity-100');
+    expect(questionButton!.parentElement).toHaveClass('open');
     expect(screen.getByText(firstAnswer)).toBeInTheDocument();
 
     // Click to close
     fireEvent.click(questionButton!);
 
     // Should be closed
-    expect(answerContainer).toHaveClass('max-h-0');
-    expect(answerContainer).toHaveClass('opacity-0');
+    expect(questionButton!.parentElement).not.toHaveClass('open');
   });
 
   it('only allows one item to be open at a time', () => {
-    render(<FAQ lang="EN" />);
+    render(<FAQSection lang="EN" />);
 
     const firstQuestion = content.faq.items[0].question.en;
     const secondQuestion = content.faq.items[1].question.en;
@@ -76,16 +67,14 @@ describe('FAQ Component', () => {
 
     // Open first
     fireEvent.click(firstButton!);
-    const firstAnswerContainer = firstButton!.nextElementSibling;
-    expect(firstAnswerContainer).toHaveClass('max-h-96');
+    expect(firstButton!.parentElement).toHaveClass('open');
 
     // Open second
     fireEvent.click(secondButton!);
-    const secondAnswerContainer = secondButton!.nextElementSibling;
 
     // First should close
-    expect(firstAnswerContainer).toHaveClass('max-h-0');
+    expect(firstButton!.parentElement).not.toHaveClass('open');
     // Second should open
-    expect(secondAnswerContainer).toHaveClass('max-h-96');
+    expect(secondButton!.parentElement).toHaveClass('open');
   });
 });

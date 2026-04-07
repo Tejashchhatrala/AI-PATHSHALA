@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowLeft, Mail, Phone, MapPin, MessageCircle } from 'lucide-react';
 import { Language } from '../types';
 import { WHATSAPP_PHONE_NUMBER } from '../constants';
+import { useScrollReveal } from './ScrollRevealContext';
 
 interface Props {
   lang: Language;
@@ -9,6 +10,7 @@ interface Props {
 }
 
 export const ContactUsPage: React.FC<Props> = ({ lang, onBack }) => {
+  const revealRef = useScrollReveal();
   return (
     <div className="legal-page">
       <div className="container">
@@ -19,7 +21,7 @@ export const ContactUsPage: React.FC<Props> = ({ lang, onBack }) => {
 
         <h1>{lang === 'EN' ? 'Contact Us' : 'અમારો સંપર્ક'}</h1>
 
-        <div className="reveal glass-card" style={{ padding: '3rem 2rem', marginTop: '2rem' }}>
+        <div className="reveal glass-card" style={{ padding: '3rem 2rem', marginTop: '2rem' }} ref={revealRef}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             {/* WhatsApp */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>

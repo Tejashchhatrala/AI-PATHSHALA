@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { Language } from '../types';
 
@@ -8,6 +8,10 @@ interface Props {
 }
 
 export const PrivacyPolicy: React.FC<Props> = ({ lang, onBack }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="legal-page">
       <div className="container">

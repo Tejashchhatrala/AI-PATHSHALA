@@ -38,26 +38,6 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Intersection Observer for scroll reveal animations
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
-    );
-
-    document.querySelectorAll('.reveal, .stagger-children').forEach((el) => {
-      observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, [currentView]);
-
   // URL-based routing
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -99,10 +79,10 @@ function App() {
   }, []);
 
   // Legal pages
-  if (currentView === 'privacy') return <Suspense fallback={null}><PrivacyPolicy lang={lang} onBack={handleBack} /></Suspense>;
-  if (currentView === 'refund') return <Suspense fallback={null}><RefundPolicy lang={lang} onBack={handleBack} /></Suspense>;
-  if (currentView === 'terms') return <Suspense fallback={null}><TermsAndConditions lang={lang} onBack={handleBack} /></Suspense>;
-  if (currentView === 'contact') return <Suspense fallback={null}><ContactUsPage lang={lang} onBack={handleBack} /></Suspense>;
+  if (currentView === 'privacy') return <Suspense fallback={<div>Loading...</div>}><PrivacyPolicy lang={lang} onBack={handleBack} /></Suspense>;
+  if (currentView === 'refund') return <Suspense fallback={<div>Loading...</div>}><RefundPolicy lang={lang} onBack={handleBack} /></Suspense>;
+  if (currentView === 'terms') return <Suspense fallback={<div>Loading...</div>}><TermsAndConditions lang={lang} onBack={handleBack} /></Suspense>;
+  if (currentView === 'contact') return <Suspense fallback={<div>Loading...</div>}><ContactUsPage lang={lang} onBack={handleBack} /></Suspense>;
 
   const t = content.nav;
 

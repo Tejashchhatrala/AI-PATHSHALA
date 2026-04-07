@@ -4,6 +4,7 @@ import { Language } from '../types';
 import { content } from '../data/content';
 import { GOOGLE_FORM_CTA_URL, GOOGLE_FORM_FIELD_IDS, WHATSAPP_PHONE_NUMBER, PHONE_REGEX } from '../constants';
 import { sanitizeInput } from '../utils';
+import { useScrollReveal } from './ScrollRevealContext';
 
 interface Props {
   lang: Language;
@@ -26,6 +27,7 @@ const validateField = (name: string, value: string, lang: Language) => {
 
 export const CTA: React.FC<Props> = ({ lang }) => {
   const t = content.cta;
+  const revealRef = useScrollReveal();
   const [formData, setFormData] = useState({ name: '', phone: '' });
   const [errors, setErrors] = useState({ name: '', phone: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -90,7 +92,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
 
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         {/* Header */}
-        <div className="section-header reveal">
+        <div className="section-header reveal" ref={revealRef}>
           <div className="section-eyebrow">{lang === 'EN' ? t.eyebrow.en : t.eyebrow.gu}</div>
           <h2 className="heading-lg section-title" style={{ whiteSpace: 'pre-line' }}>
             {lang === 'EN' ? t.title.en : t.title.gu}
@@ -101,7 +103,7 @@ export const CTA: React.FC<Props> = ({ lang }) => {
         </div>
 
         {/* Two column: Features + Form */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '3rem', maxWidth: '900px', margin: '0 auto' }} className="reveal">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '3rem', maxWidth: '900px', margin: '0 auto' }} className="reveal" ref={revealRef}>
           {/* Pricing + Features column */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
             {/* Price card */}
