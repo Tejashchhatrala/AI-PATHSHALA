@@ -7,6 +7,8 @@ interface Props {
   lang: Language;
 }
 
+const TESTIMONIAL_ITEMS = [...content.testimonials.items, ...content.testimonials.items];
+
 export const Testimonials: React.FC<Props> = ({ lang }) => {
   const t = content.testimonials;
   const revealRef = useScrollReveal();
@@ -73,7 +75,7 @@ export const Testimonials: React.FC<Props> = ({ lang }) => {
       {/* Full-width testimonials track */}
       <div className="testimonials-track" ref={trackRef} style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
         {/* Duplicate for infinite scroll effect */}
-        {[...t.items, ...t.items].map((item, i) => (
+        {TESTIMONIAL_ITEMS.map((item, i) => (
           <div key={i} className="testimonial-card">
             <div className="testimonial-text">
               "{lang === 'EN' ? item.text.en : item.text.gu}"
