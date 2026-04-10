@@ -141,7 +141,12 @@ export const CTA: React.FC<Props> = ({ lang }) => {
               </p>
             </div>
 
-            <iframe name="hidden_iframe" id="hidden_iframe" style={{ display: 'none' }} />
+            <iframe
+              name="hidden_iframe"
+              id="hidden_iframe"
+              style={{ display: 'none' }}
+              sandbox="allow-same-origin allow-forms"
+            />
 
             <form
               action={GOOGLE_FORM_CTA_URL}
